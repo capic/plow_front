@@ -1,0 +1,19 @@
+<!-- settings -->
+<button class="btn btn-default no-shadow pos-abt" toggle-class-drtv="active" target=".add-links">
+    <i class="fa fa-list"></i>
+    <span data-ng-show="nbrLinksToAdd > 0" class="badge badge-sm up bg-danger pull-right-xs">{{nbrLinksToAdd}}</span>
+</button>
+<div class="panel-heading">
+    <div class="text-center-folded">
+        <span class="pull-right pull-none-folded">{{progressbarValue}}%</span>
+        <span class="hidden-folded ng-scope" z>Add Links</span>
+    </div>
+
+    <progressbar value="progressbarValue" class="progress-xs m-b-none bg-white"></progressbar>
+</div>
+<div class="panel-body">
+    <textarea data-ng-model="links.linksString" rows="15"></textarea>
+    <button class="btn btn-default no-shadow" data-ng-click="addLinks()">Add</button>
+</div>
+
+<!-- /settings -->

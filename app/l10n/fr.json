@@ -1,0 +1,45 @@
+{
+    "header" : {
+        "navbar" : {
+        "UPLOAD" : "Upload",
+        "new" : {
+          "NEW" : "New",
+          "PROJECT" : "Projects",
+          "TASK" : "Task",
+          "USER" : "User",
+          "EMAIL" : "Email"
+        },
+        "NOTIFICATIONS" : "Notifications"
+      }
+    },
+    "aside" : {
+      "nav" : {
+        "HEADER_DOWNLOADS" : "Downloads",
+        "DOWNLOADS" : "Downloads",
+        "LINKS": "Links"
+      },
+      "MILESTONE" : "Milestone",
+      "RELEASE" : "Release"
+    },
+    "downloads": {
+        "table": {
+            "NAME": "Nom",
+            "LINK": "Lien",
+            "SIZE": "Taille",
+            "STATUS": "Statut",
+            "PROGRESS": "%",
+            "AVERAGE_SPEED": "Vit. Moy.",
+            "TIME_LEFT": "Tps rest.",
+            "ACTIONS": "Actions"
+        }
+    },
+    "links": {
+        "table": {
+            "NAME": "Nom",
+            "LINK": "Lien",
+            "SIZE": "Taille",
+            "STATUS": "Status",
+            "ACTIONS": "Actions"
+        }
+    }
+}

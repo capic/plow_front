@@ -1,0 +1,58 @@
+/* menu directive */
+.children-menu-open {
+    display: block;
+}
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+    -moz-animation: spin2 .7s infinite linear;
+}
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+@-moz-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+.add-links {
+    z-index: 1000;
+    position: fixed;
+    top: 140px;
+    right: -350px;
+    width: 350px;
+    -webkit-transition: right 0.2s;
+    transition: right 0.2s;
+}
+.add-links.active {
+    right: -1px;
+}
+.add-links > .btn {
+    background: #f6f8f8 !important;
+    border-right-width: 0;
+    border-color: #dee5e7;
+    position: absolute;
+    left: -42px;
+    top: -1px;
+    padding: 10px 15px;
+}
+.add-links .i-checks span b {
+    width: 50%;
+    height: 20px;
+    display: inline-block;
+    float: left;
+}
+.add-links .i-checks span b.header {
+    height: 10px;
+}
+
+.add-links textarea {
+    width: 300px;
+}
