@@ -63,7 +63,7 @@ angular
 
     }])
     .constant('settings', {
-        'SERVER_ADDRESS':'http://192.168.1.200',
+    'SERVER_ADDRESS': 'http://capic.hd.free.fr',
         'SERVER_NOTIFICATION': 'ws://192.168.1.200:8080/notifications'
     })
     .constant('listSeparatorDownloads', [',', ';', '\n'])

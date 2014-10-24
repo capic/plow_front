@@ -5,8 +5,8 @@
 </button>
 <div class="panel-heading">
     <div class="text-center-folded">
-        <span class="pull-right pull-none-folded">{{progressbarValue}}%</span>
-        <span class="hidden-folded ng-scope" z>Add Links</span>
+      <span class="pull-right pull-none-folded">{{progressbarValue | number: 2}}%</span>
+      <span class="hidden-folded ng-scope">Add Links</span>
     </div>
 
     <progressbar value="progressbarValue" class="progress-xs m-b-none bg-white"></progressbar>
