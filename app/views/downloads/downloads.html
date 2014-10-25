@@ -1,123 +1,116 @@
 <div class="bg-light lter b-b wrapper-md">
-    <h1 class="m-n font-thin h3">
-        <span translate="aside.nav.HEADER_DOWNLOADS">Downloads</span>
-    </h1>
+  <h1 class="m-n font-thin h3">
+    <span translate="aside.nav.HEADER_DOWNLOADS">Downloads</span>
+  </h1>
 </div>
 <div class="wrapper-md">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <span translate="aside.nav.DOWNLOADS">Downloads</span>
-        </div>
-        <div class="row wrapper">
-            <div class="col-sm-5 m-b-xs">
-                <select class="input-sm form-control w-sm inline v-middle">
-                    <option value="0">Bulk action</option>
-                    <option value="1">Delete selected</option>
-                    <option value="2">Bulk edit</option>
-                    <option value="3">Export</option>
-                </select>
-                <button class="btn btn-sm btn-default">Apply</button>
-            </div>
-            <div class="col-sm-4">
-            </div>
-            <div class="col-sm-3">
-                <div class="input-group">
-                    <input type="text" class="input-sm form-control" placeholder="Search">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span translate="aside.nav.DOWNLOADS">Downloads</span>
+    </div>
+    <div class="row wrapper">
+      <div class="col-sm-4 hidden-xs">
+        <button class="btn btn-sm btn-default" data-ng-click="refreshSelectedLinks()">Refresh</button>
+        <button class="btn btn-sm btn-default" data-ng-click="deleteSelectedLinks()">Delete</button>
+      </div>
+      <div class="col-sm-4">
+      </div>
+      <div class="col-sm-4">
+        <div class="input-group">
+          <input type="text" class="input-sm form-control" placeholder="Search">
               <span class="input-group-btn">
                 <button class="btn btn-sm btn-default" type="button">Go!</button>
               </span>
-                </div>
-            </div>
         </div>
-        <div class="table-responsive">
-            <table class="table table-striped b-t b-light">
-                <thead>
-                    <tr>
-                        <th style="width:20px;">
-                            <label class="i-checks m-b-none">
-                                <input type="checkbox" data-ng-model="checkAll" data-ng-change="selectAllDownload(checkAll)"><i></i>
-                            </label>
-                        </th>
-                        <th>
-                            <span translate="downloads.table.NAME">Name</span>
-                        </th>
-                        <th>
-                            <span translate="downloads.table.LINK">Link</span>
-                        </th>
-                        <th>
-                            <span translate="downloads.table.SIZE">Size</span>
-                        </th>
-                        <th>
-                            <span translate="downloads.table.STATUS">Status</span>
-                        </th>
-                        <th>
-                            <span translate="downloads.table.PROGRESS">%</span>
-                        </th>
-                        <th>
-                            <span translate="downloads.table.AVERAGE_SPEED">Average Speed</span>
-                        </th>
-                        <th>
-                            <span translate="downloads.table.TIME_LEFT">Time Left</span>
-                        </th>
-                        <th>
-                            <span translate="downloads.table.ACTIONS">Actions</span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-ng-repeat="download in downloadsList">
-                        <td>
-                            <label class="i-checks m-b-none">
-                                <input type="checkbox" data-ng-model="download.selected">
-                                <i></i>
-                            </label>
-                        </td>
-                        <td>{{download.name}}</td>
-                        <td>{{download.link}}</td>
-                        <td>{{download.size | bytesFltr}}</td>
-                        <td>{{download.status | downloadStatusFltr}}</td>
-                        <td>{{download.progress}}</td>
-                        <td>{{download.averageSpeed | bytesPerSecondFltr}}</td>
-                        <td>{{download.timeLeft | timeFltr}}</td>
-                        <td nowrap>
-                            <a data-ng-click="$event.stopPropagation(); startDownloading(download);" class="glyphicon glyphicon-play" href></a>&nbsp;
-                            <a data-ng-click="$event.stopPropagation(); stopDownloading(download);" class="glyphicon glyphicon-stop" href></a>&nbsp;
-                            <a data-ng-click="$event.stopPropagation(); refreshDownload(download);" class="glyphicon glyphicon-refresh" data-ng-class="downloadRefreshInProgress[download.id]" href></a>
-                            <a data-ng-click="$event.stopPropagation(); deleteDownload(download);" class="glyphicon glyphicon-trash" href></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <footer class="panel-footer">
-            <div class="row">
-                <div class="col-sm-4 hidden-xs">
-                    <select class="input-sm form-control w-sm inline v-middle">
-                        <option value="0">Bulk action</option>
-                        <option value="1">Delete selected</option>
-                        <option value="2">Bulk edit</option>
-                        <option value="3">Export</option>
-                    </select>
-                    <button class="btn btn-sm btn-default">Apply</button>
-                    <button class="btn btn-sm btn-default" data-ng-click="deleteSelectedDownload()">Delete</button>
-                </div>
-                <div class="col-sm-4 text-center">
-                    <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
-                </div>
-                <div class="col-sm-4 text-right text-center-xs">
-                    <ul class="pagination pagination-sm m-t-none m-b-none">
-                        <li><a href><i class="fa fa-chevron-left"></i></a></li>
-                        <li><a href>1</a></li>
-                        <li><a href>2</a></li>
-                        <li><a href>3</a></li>
-                        <li><a href>4</a></li>
-                        <li><a href>5</a></li>
-                        <li><a href><i class="fa fa-chevron-right"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-        </footer>
+      </div>
     </div>
+    <div class="table-responsive">
+      <table class="table table-striped b-t b-light">
+        <thead>
+        <tr>
+          <th style="width:20px;">
+            <label class="i-checks m-b-none">
+              <input type="checkbox" data-ng-model="checkAll" data-ng-change="selectAllDownload(checkAll)"><i></i>
+            </label>
+          </th>
+          <th>
+            <span translate="downloads.table.NAME">Name</span>
+          </th>
+          <th>
+            <span translate="downloads.table.LINK">Link</span>
+          </th>
+          <th>
+            <span translate="downloads.table.SIZE">Size</span>
+          </th>
+          <th>
+            <span translate="downloads.table.STATUS">Status</span>
+          </th>
+          <th>
+            <span translate="downloads.table.PROGRESS">%</span>
+          </th>
+          <th>
+            <span translate="downloads.table.AVERAGE_SPEED">Average Speed</span>
+          </th>
+          <th>
+            <span translate="downloads.table.TIME_LEFT">Time Left</span>
+          </th>
+          <th>
+            <span translate="downloads.table.ACTIONS">Actions</span>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-ng-repeat="download in downloadsList">
+          <td>
+            <label class="i-checks m-b-none">
+              <input type="checkbox" data-ng-model="download.selected">
+              <i></i>
+            </label>
+          </td>
+          <td>{{download.name}}</td>
+          <td>{{download.link}}</td>
+          <td>{{download.size | bytesFltr}}</td>
+          <td>{{download.status | downloadStatusFltr}}</td>
+          <td>{{download.progress}}</td>
+          <td>{{download.averageSpeed | bytesPerSecondFltr}}</td>
+          <td>{{download.timeLeft | timeFltr}}</td>
+          <td nowrap>
+            <a data-ng-click="$event.stopPropagation(); startDownloading(download);" class="glyphicon glyphicon-play"
+               href></a>&nbsp;
+            <a data-ng-click="$event.stopPropagation(); stopDownloading(download);" class="glyphicon glyphicon-stop"
+               href></a>&nbsp;
+            <a data-ng-click="$event.stopPropagation(); refreshDownload(download);" class="glyphicon glyphicon-refresh"
+               data-ng-class="downloadRefreshInProgress[download.id]" href></a>
+            <a data-ng-click="$event.stopPropagation(); deleteDownload(download);" class="glyphicon glyphicon-trash"
+               href></a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <footer class="panel-footer">
+      <div class="row">
+        <div class="col-sm-4 hidden-xs">
+          <button class="btn btn-sm btn-default" data-ng-click="refreshSelectedLinks()">Refresh</button>
+          <button class="btn btn-sm btn-default" data-ng-click="deleteSelectedLinks()">Delete</button>
+        </div>
+        <div class="col-sm-4 text-center">
+          <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
+        </div>
+        <div class="col-sm-4 text-right text-center-xs">
+          <ul class="pagination pagination-sm m-t-none m-b-none">
+            <li><a href><i class="fa fa-chevron-left"></i></a></li>
+            <li><a href>1</a></li>
+            <li><a href>2</a></li>
+            <li><a href>3</a></li>
+            <li><a href>4</a></li>
+            <li><a href>5</a></li>
+            <li><a href><i class="fa fa-chevron-right"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </div>
 </div>
 
 

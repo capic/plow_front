@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name plowshareFrontApp.controller:CtrlManagelinksCtrl
+ * @name plowshareFrontApp.controller:AddLinksCtrl
  * @description
- * # CtrlManagelinksCtrl
+ * # AddLinksCtrl
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
@@ -13,7 +13,6 @@ angular.module('plowshareFrontApp')
       var that = this;
 
       // number of linked to add
-      // this value will be decreased in the links controller
       $scope.nbrLinksToAdd = 0;
 
       $scope.progressbarValue = 0;
@@ -22,6 +21,9 @@ angular.module('plowshareFrontApp')
         linksString: ''
       };
 
+      /**
+       * function used to add all links
+       */
       $scope.addLinks = function () {
         if ($scope.links.linksString !== '') {
           var tabLinks = [];
@@ -47,15 +49,25 @@ angular.module('plowshareFrontApp')
         }
       };
 
+      /**
+       * function used to add a link to the database
+       *
+       * @param linkAndSeparator
+       *  the link and the separator from the textarea
+       */
       this.addLink = function (linkAndSeparator) {
         if (linkAndSeparator[0] !== '') {
           var linkObject = new LinkResourceFctry();
           linkObject.link = linkAndSeparator[0];
 
-          linkObject.$save(function (response) {
+          linkObject.$save(
+            //success
+            function (response) {
+              // fire a broadcast event to change the list of links in the links view
               eventDownloadsLinksSrvi.addNewLinkToLinksList(response);
               that.backAddLink(linkAndSeparator);
             },
+            //error
             function () {
               that.backAddLink(linkAndSeparator);
             }
@@ -63,14 +75,24 @@ angular.module('plowshareFrontApp')
         }
       };
 
+      /**
+       * function fired when the server respond after add link action
+       * decreased the number of links to add
+       * change the progress bar value
+       * delete the link and the separator in the textarea
+       *
+       * @param linkAndSeparator
+       *  the link and the separator from the textarea
+       */
       this.backAddLink = function (linkAndSeparator) {
         $scope.nbrLinksToAdd--;
         $scope.progressbarValue = ($scope.nbrLinksTotalToAdd - $scope.nbrLinksToAdd) * 100 / $scope.nbrLinksTotalToAdd;
         $scope.links.linksString = $scope.links.linksString.replace(linkAndSeparator[0] + linkAndSeparator[1], '');
-        $scope.links.linksString = $scope.links.linksString.replace(linkAndSeparator[0], '');
 
         if ($scope.nbrLinksToAdd === 0) {
           $scope.progressbarValue = 0;
+          // the last entry maybe has no separator
+          $scope.links.linksString = $scope.links.linksString.replace(linkAndSeparator[0]);
         }
       };
     }

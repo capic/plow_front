@@ -10,8 +10,15 @@
     </div>
     <div class="row wrapper">
       <div class="col-sm-4 hidden-xs">
-        <button class="btn btn-sm btn-default" data-ng-click="deleteSelectedLinks()">Delete</button>
+        <div class="btn-group dropdown">
+          <button class="btn btn-default btn-sm dropdown-toggle">Add <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><a href data-ng-click="addAllLinksToDownloadsList()">Add all links</a></li>
+            <li><a href data-ng-click="addSelectedLinksToDownloadsList()">Add selected links</a></li>
+          </ul>
+        </div>
         <button class="btn btn-sm btn-default" data-ng-click="refreshSelectedLinks()">Refresh</button>
+        <button class="btn btn-sm btn-default" data-ng-click="deleteSelectedLinks()">Delete</button>
       </div>
       <div class="col-sm-5">
       </div>
@@ -63,7 +70,7 @@
           <td>{{link.size | bytesFltr}}</td>
           <td>{{link.status | linkStatusFltr}}</td>
           <td nowrap>
-            <a data-ng-click="$event.stopPropagation(); addLinkToDownloadList(link);" class="glyphicon glyphicon-plus"
+            <a data-ng-click="$event.stopPropagation(); addLinkToDownloadsList(link);" class="glyphicon glyphicon-plus"
                href></a>&nbsp;
             <a data-ng-click="$event.stopPropagation(); refreshLink(link, link.selected);"
                class="glyphicon glyphicon-refresh"
@@ -77,8 +84,15 @@
     <footer class="panel-footer">
       <div class="row">
         <div class="col-sm-4 hidden-xs">
-          <button class="btn btn-sm btn-default" data-ng-click="deleteSelectedLinks()">Delete</button>
+          <div class="btn-group dropdown">
+            <button class="btn btn-default btn-sm dropdown-toggle">Add <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href data-ng-click="addAllLinksToDownloadsList()">Add all links</a></li>
+              <li><a href data-ng-click="addSelectedLinksToDownloadsList()">Add selected links</a></li>
+            </ul>
+          </div>
           <button class="btn btn-sm btn-default" data-ng-click="refreshSelectedLinks()">Refresh</button>
+          <button class="btn btn-sm btn-default" data-ng-click="deleteSelectedLinks()">Delete</button>
         </div>
         <div class="col-sm-4 text-center">
           <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>

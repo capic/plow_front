@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('LinkCtrl', ['$scope', 'linkStatusListValue', 'LinkResourceFctry',
-    function ($scope, linkStatusListValue, LinkResourceFctry) {
+  .controller('LinkCtrl', ['$scope', 'linkStatusListValue', 'LinkResourceFctry', 'eventDownloadsLinksSrvi',
+    function ($scope, linkStatusListValue, LinkResourceFctry, eventDownloadsLinksSrvi) {
       var that = this;
 
       // the list of links in the database displayed in the grid
@@ -61,7 +61,7 @@ angular.module('plowshareFrontApp')
 
         LinkResourceFctry.refresh({'Id': entity.id}, function (response) {
           var idx = $scope.linksList.indexOf(entity);
-          response.selected = selected
+          response.selected = selected;
           $scope.linksList[idx] = response;
 
           entity.refreshInProgress = '';
@@ -80,6 +80,33 @@ angular.module('plowshareFrontApp')
           link.selected = checkAll;
         });
       };
+
+      $scope.addLinkToDownloadsList = function (link) {
+        var linkObject = new LinkResourceFctry();
+        linkObject.id = link.id;
+
+        linkObject.$addDownloadFromLink(function (response) {
+            var idx = $scope.linksList.indexOf(link);
+            $scope.linksList.splice(idx, 1);
+
+            eventDownloadsLinksSrvi.addNewlinkToDownloadsList(response);
+          },
+          function () {
+          });
+      };
+
+      $scope.addSelectedLinksToDownloadsList = function () {
+        var selectedLinksList = that.getSelectedLinks();
+        angular.forEach(selectedLinksList, function (link) {
+          $scope.addLinkToDownloadsList(link);
+        });
+      };
+
+      $scope.addAllLinksToDownloadsList = function () {
+        angular.forEach($scope.linksList, function (link) {
+          $scope.addLinkToDownloadsList(link);
+        });
+      }
 
       this.getSelectedLinks = function () {
         var selectedLinksList = $scope.linksList.filter(

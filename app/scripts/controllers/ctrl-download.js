@@ -93,7 +93,7 @@ angular.module('plowshareFrontApp')
       };
 
       // when the add new download event is fired
-      $scope.$on('newDownload', function (event, newDownload) {
+      $scope.$on('addNewlinkToDownloadsList', function (event, newDownload) {
         $scope.downloadsList.push(newDownload);
       });
 

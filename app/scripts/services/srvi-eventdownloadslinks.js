@@ -9,12 +9,15 @@
  */
 angular.module('plowshareFrontApp')
   .service('eventDownloadsLinksSrvi', ['$rootScope',
-        function eventDownloadsLinksSrvi($rootScope) {
-            return {
-                addNewLinkToLinksList: function(newLink) {
-                    $rootScope.$broadcast('addNewLinkToLinksList', newLink);
-                }
-            };
+    function eventDownloadsLinksSrvi($rootScope) {
+      return {
+        addNewLinkToLinksList: function (newLink) {
+          $rootScope.$broadcast('addNewLinkToLinksList', newLink);
+        },
+        addNewlinkToDownloadsList: function (newDownload) {
+          $rootScope.$broadcast('addNewlinkToDownloadsList', newDownload);
         }
-    ]
+      };
+    }
+  ]
 );
