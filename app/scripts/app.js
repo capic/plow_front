@@ -16,7 +16,8 @@ angular
         'ngStorage',
         'ngResource',
         'ui.router',
-        'pascalprecht.translate'
+    'pascalprecht.translate',
+    'angular-capitalize-filter'
     ])
     .config(['$stateProvider', '$urlRouterProvider',
         function($stateProvider, $urlRouterProvider) {

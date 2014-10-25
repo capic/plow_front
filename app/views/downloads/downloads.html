@@ -70,7 +70,7 @@
           <td>{{download.name}}</td>
           <td>{{download.link}}</td>
           <td>{{download.size | bytesFltr}}</td>
-          <td>{{download.status | downloadStatusFltr}}</td>
+          <td>{{download.status | downloadStatusFltr | capitalize: 'all'}}</td>
           <td>{{download.progress}}</td>
           <td>{{download.averageSpeed | bytesPerSecondFltr}}</td>
           <td>{{download.timeLeft | timeFltr}}</td>

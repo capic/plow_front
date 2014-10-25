@@ -68,7 +68,7 @@
           <td>{{link.name}}</td>
           <td>{{link.link}}</td>
           <td>{{link.size | bytesFltr}}</td>
-          <td>{{link.status | linkStatusFltr}}</td>
+          <td>{{link.status | linkStatusFltr | capitalize: 'all'}}</td>
           <td nowrap>
             <a data-ng-click="$event.stopPropagation(); addLinkToDownloadsList(link);" class="glyphicon glyphicon-plus"
                href></a>&nbsp;
