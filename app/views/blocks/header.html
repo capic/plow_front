@@ -31,7 +31,7 @@
 
   <!-- link and dropdown -->
   <ul class="nav navbar-nav hidden-sm">
-    <li class="active">
+    <li>
       <a href><i class="fa fa-cloud-upload fa-fw"></i> <span translate="header.navbar.UPLOAD">Upload</span></a>
     </li>
     <li class="dropdown">
@@ -89,8 +89,13 @@
       </ul>
       <!-- / dropdown -->
     </li>
-    <li class="hidden-xs">
+    <!--<li class="hidden-xs">
       <a ui-fullscreen></a>
+    </li>-->
+    <li>
+      <a href data-ng-show="nbrActionsInProgress > 0">
+        <i class="icon-hourglass glyphicon-refresh-animate"></i>
+      </a>
     </li>
     <li class="dropdown">
       <a href class="dropdown-toggle">

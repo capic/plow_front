@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('LinkCtrl', ['$scope', 'linkStatusListValue', 'LinkResourceFctry', 'eventDownloadsLinksSrvi',
-    function ($scope, linkStatusListValue, LinkResourceFctry, eventDownloadsLinksSrvi) {
+  .controller('LinkCtrl', ['$scope', 'linkStatusListValue', 'LinkResourceFctry', 'eventDownloadsLinksSrvi', 'eventNotificationsSrvi',
+    function ($scope, linkStatusListValue, LinkResourceFctry, eventDownloadsLinksSrvi, eventNotificationsSrvi) {
       var that = this;
 
       // the list of links in the database displayed in the grid
@@ -25,6 +25,8 @@ angular.module('plowshareFrontApp')
       });
 
       $scope.deleteSelectedLinks = function () {
+        eventNotificationsSrvi.addNewActionInProgress();
+
         var selectedLinksList = that.getSelectedLinks();
         var selectedIds = [];
         angular.forEach(selectedLinksList, function (entity) {
@@ -38,6 +40,7 @@ angular.module('plowshareFrontApp')
               $scope.linksList.splice(idx, 1);
             });
             $scope.checkAll = false;
+            eventNotificationsSrvi.removeNewActionInProgress();
           }
         });
       };
@@ -45,10 +48,14 @@ angular.module('plowshareFrontApp')
       $scope.deleteLink = function (entity) {
         //var dlg = dialogs.confirm('Confirm the deleting');
         //dlg.result.then(function(){
+        eventNotificationsSrvi.addNewActionInProgress();
+
         LinkResourceFctry.delete({Id: entity.id}, function (response) {
           if (response.status === true) {
             var idx = $scope.linksList.indexOf(entity);
             $scope.linksList.splice(idx, 1);
+
+            eventNotificationsSrvi.removeNewActionInProgress();
           }
         });
 //                },function(){

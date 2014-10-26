@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('AddLinksCtrl', ['$scope', 'listSeparatorDownloads', 'LinkResourceFctry', 'eventDownloadsLinksSrvi',
-    function ($scope, listSeparatorDownloads, LinkResourceFctry, eventDownloadsLinksSrvi) {
+  .controller('AddLinksCtrl', ['$scope', 'listSeparatorDownloads', 'LinkResourceFctry', 'eventDownloadsLinksSrvi', 'eventNotificationsSrvi',
+    function ($scope, listSeparatorDownloads, LinkResourceFctry, eventDownloadsLinksSrvi, eventNotificationsSrvi) {
       var that = this;
 
       // number of linked to add
@@ -26,11 +26,14 @@ angular.module('plowshareFrontApp')
        */
       $scope.addLinks = function () {
         if ($scope.links.linksString !== '') {
+          eventNotificationsSrvi.addNewActionInProgress();
           var tabLinks = [];
           angular.forEach(listSeparatorDownloads, function (separator) {
             if ($scope.links.linksString.indexOf(separator) >= 0) {
               angular.forEach($scope.links.linksString.split(separator), function (link) {
-                tabLinks.push([link, separator]);
+                if (link !== '') {
+                  tabLinks.push([link, separator]);
+                }
               });
             }
           });
@@ -92,7 +95,12 @@ angular.module('plowshareFrontApp')
         if ($scope.nbrLinksToAdd === 0) {
           $scope.progressbarValue = 0;
           // the last entry maybe has no separator
-          $scope.links.linksString = $scope.links.linksString.replace(linkAndSeparator[0]);
+          $scope.links.linksString = $scope.links.linksString.replace(linkAndSeparator[0], '');
+
+          // force the textarea to be empty
+          $scope.links.linksString = '';
+
+          eventNotificationsSrvi.removeNewActionInProgress();
         }
       };
     }
