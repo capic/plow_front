@@ -56,3 +56,32 @@
 .add-links textarea {
     width: 300px;
 }
+
+.animated-fade.ng-enter, .animated-fade.ng-leave {
+  -webkit-animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-duration: 1s;
+  -moz-animation-fill-mode: both;
+  -ms-animation-duration: 1s;
+  -ms-animation-fill-mode: both;
+  -o-animation-duration: 1s;
+  -o-animation-fill-mode: both;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+/*.animated-fade.ng-enter {
+  -webkit-animation-name: fadeInLeft;
+  -moz-transition-animation-name: fadeInLeft;
+  -ms-transition-animation-name: fadeInLeft;
+  -o-transition-animation-name: fadeInLeft;
+  transition-animation-name: fadeInLeft;
+}*/
+
+.animated-fade.ng-leave {
+  -webkit-animation-name: fadeOutRight;
+  -moz-transition-animation-name: fadeOutRight;
+  -ms-transition-animation-name: fadeOutRight;
+  -o-transition-animation-name: fadeOutRight;
+  transition-animation-name: fadeInLeft;
+}
