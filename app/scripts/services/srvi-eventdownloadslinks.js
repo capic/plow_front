@@ -14,8 +14,8 @@ angular.module('plowshareFrontApp')
         addNewLinkToLinksList: function (newLink) {
           $rootScope.$broadcast('addNewLinkToLinksList', newLink);
         },
-        addNewlinkToDownloadsList: function (newDownload) {
-          $rootScope.$broadcast('addNewlinkToDownloadsList', newDownload);
+        addNewLinksToDownloadsList: function (newDownloadsList) {
+          $rootScope.$broadcast('addNewLinksToDownloadsList', newDownloadsList);
         }
       };
     }

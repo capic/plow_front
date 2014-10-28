@@ -93,8 +93,10 @@ angular.module('plowshareFrontApp')
       };
 
       // when the add new download event is fired
-      $scope.$on('addNewlinkToDownloadsList', function (event, newDownload) {
-        $scope.downloadsList.push(newDownload);
+      $scope.$on('addNewLinksToDownloadsList', function (event, newDownloadsList) {
+        angular.forEach(newDownloadsList, function (newDownload) {
+          $scope.downloadsList.push(newDownload);
+        });
       });
 
       $scope.selectAllDownload = function (checkAll) {

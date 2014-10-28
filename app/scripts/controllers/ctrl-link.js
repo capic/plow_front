@@ -28,10 +28,7 @@ angular.module('plowshareFrontApp')
         eventNotificationsSrvi.addNewActionInProgress();
 
         var selectedLinksList = that.getSelectedLinks();
-        var selectedIds = [];
-        angular.forEach(selectedLinksList, function (entity) {
-          selectedIds.push(entity.id);
-        });
+        var selectedIds = that.getLinkIdListFromLinksList(selectedLinksList);
 
         LinkResourceFctry.remove({ListId: selectedIds}, function (response) {
           if (response.status === true) {
@@ -96,24 +93,51 @@ angular.module('plowshareFrontApp')
             var idx = $scope.linksList.indexOf(link);
             $scope.linksList.splice(idx, 1);
 
-            eventDownloadsLinksSrvi.addNewlinkToDownloadsList(response);
+            eventDownloadsLinksSrvi.addNewLinksToDownloadsList([response]);
           },
           function () {
           });
       };
 
       $scope.addSelectedLinksToDownloadsList = function () {
+        eventNotificationsSrvi.addNewActionInProgress();
+
         var selectedLinksList = that.getSelectedLinks();
-        angular.forEach(selectedLinksList, function (link) {
-          $scope.addLinkToDownloadsList(link);
+        var selectedLinkIdList = that.getLinkIdListFromLinksList(selectedLinksList);
+
+        LinkResourceFctry.addDownloadsFromLinks({ListId: selectedLinkIdList}, function (response) {
+          that.backAddLinksToDownloadList(response);
         });
       };
 
       $scope.addAllLinksToDownloadsList = function () {
-        angular.forEach($scope.linksList, function (link) {
-          $scope.addLinkToDownloadsList(link);
+        eventNotificationsSrvi.addNewActionInProgress();
+
+        var allLinkIdList = that.getLinkIdListFromLinksList($scope.linksList);
+
+        LinkResourceFctry.addDownloadsFromLinks({ListId: allLinkIdList}, function (response) {
+          that.backAddLinksToDownloadList(response);
         });
-      }
+      };
+
+      this.backAddLinksToDownloadList = function (response) {
+        eventDownloadsLinksSrvi.addNewLinksToDownloadsList(response.downloads);
+
+        angular.forEach(response.linksId, function (linkId) {
+          var idx = 0;
+          var found = false;
+          while (idx < $scope.linksList.length && found === false) {
+            if ($scope.linksList[idx].id === linkId) {
+              found = true;
+              $scope.linksList.splice(idx, 1);
+            }
+
+            idx++;
+          }
+        });
+
+        eventNotificationsSrvi.removeNewActionInProgress();
+      };
 
       this.getSelectedLinks = function () {
         var selectedLinksList = $scope.linksList.filter(
@@ -123,6 +147,15 @@ angular.module('plowshareFrontApp')
         );
 
         return selectedLinksList;
+      };
+
+      this.getLinkIdListFromLinksList = function (linksList) {
+        var linkIdList = [];
+        angular.forEach(linksList, function (link) {
+          linkIdList.push(link.id);
+        });
+
+        return linkIdList;
       }
     }
   ]
