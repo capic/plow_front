@@ -92,10 +92,32 @@
     <!--<li class="hidden-xs">
       <a ui-fullscreen></a>
     </li>-->
-    <li>
-      <a href data-ng-show="nbrActionsInProgress > 0">
-        <i class="icon-hourglass glyphicon-refresh-animate"></i>
+    <li class="dropdown" data-ng-controller="tasksInProgressCtrl">
+      <a href class="dropdown-toggle">
+        <i class="icon-hourglass" data-ng-class="{'glyphicon-refresh-animate': tasksInProgress.length > 0}"></i>
       </a>
+      <!-- dropdown -->
+      <div class="dropdown-menu w-xl animated fadeInUp">
+        <div class="panel bg-white slimScrollDiv">
+          <div class="panel-heading b-light bg-light">
+            <strong>You have <span>{{tasksInProgress.length}}</span> tasks in progress</strong>
+          </div>
+          <div class="list-group">
+            <div class="panel-body text-sm">
+              <ul>
+                <li data-ng-repeat="task in tasksInProgress" data-translate="{{task.name}}"
+                    data-translate-value-value="{{task.value}}">{{task.name}}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="panel-footer text-sm">
+            <a href class="pull-right"><i class="fa fa-cog"></i></a>
+            <a href="#notes" data-toggle="class:show animated fadeInRight">See all the notifications</a>
+          </div>
+        </div>
+      </div>
+      <!-- / dropdown -->
     </li>
     <li class="dropdown">
       <a href class="dropdown-toggle">

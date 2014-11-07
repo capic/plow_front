@@ -8,16 +8,22 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('DownloadCtrl', ['$scope', 'DownloadResourceFctry', 'downloadStatusListValue',
-    function ($scope, DownloadResourceFctry, downloadStatusListValue) {
+  .controller('DownloadCtrl', ['$scope', 'DownloadResourceFctry', 'downloadStatusListValue', 'tasksManagementFcty',
+    function ($scope, DownloadResourceFctry, downloadStatusListValue, tasksManagementFcty) {
       // the list of downloads
       $scope.downloadsList = [];
       // tab for the animate refresh icon
       $scope.downloadRefreshInProgress = [];
 
+      var taskId = tasksManagementFcty.addTask('notifications.tasks.downloadCtrl.GET_DOWNLOAD_STATUS');
       // get the status list for the column status
       downloadStatusListValue.status = DownloadResourceFctry.status(function () {
-        $scope.downloadsList = DownloadResourceFctry.query();
+        tasksManagementFcty.removeTask(taskId);
+        taskId = tasksManagementFcty.addTask('notifications.tasks.downloadCtrl.GET_DOWNLOADS');
+        DownloadResourceFctry.query(function (response) {
+          $scope.downloadsList = response;
+          tasksManagementFcty.removeTask(taskId);
+        });
       });
 
       // to refresh all downloads list
@@ -44,16 +50,21 @@ angular.module('plowshareFrontApp')
 
       // to delete a download
       $scope.deleteDownload = function (entity) {
+        taskId = tasksManagementFcty.addTask('notifications.tasks.downloadCtrl.DELETE_DOWNLOAD');
         DownloadResourceFctry.delete({Id: entity.id}, function (response) {
           if (response.status === true) {
             var idx = $scope.downloadsList.indexOf(entity);
             $scope.downloadsList.splice(idx, 1);
           }
+
+          tasksManagementFcty.removeTask(taskId);
         });
       };
 
       // to delete the selected downloads
-      $scope.deleteSelectedDownload = function () {
+      $scope.deleteSelectedDownloads = function () {
+        taskId = tasksManagementFcty.addTask('notifications.tasks.downloadCtrl.DELETE_SELECTED_DOWNLOADS');
+
         var selectedDownloadsList = $scope.downloadsList.filter(
           function (download) {
             return download.hasOwnProperty('selected') && download.selected === true;
@@ -71,6 +82,8 @@ angular.module('plowshareFrontApp')
               $scope.downloadsList.splice(idx, 1);
             });
           }
+
+          tasksManagementFcty.removeTask(taskId);
         });
       };
 
@@ -104,4 +117,6 @@ angular.module('plowshareFrontApp')
           download.selected = checkAll;
         });
       };
-    }]);
+    }
+  ]
+);

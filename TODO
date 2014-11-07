@@ -1,8 +1,9 @@
 AJOUT DE LIENS:
+- vérifier si quand un seul lien la tache est bien prise en compte
 
 HEADER
 - gérer les notifications
-- afficher un sablier qui tourne quand une action est en cours
+- div des taches en cours scrollable
 
 LINKS
-- ajouter tous les liens à la liste des téléchargement => tout envoyer d'un  (même chose pour les liens sélectionné ?)
+

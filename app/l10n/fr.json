@@ -41,5 +41,26 @@
             "STATUS": "Status",
             "ACTIONS": "Actions"
         }
+    },
+  "notifications": {
+    "tasks": {
+      "linkCtrl": {
+        "GET_LINKS": "Récupération des liens",
+        "GET_LINK_STATUS": "Récupération des status des liens",
+        "DELETE_SELECTED_LINKS": "Suppression des liens sélectionnés",
+        "DELETE_LINK": "Suppression du lien",
+        "ADD_LINK_TO_DOWNLOADS_LIST": "Ajout du lien à la liste des téléchargements"
+      },
+      "downloadCtrl": {
+        "GET_DOWNLOAD_STATUS": "Récupération des status des téléchargements",
+        "GET_DOWNLOADS": "Récupération des téléchargements",
+        "DELETE_DOWNLOAD": "Suppression du téléchargement",
+        "DELETE_SELECTED_DOWNLOADS": "Suppression des téléchargements sélectionnés"
+      },
+      "addLinksCtrl": {
+        "ADD_LINK": "Ajout du lien {{value}}"
+      }
+    }
+
     }
 }

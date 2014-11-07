@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('AddLinksCtrl', ['$scope', 'listSeparatorDownloads', 'LinkResourceFctry', 'eventDownloadsLinksSrvi', 'eventNotificationsSrvi',
-    function ($scope, listSeparatorDownloads, LinkResourceFctry, eventDownloadsLinksSrvi, eventNotificationsSrvi) {
+  .controller('AddLinksCtrl', ['$scope', 'listSeparatorDownloads', 'LinkResourceFctry', 'eventDownloadsLinksSrvi', 'tasksManagementFcty',
+    function ($scope, listSeparatorDownloads, LinkResourceFctry, eventDownloadsLinksSrvi, tasksManagementFcty) {
       var that = this;
 
       // number of linked to add
@@ -26,13 +26,14 @@ angular.module('plowshareFrontApp')
        */
       $scope.addLinks = function () {
         if ($scope.links.linksString !== '') {
-          eventNotificationsSrvi.addNewActionInProgress();
+          var taskIdList = [];
           var tabLinks = [];
           angular.forEach(listSeparatorDownloads, function (separator) {
             if ($scope.links.linksString.indexOf(separator) >= 0) {
               angular.forEach($scope.links.linksString.split(separator), function (link) {
                 if (link !== '') {
                   tabLinks.push([link, separator]);
+                  taskIdList.push(tasksManagementFcty.addTask('notifications.tasks.addLinksCtrl.ADD_LINK', link));
                 }
               });
             }
@@ -46,8 +47,10 @@ angular.module('plowshareFrontApp')
           $scope.nbrLinksToAdd = tabLinks.length;
           $scope.nbrLinksTotalToAdd = $scope.nbrLinksToAdd;
 
+          var i = 0;
           angular.forEach(tabLinks, function (link) {
-            that.addLink(link);
+            that.addLink(link, taskIdList[i]);
+            i++;
           });
         }
       };
@@ -58,7 +61,7 @@ angular.module('plowshareFrontApp')
        * @param linkAndSeparator
        *  the link and the separator from the textarea
        */
-      this.addLink = function (linkAndSeparator) {
+      this.addLink = function (linkAndSeparator, taskId) {
         if (linkAndSeparator[0] !== '') {
           var linkObject = new LinkResourceFctry();
           linkObject.link = linkAndSeparator[0];
@@ -68,11 +71,11 @@ angular.module('plowshareFrontApp')
             function (response) {
               // fire a broadcast event to change the list of links in the links view
               eventDownloadsLinksSrvi.addNewLinkToLinksList(response);
-              that.backAddLink(linkAndSeparator);
+              that.backAddLink(linkAndSeparator, taskId);
             },
             //error
             function () {
-              that.backAddLink(linkAndSeparator);
+              that.backAddLink(linkAndSeparator, taskId);
             }
           );
         }
@@ -87,10 +90,12 @@ angular.module('plowshareFrontApp')
        * @param linkAndSeparator
        *  the link and the separator from the textarea
        */
-      this.backAddLink = function (linkAndSeparator) {
+      this.backAddLink = function (linkAndSeparator, taskId) {
         $scope.nbrLinksToAdd--;
         $scope.progressbarValue = ($scope.nbrLinksTotalToAdd - $scope.nbrLinksToAdd) * 100 / $scope.nbrLinksTotalToAdd;
         $scope.links.linksString = $scope.links.linksString.replace(linkAndSeparator[0] + linkAndSeparator[1], '');
+
+        tasksManagementFcty.removeTask(taskId);
 
         if ($scope.nbrLinksToAdd === 0) {
           $scope.progressbarValue = 0;
@@ -99,8 +104,6 @@ angular.module('plowshareFrontApp')
 
           // force the textarea to be empty
           $scope.links.linksString = '';
-
-          eventNotificationsSrvi.removeNewActionInProgress();
         }
       };
     }

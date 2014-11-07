@@ -8,16 +8,22 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('LinkCtrl', ['$scope', 'linkStatusListValue', 'LinkResourceFctry', 'eventDownloadsLinksSrvi', 'eventNotificationsSrvi',
-    function ($scope, linkStatusListValue, LinkResourceFctry, eventDownloadsLinksSrvi, eventNotificationsSrvi) {
+  .controller('LinkCtrl', ['$scope', 'linkStatusListValue', 'LinkResourceFctry', 'eventDownloadsLinksSrvi', 'tasksManagementFcty',
+    function ($scope, linkStatusListValue, LinkResourceFctry, eventDownloadsLinksSrvi, tasksManagementFcty) {
       var that = this;
 
       // the list of links in the database displayed in the grid
       $scope.linksList = [];
 
+      var taskId = tasksManagementFcty.addTask('notifications.tasks.linkCtrl.GET_LINK_STATUS');
       // get the list of status
       linkStatusListValue.status = LinkResourceFctry.status(function () {
-        $scope.linksList = LinkResourceFctry.query();
+        tasksManagementFcty.removeTask(taskId);
+        taskId = tasksManagementFcty.addTask('notifications.tasks.linkCtrl.GET_LINKS');
+        LinkResourceFctry.query(function (response) {
+          $scope.linksList = response;
+          tasksManagementFcty.removeTask(taskId);
+        });
       });
 
       $scope.$on('addNewLinkToLinksList', function (events, newLink) {
@@ -25,7 +31,7 @@ angular.module('plowshareFrontApp')
       });
 
       $scope.deleteSelectedLinks = function () {
-        eventNotificationsSrvi.addNewActionInProgress();
+        var taskId = tasksManagementFcty.addTask('notifications.tasks.linkCtrl.DELETE_SELECTED_LINKS');
 
         var selectedLinksList = that.getSelectedLinks();
         var selectedIds = that.getLinkIdListFromLinksList(selectedLinksList);
@@ -37,7 +43,7 @@ angular.module('plowshareFrontApp')
               $scope.linksList.splice(idx, 1);
             });
             $scope.checkAll = false;
-            eventNotificationsSrvi.removeNewActionInProgress();
+            tasksManagementFcty.removeTask(taskId);
           }
         });
       };
@@ -45,14 +51,14 @@ angular.module('plowshareFrontApp')
       $scope.deleteLink = function (entity) {
         //var dlg = dialogs.confirm('Confirm the deleting');
         //dlg.result.then(function(){
-        eventNotificationsSrvi.addNewActionInProgress();
+        var taskId = tasksManagementFcty.addTask('notifications.tasks.linkCtrl.DELETE_LINK');
 
         LinkResourceFctry.delete({Id: entity.id}, function (response) {
           if (response.status === true) {
             var idx = $scope.linksList.indexOf(entity);
             $scope.linksList.splice(idx, 1);
 
-            eventNotificationsSrvi.removeNewActionInProgress();
+            tasksManagementFcty.removeTask(taskId);
           }
         });
 //                },function(){
@@ -86,6 +92,8 @@ angular.module('plowshareFrontApp')
       };
 
       $scope.addLinkToDownloadsList = function (link) {
+        var taskId = tasksManagementFcty.addTask('notifications.tasks.linkCtrl.ADD_LINK_TO_DOWNLOADS_LIST');
+
         var linkObject = new LinkResourceFctry();
         linkObject.id = link.id;
 
@@ -94,13 +102,15 @@ angular.module('plowshareFrontApp')
             $scope.linksList.splice(idx, 1);
 
             eventDownloadsLinksSrvi.addNewLinksToDownloadsList([response]);
+
+            tasksManagementFcty.removeTask(taskId);
           },
           function () {
           });
       };
 
       $scope.addSelectedLinksToDownloadsList = function () {
-        eventNotificationsSrvi.addNewActionInProgress();
+        //eventNotificationsSrvi.addNewActionInProgress();
 
         var selectedLinksList = that.getSelectedLinks();
         var selectedLinkIdList = that.getLinkIdListFromLinksList(selectedLinksList);
@@ -111,7 +121,7 @@ angular.module('plowshareFrontApp')
       };
 
       $scope.addAllLinksToDownloadsList = function () {
-        eventNotificationsSrvi.addNewActionInProgress();
+        //eventNotificationsSrvi.addNewActionInProgress();
 
         var allLinkIdList = that.getLinkIdListFromLinksList($scope.linksList);
 
@@ -136,7 +146,7 @@ angular.module('plowshareFrontApp')
           }
         });
 
-        eventNotificationsSrvi.removeNewActionInProgress();
+        //eventNotificationsSrvi.removeNewActionInProgress();
       };
 
       this.getSelectedLinks = function () {

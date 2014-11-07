@@ -73,15 +73,6 @@ angular
   .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window',
     function ($scope, $translate, $localStorage, $window) {
       $scope.notifications = [];
-      $scope.nbrActionsInProgress = 0;
-
-      $scope.$on('addNewActionInProgress', function (events) {
-        $scope.nbrActionsInProgress += 1;
-      });
-
-      $scope.$on('removeNewActionInProgress', function (events) {
-        $scope.nbrActionsInProgress -= 1;
-      });
 
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
