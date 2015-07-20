@@ -62,7 +62,7 @@ angular
     });
 
     // Tell the module what language to use by default
-    $translateProvider.preferredLanguage('en');
+    $translateProvider.preferredLanguage('fr');
 
     // Tell the module to store the language in the local storage
     $translateProvider.useLocalStorage();

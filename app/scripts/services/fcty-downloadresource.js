@@ -22,7 +22,9 @@ angular.module('plowshareFrontApp')
                 'remove': {url: settings.SERVER_ADDRESS +'/api/downloads/remove', method: 'POST'},
                 'start': {url: settings.SERVER_ADDRESS +'/api/downloads/start', method: 'POST', isArray : true},
                 'stop': {url: settings.SERVER_ADDRESS +'/api/downloads/stop', method: 'POST', isArray : true},
-                'import': {url: settings.SERVER_ADDRESS +'/api/downloads/import', method: 'POST', isArray : true}
+              'import': {url: settings.SERVER_ADDRESS + '/api/downloads/import', method: 'POST', isArray: true},
+              'infos': {url: settings.SERVER_ADDRESS + '/api/downloads/infos/:id', method: 'GET'},
+              'deleteInfos': {url: settings.SERVER_ADDRESS + 'api/downloads/infos/:id', method: 'DELETE'}
             }
         );
   }]);

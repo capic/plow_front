@@ -7,6 +7,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <span translate="aside.nav.DOWNLOADS">Downloads</span>
+      <span class="pull-right btn btn-action glyphicon glyphicon-refresh" data-ng-click="refresh()"></span>
     </div>
     <div class="row wrapper">
       <div class="col-sm-4 hidden-xs">
@@ -34,28 +35,28 @@
             </label>
           </th>
           <th>
-            <span translate="downloads.table.NAME">Name</span>
+            <span>{{'downloads.table.NAME' | translate}}</span>
           </th>
           <th>
-            <span translate="downloads.table.LINK">Link</span>
+            <span>{{'downloads.table.LINK' | translate}}</span>
           </th>
           <th>
-            <span translate="downloads.table.SIZE">Size</span>
+            <span>{{'downloads.table.SIZE' | translate}}</span>
           </th>
           <th>
-            <span translate="downloads.table.STATUS">Status</span>
+            <span>{{'downloads.table.STATUS' | translate}}</span>
           </th>
           <th>
-            <span translate="downloads.table.PROGRESS">%</span>
+            <span>{{'downloads.table.PROGRESS' | translate}}</span>
           </th>
           <th>
-            <span translate="downloads.table.AVERAGE_SPEED">Average Speed</span>
+            <span>{{'downloads.table.AVERAGE_SPEED' | translate}}</span>
           </th>
           <th>
-            <span translate="downloads.table.TIME_LEFT">Time Left</span>
+            <span>{{'downloads.table.TIME_LEFT' | translate}}</span>
           </th>
           <th style="width: 110px;">
-            <span translate="downloads.table.ACTIONS">Actions</span>
+            <span>{{'downloads.table.ACTIONS' | translate}}</span>
           </th>
         </tr>
         </thead>
@@ -93,7 +94,7 @@
                  href></a>
               <a data-ng-click="$event.stopPropagation(); infosPlowdown(download);"
                  class=" btn btn-action glyphicon glyphicon-list-alt"
-                 href data-ng-show="download.infosPlowdown !== undefined && download.infosPlowdown !== ''"></a>
+                 href data-ng-show="download.hasInfosPlowdown == true"></a>
             </div>
           </td>
         </tr>

@@ -1,47 +1,47 @@
 {
-    "header" : {
-        "navbar" : {
-        "UPLOAD" : "Upload",
-        "new" : {
-          "NEW" : "New",
-          "PROJECT" : "Projects",
-          "TASK" : "Task",
-          "USER" : "User",
-          "EMAIL" : "Email"
-        },
-        "NOTIFICATIONS" : "Notifications"
-      }
-    },
-    "aside" : {
-      "nav" : {
-        "HEADER_DOWNLOADS" : "Downloads",
-        "DOWNLOADS" : "Downloads",
-        "LINKS": "Links"
+  "header": {
+    "navbar": {
+      "UPLOAD": "Upload",
+      "new": {
+        "NEW": "New",
+        "PROJECT": "Projects",
+        "TASK": "Task",
+        "USER": "User",
+        "EMAIL": "Email"
       },
-      "MILESTONE" : "Milestone",
-      "RELEASE" : "Release"
+      "NOTIFICATIONS": "Notifications"
+    }
+  },
+  "aside": {
+    "nav": {
+      "HEADER_DOWNLOADS": "Downloads",
+      "DOWNLOADS": "Downloads",
+      "LINKS": "Links"
     },
-    "downloads": {
-        "table": {
-            "NAME": "Nom",
-            "LINK": "Lien",
-            "SIZE": "Taille",
-            "STATUS": "Statut",
-            "PROGRESS": "%",
-            "AVERAGE_SPEED": "Vit. Moy.",
-            "TIME_LEFT": "Tps rest.",
-            "ACTIONS": "Actions"
-        }
-    },
-    "links": {
-        "table": {
-            "NAME": "Nom",
-            "LINK": "Lien",
-            "SIZE": "Taille",
-            "STATUS": "Status",
-            "ACTIONS": "Actions"
-        }
-    },
+    "MILESTONE": "Milestone",
+    "RELEASE": "Release"
+  },
+  "downloads": {
+    "table": {
+      "NAME": "Nom",
+      "LINK": "Lien",
+      "SIZE": "Taille",
+      "STATUS": "Statut",
+      "PROGRESS": "%",
+      "AVERAGE_SPEED": "Vit. Moy.",
+      "TIME_LEFT": "Tps rest.",
+      "ACTIONS": "Actions"
+    }
+  },
+  "links": {
+    "table": {
+      "NAME": "Nom",
+      "LINK": "Lien",
+      "SIZE": "Taille",
+      "STATUS": "Status",
+      "ACTIONS": "Actions"
+    }
+  },
   "notifications": {
     "tasks": {
       "linkCtrl": {
@@ -61,6 +61,10 @@
         "ADD_LINK": "Ajout du lien {{value}}"
       }
     }
-
+  },
+  "infosPlowdown": {
+    "form": {
+      "DELETE": "Supprimer"
     }
+  }
 }
