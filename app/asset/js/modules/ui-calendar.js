@@ -136,7 +136,7 @@ app.controller('uiCalendarCtrl', ['$scope', '$timeout', function($scope, $timeou
           }
         };
         return self = {
-          subscribe: function(scope, onChanged) {
+          getAllNotifications: function (scope, onChanged) {
             scope.$watch(getTokens, function(newTokens, oldTokens) {
               if (!onChanged || onChanged(newTokens, oldTokens) !== false) {
                 applyChanges(newTokens, oldTokens);
@@ -154,7 +154,7 @@ app.controller('uiCalendarCtrl', ['$scope', '$timeout', function($scope, $timeou
 
           angular.extend(config, uiCalendarConfig);
           angular.extend(config, calendarSettings);
-         
+
           angular.forEach(config, function(value,key){
             if (typeof value === 'function'){
               config[key] = wrapFunctionWithScopeApply(config[key]);
@@ -247,8 +247,8 @@ app.directive('uiCalendar', ['uiCalendarConfig', '$locale', function(uiCalendarC
           scope.calendar.fullCalendar('updateEvent', event);
         };
 
-        eventSourcesWatcher.subscribe(scope);
-        eventsWatcher.subscribe(scope, function(newTokens, oldTokens) {
+        eventSourcesWatcher.getAllNotifications(scope);
+        eventsWatcher.getAllNotifications(scope, function (newTokens, oldTokens) {
           if (sourcesChanged === true) {
             sourcesChanged = false;
             // prevent incremental updates in this case

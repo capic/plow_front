@@ -25,7 +25,7 @@
 .add-links {
     z-index: 1000;
     position: fixed;
-    top: 140px;
+  top: 52px;
     right: -350px;
     width: 350px;
     -webkit-transition: right 0.2s;
@@ -84,4 +84,41 @@
   -ms-transition-animation-name: fadeOutRight;
   -o-transition-animation-name: fadeOutRight;
   transition-animation-name: fadeInLeft;
+}
+
+#page-wrapper {
+  width: 720px;
+  background: #FFF;
+  padding: 1em;
+  margin: 1em auto;
+  min-height: 300px;
+  border-top: 5px solid #69c773;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+div,
+p {
+  line-height: 1.6em;
+}
+
+div.editable {
+  padding: 1em;
+  border-radius: 3px;
+  outline: none;
+  border: 2px solid transparent;
+}
+
+div[contenteditable]:hover {
+  background: #E6E6E6;
+}
+
+div.editable:focus, div.editable:focus:hover {
+  background: #FFF;
+  border-color: #69c773;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15) inset;
+}
+
+.btn.btn-action {
+  padding-left: 2px;
+  padding-right: 2px;
 }

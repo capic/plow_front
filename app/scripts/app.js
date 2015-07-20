@@ -27,7 +27,7 @@ angular
         .state('app', {
           abstract: true,
           url: '/app',
-          templateUrl: 'views/app.html',
+          templateUrl: 'views/app.html'
         })
         .state('app.downloads', {
           abstract: true,
@@ -43,6 +43,11 @@ angular
           url: '/links',
           templateUrl: 'views/downloads/links.html',
           controller: 'LinkCtrl'
+        })
+        .state('app.downloads.test', {
+          url: '/test',
+          templateUrl: 'views/test.html',
+          controller: 'TestCtrl'
         });
     }
   ])
@@ -70,9 +75,9 @@ angular
   .constant('listSeparatorDownloads', [',', ';', '\n'])
   .value('downloadStatusListValue', {})
   .value('linkStatusListValue', {})
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window',
-    function ($scope, $translate, $localStorage, $window) {
-      $scope.notifications = [];
+  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', 'webSocketFcty',
+    function ($scope, $translate, $localStorage, $window, webSocketFcty) {
+      $scope.notifications = webSocketFcty.getNewNotifications();
 
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
@@ -133,7 +138,6 @@ angular
         // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
         return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
       }
-
     }
   ]
 );

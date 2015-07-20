@@ -2,8 +2,13 @@ AJOUT DE LIENS:
 - vérifier si quand un seul lien la tache est bien prise en compte
 
 HEADER
-- gérer les notifications
+- gérer les notifications vu et non vu
 - div des taches en cours scrollable
 
 LINKS
+
+DOWNLOADS
+- mettre une case à coher en haut pour choisir d'afficher ou non les liens terminés
+- bouton refresh all
+- créer des entêtes dans le tableau pour grouper les liens par statut
 

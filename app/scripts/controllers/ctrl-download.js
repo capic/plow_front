@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('DownloadCtrl', ['$scope', 'DownloadResourceFctry', 'downloadStatusListValue', 'tasksManagementFcty',
-    function ($scope, DownloadResourceFctry, downloadStatusListValue, tasksManagementFcty) {
+  .controller('DownloadCtrl', ['$scope', 'DownloadResourceFctry', 'downloadStatusListValue', 'tasksManagementFcty', '$modal',
+    function ($scope, DownloadResourceFctry, downloadStatusListValue, tasksManagementFcty, $modal) {
       // the list of downloads
       $scope.downloadsList = [];
       // tab for the animate refresh icon
@@ -89,20 +89,26 @@ angular.module('plowshareFrontApp')
 
       // to start downloading
       $scope.startDownloading = function (entity) {
-        DownloadResourceFctry.start({}, {id: entity.id}, function (response) {
-          var idx = $scope.downloadsList.indexOf(entity);
-
-          $scope.downloadsList[idx] = response[0];
-        });
+        DownloadResourceFctry.start({}, {id: entity.id},
+          function (response) {
+            var idx = $scope.downloadsList.indexOf(entity);
+            var download = response[0];
+            download.started = true;
+            $scope.downloadsList[idx] = download;
+          }
+        );
       };
 
       // to stop donwloading
       $scope.stopDownloading = function (entity) {
-        DownloadResourceFctry.stop({id: entity.id}, function (response) {
-          var idx = $scope.downloadsList.indexOf(entity);
-
-          $scope.downloadsList[idx] = response[0];
-        });
+        DownloadResourceFctry.stop({id: entity.id},
+          function (response) {
+            var idx = $scope.downloadsList.indexOf(entity);
+            var download = response[0];
+            download.started = false;
+            $scope.downloadsList[idx] = download;
+          }
+        );
       };
 
       // when the add new download event is fired
@@ -116,6 +122,30 @@ angular.module('plowshareFrontApp')
         angular.forEach($scope.downloadsList, function (download) {
           download.selected = checkAll;
         });
+      };
+
+      $scope.infosPlowdown = function (download) {
+        $scope.modal = $modal.open({
+          templateUrl: 'views/downloads/infosPlowdownPopup.html',
+          controller: 'InfosPlowdownCtrl',
+          size: 'lg',
+          resolve: {
+            download: function () {
+              return angular.copy(download);
+            }
+          }
+        });
+
+        $scope.modal.result.then(
+          //success
+          function () {
+
+          },
+          // cancel
+          function () {
+
+          }
+        )
       };
     }
   ]
