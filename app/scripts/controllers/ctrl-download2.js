@@ -22,7 +22,9 @@ angular.module('plowshareFrontApp')
             name: 'status',
             grouping: {groupPriority: 0},
             sort: {priority: 0, direction: 'asc'},
-            cellTemplate: '<download-status-drtv status="row.entity" row="row"></download-status-drtv>'
+            cellFilter: 'downloadStatusFltr2'
+            /*,
+             cellTemplate: '<download-status-drtv status="row.entity" row="row"></download-status-drtv>'*/
           },
           {name: 'percent'},
           {name: 'Average speed'},

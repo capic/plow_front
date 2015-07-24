@@ -13,14 +13,14 @@ angular.module('plowshareFrontApp')
     return function (input) {
       var returned = '*unknown*';
 
-      /*var statusMatched = downloadStatusListValue.status.filter(function(statusValue) {
-       return statusValue.id === input;
+      var statusMatched = downloadStatusListValue.status.filter(function (statusValue) {
+        return parseInt(statusValue.id) === parseInt(input);
        });
 
        if (statusMatched.length === 1) {
        returned = statusMatched[0].name;
-       }*/
-      i = parseInt(input);
-      return downloadStatusListValue[i];
+       }
+
+      return returned;
     };
   });
