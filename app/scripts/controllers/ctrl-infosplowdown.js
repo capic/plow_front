@@ -10,10 +10,16 @@
 angular.module('plowshareFrontApp')
   .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', 'DownloadResourceFctry', 'download',
     function ($scope, $modalInstance, DownloadResourceFctry, download) {
-      $scope.infosPlowdown = DownloadResourceFctry.infos({id: download.id});
+      $scope.infosPlowdown = DownloadResourceFctry.infos({Id: download.id});
 
       $scope.delete = function () {
-        DownloadResourceFctry.deleteInfos({id: download.id});
+        DownloadResourceFctry.deleteInfos({}, {id: download.id},
+          function (response) {
+            if (response.status == true) {
+              $scope.infosPlowdown = '';
+            }
+          }, function () {
+          });
       };
 
       $scope.ok = function () {

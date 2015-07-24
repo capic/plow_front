@@ -14,6 +14,7 @@ angular.module('plowshareFrontApp')
       $scope.downloadsList = [];
       // tab for the animate refresh icon
       $scope.downloadRefreshInProgress = [];
+      $scope.allDownloadRefresh = false;
 
       var taskId = tasksManagementFcty.addTask('notifications.tasks.downloadCtrl.GET_DOWNLOAD_STATUS');
       // get the status list for the column status
@@ -28,7 +29,10 @@ angular.module('plowshareFrontApp')
 
       // to refresh all downloads list
       $scope.refresh = function () {
-        $scope.downloadsList = DownloadResourceFctry.refresh();
+        $scope.allDownloadRefresh = true;
+        $scope.downloadsList = DownloadResourceFctry.refresh(function () {
+          $scope.allDownloadRefresh = false
+        });
       };
 
       // to refresh only one download

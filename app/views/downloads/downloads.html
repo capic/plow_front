@@ -6,8 +6,9 @@
 <div class="wrapper-md">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <span translate="aside.nav.DOWNLOADS">Downloads</span>
-      <span class="pull-right btn btn-action glyphicon glyphicon-refresh" data-ng-click="refresh()"></span>
+      <span translate="aside.nav.DOWNLOADS">{{downloadsList.length}} Downloads</span>
+      <span class="pull-right btn btn-action glyphicon glyphicon-refresh" data-ng-click="refresh()"
+            data-ng-class="{'glyphicon-refresh-animate': allDownloadRefresh}"></span>
     </div>
     <div class="row wrapper">
       <div class="col-sm-4 hidden-xs">

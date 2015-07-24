@@ -17,7 +17,9 @@ angular
     'ngResource',
     'ui.router',
     'pascalprecht.translate',
-    'angular-capitalize-filter'
+    'angular-capitalize-filter',
+    'ui.grid',
+    'ui.grid.grouping'
   ])
   .config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
@@ -38,6 +40,11 @@ angular
           url: '/downloads',
           templateUrl: 'views/downloads/downloads.html',
           controller: 'DownloadCtrl'
+        })
+        .state('app.downloads.downloads2', {
+          url: '/downloads2',
+          templateUrl: 'views/downloads/downloads2.html',
+          controller: 'DownloadCtrl2'
         })
         .state('app.downloads.links', {
           url: '/links',
