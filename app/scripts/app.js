@@ -24,7 +24,7 @@ angular
   .config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
       $urlRouterProvider
-        .otherwise('/app/downloads');
+        .otherwise('/app/downloads2');
       $stateProvider
         .state('app', {
           abstract: true,

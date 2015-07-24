@@ -17,7 +17,7 @@ angular.module('plowshareFrontApp')
         columnDefs: [
           {name: 'name'},
           {name: 'link'},
-          {name: 'size'},
+          {name: 'size', cellFilter: 'bytesFltr'},
           {
             name: 'status',
             grouping: {groupPriority: 0},
@@ -26,9 +26,9 @@ angular.module('plowshareFrontApp')
             /*,
              cellTemplate: '<download-status-drtv status="row.entity" row="row"></download-status-drtv>'*/
           },
-          {name: 'percent'},
-          {name: 'Average speed'},
-          {name: 'Time left'},
+          {name: 'progress'},
+          {name: 'averageSpeed', cellFilter: 'bytesPerSecondFltr'},
+          {name: 'timeLeft', cellFilter: 'timeFltr'},
           {name: 'action'}
         ],
         onRegisterApi: function (gridApi) {
