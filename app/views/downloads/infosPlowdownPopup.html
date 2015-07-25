@@ -6,7 +6,8 @@
     <div class="panel-body">
       <div class="form-group">
         <label>Message</label>
-        <textarea class="form-control" rows="15" disabled="disabled" wrap="off" placeholder="Type your message">{{infosPlowdown.infos}}</textarea>
+        <textarea class="form-control" rows="15" disabled="disabled" wrap="off"
+                  placeholder="{{'infosPlowdown.form.PLACE_HOLDER' | translate}}">{{infosPlowdown.infos}}</textarea>
       </div>
       <button type="submit" class="btn btn-warning" data-ng-click="delete()">{{'infosPlowdown.form.DELETE' | translate}}
       </button>

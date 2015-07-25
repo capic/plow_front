@@ -64,7 +64,9 @@
   },
   "infosPlowdown": {
     "form": {
-      "DELETE": "Supprimer"
+      "DELETE": "Supprimer",
+      "PLACE_HOLDER": "Téléchargement du log en cours ...",
+      "NO_INFO": "Aucune informations disponible"
     }
   }
 }

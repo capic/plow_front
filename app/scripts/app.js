@@ -19,7 +19,9 @@ angular
     'pascalprecht.translate',
     'angular-capitalize-filter',
     'ui.grid',
-    'ui.grid.grouping'
+    'ui.grid.selection',
+    'ui.grid.grouping',
+    'ui.grid.resizeColumns'
   ])
   .config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
