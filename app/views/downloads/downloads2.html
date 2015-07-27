@@ -7,7 +7,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <span translate="aside.nav.DOWNLOADS">{{downloadsList.length}} Downloads</span>
-      <span class="pull-right btn btn-action glyphicon glyphicon-refresh" data-ng-click="infosPlowdown(a)"
+      <span class="pull-right btn btn-action glyphicon glyphicon-refresh" data-ng-click="refresh()"
             data-ng-class="{'glyphicon-refresh-animate': allDownloadRefresh}"></span>
     </div>
     <div class="row wrapper">
@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="table-responsive">
-      <div id="grid1" ui-grid="gridOptions" ui-grid-selection ui-grid-grouping ui-grid-resize-columns
+      <div id="grid1" ui-grid="gridOptions" ui-grid-selection ui-grid-grouping ui-grid-resize-columns ui-grid-edit
            class="grid"></div>
     </div>
     <footer class="panel-footer">

@@ -64,9 +64,26 @@
   },
   "infosPlowdown": {
     "form": {
+      "GENERAL": "Général",
+      "LIFECYCLE": "Life cycle",
+      "NAME": "Nom",
+      "LINK": "Lien",
+      "SIZE": "Taille",
+      "STATUS": "Statut",
+      "LIFECYCLE_INSERT_DATE": " Date création",
+      "LIFECYCLE_UPDATE_DATE": " Date modification",
       "DELETE": "Supprimer",
       "PLACE_HOLDER": "Téléchargement du log en cours ...",
-      "NO_INFO": "Aucune informations disponible"
+      "NO_INFO": "Aucune informations disponible",
+      "PRIORITY": "Priorité"
+    }
+  },
+  "download": {
+    "priority": {
+      "LOW": "Basse",
+      "NORMAL": "Normale",
+      "HIGH": "Haute",
+      "MAX": "Max"
     }
   }
 }

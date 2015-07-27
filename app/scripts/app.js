@@ -21,7 +21,8 @@ angular
     'ui.grid',
     'ui.grid.selection',
     'ui.grid.grouping',
-    'ui.grid.resizeColumns'
+    'ui.grid.resizeColumns',
+    'ui.grid.edit'
   ])
   .config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
@@ -79,9 +80,16 @@ angular
   }])
   .constant('settings', {
     'SERVER_ADDRESS': 'http://capic.hd.free.fr',
-    'SERVER_NOTIFICATION': 'ws://192.168.1.200:8080/notifications'
+    'SERVER_NOTIFICATION': 'ws://capic.hd.free.fr:7070/notifications'
   })
   .constant('listSeparatorDownloads', [',', ';', '\n'])
+  .constant('downloadPriorities', [
+    {id: 0, value: 'download.priority.LOW'},
+    {id: 1, value: 'download.priority.NORMAL'},
+    {id: 2, value: 'download.priority.HIGH'},
+    {id: 3, value: 'download.priority.MAX'},
+  ]
+)
   .value('downloadStatusListValue', {})
   .value('linkStatusListValue', {})
   .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', 'webSocketFcty',
