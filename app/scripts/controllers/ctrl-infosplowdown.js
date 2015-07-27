@@ -10,14 +10,11 @@
 angular.module('plowshareFrontApp')
   .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', '$translate', '$filter', 'DownloadResourceFctry', 'downloadPriorities', 'download',
     function ($scope, $modalInstance, $translate, $filter, DownloadResourceFctry, downloadPriorities, download) {
+
       $scope.download = download;
       $scope.downloadPriorities = downloadPriorities;
-      /*$scope.downloadPriority = downloadPriorities.filter(function (priority) {
-       return parseInt(priority.id) === parseInt($scope.download.priority);
-       });*/
-      $scope.downloadPriorities = 'download.priority.MAX';
-
-      console.log($scope.priority);
+      $scope.downloadPriority = {};
+      $scope.downloadPriority.selected = $filter('filter')(downloadPriorities, { id: $scope.download.priority })[0];
 
       DownloadResourceFctry.infos({Id: download.id},
         function (response) {
@@ -46,6 +43,14 @@ angular.module('plowshareFrontApp')
       $scope.ok = function () {
         $modalInstance.dismiss('cancel');
       };
+
+      $scope.$watch("downloadPriority.selected",
+        function(newVal, oldVal) {
+          if (newVal != oldVal) {
+           DownloadResourceFctry.updatePriority({id: newVal});
+          }
+        }
+      );
     }
   ]
 );

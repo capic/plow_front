@@ -125,6 +125,6 @@ div.editable:focus, div.editable:focus:hover {
 
 /** ui grid download */
 .grid {
-  width: 1200px;
+  width: 100%;
   height: 400px;
 }

@@ -13,10 +13,8 @@
             <label class="col-lg-offset-6 col-lg-1 control-label">{{'infosPlowdown.form.PRIORITY' | translate}}</label>
 
             <div class="col-lg-2">
-              <select name="priority" class="form-control m-b" ng-model="$parent.priority">
-                <option ng-repeat="priority in downloadPriorities" value="{{priority.id}}">{{priority.value |
-                  translate}}
-                </option>
+              <select name="priority" class="form-control m-b" ng-model="downloadPriority.selected"
+                      ng-options="p.value | translate for p in downloadPriorities track by p.id">
               </select>
             </div>
           </div>
@@ -38,7 +36,7 @@
 
             <div class="col-lg-2">
               <input class="form-control" type="text" disabled="disabled"
-                     value="{{download.origin_size | bytesFltr}}"></input>
+                     value="{{download.originSize | bytesFltr}}"></input>
             </div>
 
             <label class="col-lg-1 control-label">{{'infosPlowdown.form.STATUS' | translate}}</label>
@@ -49,6 +47,38 @@
             </div>
           </div>
         </tab>
+        <tab heading="{{'infosPlowdown.form.OTHER' | translate}}">
+          <div class="form-group">
+            <label class="col-lg-2 control-label">{{'infosPlowdown.form.FILE_PATH' |
+              translate}}</label>
+
+            <div class="col-lg-10">
+              <input type="text" class="form-control" disabled="disabled"
+                     value="{{download.filePath}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-2 control-label">{{'infosPlowdown.form.PID_PYTHON' | translate}}</label>
+
+            <div class="col-lg-2">
+              <input class="form-control" type="text" disabled="disabled" value="{{download.pidPython}}"></input>
+            </div>
+
+            <label class="col-lg-2 control-label">{{'infosPlowdown.form.PID_PLOWDOWN' | translate}}</label>
+
+            <div class="col-lg-2">
+              <input class="form-control" type="text" disabled="disabled"
+                     value="{{download.pidPlowdown}}"></input>
+            </div>
+
+            <label class="col-lg-2 control-label">{{'infosPlowdown.form.PID_CURL' | translate}}</label>
+
+            <div class="col-lg-2">
+              <input class="form-control" type="text" disabled="disabled"
+                     value="{{download.pidCurl}}"></input>
+            </div>
+          </div>
+        </tab>
         <tab heading="{{'infosPlowdown.form.LIFECYCLE' | translate}}">
           <div class="form-group">
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.LIFECYCLE_INSERT_DATE' |
@@ -56,7 +86,7 @@
 
             <div class="col-lg-3">
               <input type="text" class="form-control" disabled="disabled"
-                     value="{{download.lifecycle_insert_date | date:'dd/MM/yyyy HH:mm:ss'}}">
+                     value="{{download.lifecycle_insert_date | date: 'dd/MM/yyyy HH:mm:ss'}}">
             </div>
           </div>
           <div class="form-group">
@@ -65,7 +95,7 @@
 
             <div class="col-lg-3">
               <input class="form-control" type="text" disabled="disabled"
-                     value="{{download.lifecycle_update_date | date:'dd/MM/yyyy HH:mm:ss'}}"></input>
+                     value="{{download.lifecycle_update_date | date: 'dd/MM/yyyy HH:mm:ss'}}"></input>
             </div>
           </div>
         </tab>
@@ -74,7 +104,7 @@
 
     <div class="form-group">
       <label>Informations</label>
-                <textarea class="form-control" rows="15" disabled="disabled" wrap="off"
+                <textarea class="form-control" rows="15" readonly wrap="off"
                           placeholder="{{'infosPlowdown.form.PLACE_HOLDER' | translate}}">{{download.infosPlowdown}}</textarea>
     </div>
     <button type="submit" class="btn btn-warning" data-ng-click="delete()">{{'infosPlowdown.form.DELETE' |

@@ -22,7 +22,8 @@ angular
     'ui.grid.selection',
     'ui.grid.grouping',
     'ui.grid.resizeColumns',
-    'ui.grid.edit'
+    'ui.grid.edit',
+    'ui.grid.autoResize'
   ])
   .config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {

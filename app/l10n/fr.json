@@ -65,6 +65,7 @@
   "infosPlowdown": {
     "form": {
       "GENERAL": "Général",
+      "OTHER": "Autre",
       "LIFECYCLE": "Life cycle",
       "NAME": "Nom",
       "LINK": "Lien",
@@ -75,7 +76,11 @@
       "DELETE": "Supprimer",
       "PLACE_HOLDER": "Téléchargement du log en cours ...",
       "NO_INFO": "Aucune informations disponible",
-      "PRIORITY": "Priorité"
+      "PRIORITY": "Priorité",
+      "FILE_PATH": "Fichier",
+      "PID_PYTHON": "Pid Pyhton",
+      "PID_PLOWDOWN": "Pid Plowdown",
+      "PID_CURL": "Pid Curl"
     }
   },
   "download": {
