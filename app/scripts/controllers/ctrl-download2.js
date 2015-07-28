@@ -31,7 +31,7 @@ angular.module('plowshareFrontApp')
             /*,
              cellTemplate: '<download-status-drtv status="row.entity" row="row"></download-status-drtv>'*/
           },
-          {name: 'progress', displayName: '%', width: '40', enableColumnResizing: false},
+          {name: 'progressFile', displayName: '%', width: '40', enableColumnResizing: false},
           {
             name: 'averageSpeed',
             displayName: 'Avg Speed',
@@ -123,7 +123,7 @@ angular.module('plowshareFrontApp')
       $scope.refresh = function () {
         $scope.allDownloadRefresh = true;
         $scope.downloadsList = DownloadResourceFctry.refresh(function () {
-          $scope.allDownloadRefresh = false
+          $scope.allDownloadRefresh = false;
         });
       };
 
