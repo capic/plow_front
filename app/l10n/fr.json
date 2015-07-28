@@ -69,7 +69,10 @@
       "LIFECYCLE": "Life cycle",
       "NAME": "Nom",
       "LINK": "Lien",
-      "SIZE": "Taille",
+      "SIZE_FILE": "Taille fichier",
+      "SIZE_PART": "Taille partie",
+      "PROGRESS_FILE": "% fichier",
+      "PROGRESS_PART": "% partie",
       "STATUS": "Statut",
       "LIFECYCLE_INSERT_DATE": " Date création",
       "LIFECYCLE_UPDATE_DATE": " Date modification",
@@ -80,7 +83,9 @@
       "FILE_PATH": "Fichier",
       "PID_PYTHON": "Pid Pyhton",
       "PID_PLOWDOWN": "Pid Plowdown",
-      "PID_CURL": "Pid Curl"
+      "PID_CURL": "Pid Curl",
+      "TIME_SPENT": "Temps écoulé",
+      "TIME_LEFT": "Temps restant"
     }
   },
   "download": {
