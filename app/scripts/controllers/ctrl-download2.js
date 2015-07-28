@@ -20,7 +20,7 @@ angular.module('plowshareFrontApp')
         columnDefs: [
           {name: 'name', displayName: 'Name', cellTooltip: true, headerCellFilter: 'translate'},
           {name: 'link', displayName: 'Link'},
-          {name: 'size', displayName: 'Size', cellFilter: 'bytesFltr', enableColumnResizing: false},
+          {name: 'sizeFile', displayName: 'Size', cellFilter: 'bytesFltr', enableColumnResizing: false},
           {
             name: 'status',
             displayName: 'Status',
