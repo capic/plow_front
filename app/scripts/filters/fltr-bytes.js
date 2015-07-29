@@ -9,22 +9,25 @@
  * Filter in the plowshareFrontApp.
  */
 angular.module('plowshareFrontApp')
-    .filter('bytesFltr', function () {
-        return function(bytes, precision) {
-            var returned = '';
-            if (isNaN(parseFloat(bytes)) || !isFinite(bytes)){
-                returned = '-';
-            } else {
-                if (typeof precision === 'undefined') {
-                    precision = 1;
-                }
+  .filter('bytesFltr', function () {
+    return function (bytes, precision) {
+      var returned = '';
+      if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) {
+        returned = '-';
+      } else {
+        if (typeof precision === 'undefined') {
+          precision = 1;
+        }
 
-                var units = ['b', 'kB', 'MB', 'GB', 'TB', 'PB'],
-                    number = Math.floor(Math.log(bytes) / Math.log(1024));
+        if (bytes != 0) {
 
-                returned = (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
-            }
+          var units = ['b', 'kB', 'MB', 'GB', 'TB', 'PB'],
+            number = Math.floor(Math.log(bytes) / Math.log(1024));
 
-            return returned;
-        };
-    });
+          returned = (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
+        }
+      }
+
+      return returned;
+    };
+  });

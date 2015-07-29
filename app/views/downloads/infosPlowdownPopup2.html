@@ -112,14 +112,14 @@
 
             <div class="col-lg-2">
               <input type="text" class="form-control" disabled="disabled"
-                     value="{{download.timeSpent}}">
+                     value="{{download.timeSpent | timeFltr}}">
             </div>
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.TIME_LEFT' |
               translate}}</label>
 
             <div class="col-lg-2">
               <input type="text" class="form-control" disabled="disabled"
-                     value="{{download.timeLEFT}}">
+                     value="{{download.timeLeft | timeFltr}}">
             </div>
           </div>
         </tab>
