@@ -86,8 +86,6 @@ angular
       realm: 'realm1'
       //Any other AutobahnJS options
     });
-
-    $wamp.open();
   })
   .constant('settings', {
     'SERVER_ADDRESS': 'http://capic.hd.free.fr',
@@ -103,10 +101,10 @@ angular
 )
   .value('downloadStatusListValue', {})
   .value('linkStatusListValue', {})
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', 'webSocketFcty',
-    function ($scope, $translate, $localStorage, $window, webSocketFcty) {
+  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', 'webSocketFcty', '$wamp',
+    function ($scope, $translate, $localStorage, $window, webSocketFcty, $wamp) {
       $scope.notifications = webSocketFcty.getNewNotifications();
-
+      $wamp.open();
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
       isIE && angular.element($window.document.body).addClass('ie');

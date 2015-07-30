@@ -170,7 +170,8 @@ angular.module('plowshareFrontApp')
       function onevent(args) {
         $scope.hello = args[0];
       }
-      $wamp.subscribe('com.myapp.hello', onevent);
+
+      $wamp.subscribe('message', onevent);
     }
   ]
 )
