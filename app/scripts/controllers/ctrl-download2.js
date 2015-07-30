@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('DownloadCtrl2', ['$scope', 'DownloadResourceFctry', 'downloadStatusListValue', 'downloadPriorities', '$modal', 'uiGridGroupingConstants',
-    function ($scope, DownloadResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants) {
+  .controller('DownloadCtrl2', ['$scope', 'DownloadResourceFctry', 'downloadStatusListValue', 'downloadPriorities', '$modal', 'uiGridGroupingConstants', '$wamp',
+    function ($scope, DownloadResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp) {
 
       $scope.gridOptions = {
         treeRowHeaderAlwaysVisible: false,
@@ -166,6 +166,11 @@ angular.module('plowshareFrontApp')
           }
         });
       };
+
+      function onevent(args) {
+        $scope.hello = args[0];
+      }
+      $wamp.subscribe('com.myapp.hello', onevent);
     }
   ]
 )

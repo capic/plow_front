@@ -18,6 +18,7 @@ angular
     'ui.router',
     'pascalprecht.translate',
     'angular-capitalize-filter',
+    'vxWamp',
     'ui.grid',
     'ui.grid.selection',
     'ui.grid.grouping',
@@ -78,7 +79,16 @@ angular
     // Tell the module to store the language in the local storage
     $translateProvider.useLocalStorage();
 
-  }])
+  }]).
+  config(function ($wampProvider) {
+    $wampProvider.init({
+      url: 'ws://192.168.1.200:7171/',
+      realm: 'realm1'
+      //Any other AutobahnJS options
+    });
+
+    $wamp.open();
+  })
   .constant('settings', {
     'SERVER_ADDRESS': 'http://capic.hd.free.fr',
     'SERVER_NOTIFICATION': 'ws://capic.hd.free.fr:7070/notifications'
