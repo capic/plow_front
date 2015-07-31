@@ -12,7 +12,7 @@ angular.module('plowshareFrontApp')
     function ($scope, DownloadResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp) {
 
       function onevent(args) {
-        $scope.hello = 'hellooooooooooooooooooooooooo';
+        console.log('hellooooooooooooooooooooooooo');
       }
 
       $wamp.subscribe('com.myapp.oncounter', onevent);
