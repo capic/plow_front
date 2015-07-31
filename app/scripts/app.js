@@ -40,12 +40,12 @@ angular
           abstract: true,
           templateUrl: 'views/downloads/download_main.html',
           controller: 'AddLinksCtrl'
-        })
+        })/*
         .state('app.downloads.downloads', {
           url: '/downloads',
           templateUrl: 'views/downloads/downloads.html',
           controller: 'DownloadCtrl'
-        })
+        })*/
         .state('app.downloads.downloads2', {
           url: '/downloads2',
           templateUrl: 'views/downloads/downloads2.html',
@@ -82,8 +82,7 @@ angular
   }]).
   config(function ($wampProvider) {
     $wampProvider.init({
-      url: 'ws://192.168.1.200:7171/',
-      realm: 'realm1'
+      url: 'ws://192.168.1.200:9090', realm: 'realm1'
       //Any other AutobahnJS options
     });
   })
@@ -101,9 +100,9 @@ angular
 )
   .value('downloadStatusListValue', {})
   .value('linkStatusListValue', {})
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', 'webSocketFcty', '$wamp',
-    function ($scope, $translate, $localStorage, $window, webSocketFcty, $wamp) {
-      $scope.notifications = webSocketFcty.getNewNotifications();
+  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window'/*, 'webSocketFcty'*/, '$wamp',
+    function ($scope, $translate, $localStorage, $window/*, webSocketFcty*/, $wamp) {
+      //$scope.notifications = webSocketFcty.getNewNotifications();
       $wamp.open();
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
