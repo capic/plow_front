@@ -11,14 +11,14 @@
 angular.module('plowshareFrontApp')
   .filter('downloadStatusFltr2', function (downloadStatusListValue) {
     return function (input) {
-      var returned = '*unknown*';
+      var returned = '';
 
       var statusMatched = downloadStatusListValue.status.filter(function (statusValue) {
         return parseInt(statusValue.id) === parseInt(input);
        });
 
        if (statusMatched.length === 1) {
-       returned = statusMatched[0].name;
+         returned = statusMatched[0].name;
        }
 
       return returned;
