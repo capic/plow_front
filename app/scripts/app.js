@@ -82,7 +82,7 @@ angular
   }]).
   config(function ($wampProvider) {
     $wampProvider.init({
-      url: 'ws://192.168.1.200:9090', realm: 'realm1'
+      url: 'ws://192.168.1.101:9090', realm: 'realm1'
       //Any other AutobahnJS options
     });
   })

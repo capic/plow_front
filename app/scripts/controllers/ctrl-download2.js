@@ -24,7 +24,7 @@ angular.module('plowshareFrontApp')
         enableGroupHeaderSelection: true,
         rowHeight: 35,
         columnDefs: [
-          {name: 'package', displayName: 'Paquet', grouping: {groupPriority: 1}},
+          {name: 'package', displayName: 'Paquet', grouping: {groupPriority: 1}, cellTooltip: true},
           {
             name: 'name',
             displayName: 'Name',
@@ -38,7 +38,8 @@ angular.module('plowshareFrontApp')
             displayName: 'Size',
             cellFilter: 'bytesFltr',
             enableColumnResizing: false,
-            enableCellEdit: false
+            enableCellEdit: false,
+            width: 80
           },
           {
             name: 'status',
@@ -48,6 +49,7 @@ angular.module('plowshareFrontApp')
             cellFilter: 'downloadStatusFltr2',
             enableColumnResizing: false,
             enableCellEdit: false,
+            width: 80
             //cellTemplate: '<div ng-if="row.groupHeader">{{COL_FIELD | downloadStatusFltr2}}</div>'
           },
           {
@@ -63,24 +65,26 @@ angular.module('plowshareFrontApp')
             cellFilter: 'bytesPerSecondFltr',
             enableColumnResizing: false,
             enableCellEdit: false,
+            width: 80
           },
           {
             name: 'timeLeft',
             displayName: 'Time Left',
             cellFilter: 'timeFltr',
             enableColumnResizing: false,
-            enableCellEdit: false
+            enableCellEdit: false,
+            width: 80
           },
           {
             name: 'priority',
             displayName: 'Pty',
-            width: '100',
             enableColumnResizing: false,
             cellTemplate: '<div>{{COL_FIELD | downloadPriorityFltr |translate}}</div>',
             editableCellTemplate: 'ui-grid/dropdownEditor',
             editDropdownValueLabel: 'value',
             editDropdownOptionsArray: downloadPriorities,
-            editDropdownFilter: 'translate'
+            editDropdownFilter: 'translate',
+            width: 70
           },
           {
             name: 'Actions',
