@@ -104,10 +104,7 @@ angular
     function ($scope, $translate, $localStorage, $window/*, webSocketFcty*/, $wamp) {
       //$scope.notifications = webSocketFcty.getNewNotifications();
       $wamp.open();
-      function onevent(args) {
-       console.log(args[0]);
-      }
-      $wamp.subscribe('plow.download.downloads.infos_plowdown', onevent);
+
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
       isIE && angular.element($window.document.body).addClass('ie');
