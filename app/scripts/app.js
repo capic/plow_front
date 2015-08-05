@@ -82,7 +82,7 @@ angular
   }]).
   config(function ($wampProvider) {
     $wampProvider.init({
-      url: 'ws://192.168.1.200:9090', realm: 'realm1'
+      url: 'ws://192.168.1.101:8080/ws', realm: 'realm1'
       //Any other AutobahnJS options
     });
   })
@@ -104,6 +104,10 @@ angular
     function ($scope, $translate, $localStorage, $window/*, webSocketFcty*/, $wamp) {
       //$scope.notifications = webSocketFcty.getNewNotifications();
       $wamp.open();
+      function onevent(args) {
+       console.log(args[0]);
+      }
+      $wamp.subscribe('plow.download.downloads.infos_plowdown', onevent);
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
       isIE && angular.element($window.document.body).addClass('ie');
