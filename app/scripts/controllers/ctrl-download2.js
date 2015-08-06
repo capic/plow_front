@@ -20,6 +20,7 @@ angular.module('plowshareFrontApp')
               if (downloadNotification.id == $scope.gridOptions.data[iterator].id) {
                 found = true;
                 $scope.gridOptions.data[iterator].progressFile = downloadNotification.progress_file;
+                $scope.gridOptions.data[iterator].timeLeft = downloadNotification.time_left;
               }
               iterator++;
             }

@@ -11,3 +11,4 @@ DOWNLOADS
 - mettre une case à coher en haut pour choisir d'afficher ou non les liens terminés
 - bouton refresh all
 - ne pas pouvoir lancer un téléchargement terminé
+- coloré la ligne si elle est en liaison avec le serveur de notif
