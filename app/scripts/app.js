@@ -24,7 +24,8 @@ angular
     'ui.grid.grouping',
     'ui.grid.resizeColumns',
     'ui.grid.edit',
-    'ui.grid.autoResize'
+    'ui.grid.autoResize',
+    'luegg.directives'
   ])
   .config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {

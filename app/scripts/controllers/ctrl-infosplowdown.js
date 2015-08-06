@@ -10,9 +10,13 @@
 angular.module('plowshareFrontApp')
   .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', '$translate', '$filter', 'DownloadResourceFctry', 'downloadPriorities', 'download', '$wamp',
     function ($scope, $modalInstance, $translate, $filter, DownloadResourceFctry, downloadPriorities, download, $wamp) {
+      $scope.autoscroll = true;
+
       function onevent(args) {
         console.log(args[0]);
         $scope.download.infosPlowdown = args[0].infos_plowdown;
+        $scope.download.sizeFileDownloaded = args[0].size_file_downloaded;
+        $scope.download.sizePartDownloaded = args[0].size_part_downloaded
       }
 
       $scope.download = download;
@@ -24,7 +28,7 @@ angular.module('plowshareFrontApp')
         function (response) {
           if (response != '') {
             $scope.download.infosPlowdown = response.infos;
-            $wamp.subscribe('plow.download.downloads.infos_plowdown', onevent);
+            $wamp.subscribe('plow.downloads.download.' + download.id, onevent);
           } else {
             $translate('infosPlowdown.form.NO_INFO').then(function (translation) {
               $scope.download.infosPlowdown = translation;

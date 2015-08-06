@@ -12,10 +12,22 @@ angular.module('plowshareFrontApp')
     function ($scope, DownloadResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp) {
 
       function onevent(args) {
-        console.log('hellooooooooooooooooooooooooo');
+        angular.forEach(args[0],
+          function(downloadNotification) {
+            var iterator = 0;
+            var found = false;
+            while (iterator < $scope.gridOptions.data.length && !found) {
+              if (downloadNotification.id == $scope.gridOptions.data[iterator].id) {
+                found = true;
+                $scope.gridOptions.data[iterator].progressFile = downloadNotification.progress_file;
+              }
+              iterator++;
+            }
+          }
+        );
       }
 
-      $wamp.subscribe('com.myapp.oncounter', onevent);
+      $wamp.subscribe('plow.downloads.downloads', onevent);
 
       $scope.gridOptions = {
         treeRowHeaderAlwaysVisible: false,
