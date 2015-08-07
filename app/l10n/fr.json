@@ -87,7 +87,8 @@
       "TIME_SPENT": "Temps écoulé",
       "TIME_LEFT": "Temps restant",
       "CURRENT_SPEED": "Vitesse",
-      "AVERAGE_SPEED": "Vitesse moyenne"
+      "AVERAGE_SPEED": "Vitesse moyenne",
+      "AUTOSCROLL": "Auto scroll"
     }
   },
   "download": {

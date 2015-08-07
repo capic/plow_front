@@ -20,6 +20,9 @@ angular.module('plowshareFrontApp')
         $scope.download.progressFile = args[0].progress_file;
         $scope.download.progressPart = args[0].progress_part;
         $scope.download.status = args[0].status;
+        $scope.download.currentSpeed = args[0].current_speed;
+        $scope.download.timeLeft = args[0].time_left;
+        $scope.download.timeSpent = args[0].time_spent;
       }
 
       $scope.download = download;
