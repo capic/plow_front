@@ -42,11 +42,11 @@ angular
           templateUrl: 'views/downloads/download_main.html',
           controller: 'AddLinksCtrl'
         })/*
-        .state('app.downloads.downloads', {
-          url: '/downloads',
-          templateUrl: 'views/downloads/downloads.html',
-          controller: 'DownloadCtrl'
-        })*/
+       .state('app.downloads.downloads', {
+       url: '/downloads',
+       templateUrl: 'views/downloads/downloads.html',
+       controller: 'DownloadCtrl'
+       })*/
         .state('app.downloads.downloads2', {
           url: '/downloads2',
           templateUrl: 'views/downloads/downloads2.html',
@@ -79,17 +79,16 @@ angular
 
     // Tell the module to store the language in the local storage
     $translateProvider.useLocalStorage();
-
-  }]).
-  config(function ($wampProvider) {
-    $wampProvider.init({
-      url: 'ws://192.168.1.101:8080/ws', realm: 'realm1'
-      //Any other AutobahnJS options
-    });
-  })
+  }])
   .constant('settings', {
     'SERVER_ADDRESS': 'http://capic.hd.free.fr',
-    'SERVER_NOTIFICATION': 'ws://capic.hd.free.fr:7070/notifications'
+    'SERVER_NOTIFICATION': 'ws://192.168.1.101:8181/ws'
+  })
+  .config(function (settings, $wampProvider) {
+    $wampProvider.init({
+      url: settings.SERVER_NOTIFICATION, realm: 'realm1'
+      //Any other AutobahnJS options
+    });
   })
   .constant('listSeparatorDownloads', [',', ';', '\n'])
   .constant('downloadPriorities', [
