@@ -3,22 +3,15 @@
     <div class="row">
       <tabset class="tab-container">
         <tab heading="{{'infosPlowdown.form.GENERAL' | translate}}">
-          <!--id + status + priority-->
+          <!--link + priority-->
           <div class="form-group">
-            <label class="col-lg-2 control-label">Id</label>
+            <label class="col-lg-2 control-label">{{'infosPlowdown.form.LINK' | translate}}</label>
 
-            <div class="col-lg-2">
-              <input type="text" class="form-control" disabled="disabled" value="{{download.id}}">
+            <div class="col-lg-7">
+              <input class="form-control" type="text" disabled="disabled" value="{{download.link}}"></input>
             </div>
 
-            <label class="col-lg-2 control-label">{{'infosPlowdown.form.STATUS' | translate}}</label>
-
-            <div class="col-lg-2">
-              <input class="form-control" type="text" disabled="disabled"
-                     value="{{download.status | downloadStatusFltr2}}"></input>
-            </div>
-
-            <label class="col-lg-2 control-label">{{'infosPlowdown.form.PRIORITY' | translate}}</label>
+            <label class="col-lg-1 control-label">{{'infosPlowdown.form.PRIORITY' | translate}}</label>
 
             <div class="col-lg-2">
               <select name="priority" class="form-control m-b" ng-model="downloadPriority.selected"
@@ -34,15 +27,7 @@
               <input class="form-control" type="text" disabled="disabled" value="{{download.name}}"></input>
             </div>
           </div>
-          <!--link-->
-          <div class="form-group">
-            <label class="col-lg-2 control-label">{{'infosPlowdown.form.LINK' | translate}}</label>
-
-            <div class="col-lg-7">
-              <input class="form-control" type="text" disabled="disabled" value="{{download.link}}"></input>
-            </div>
-          </div>
-          <!--sizes-->
+          <!--file size + % file-->
           <div class="form-group">
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.SIZE_FILE' | translate}}</label>
 
@@ -51,31 +36,61 @@
                      value="{{download.sizeFileDownloaded | bytesFltr}} / {{download.sizeFile | bytesFltr}}"></input>
             </div>
 
-            <label class="col-lg-2 control-label">{{'infosPlowdown.form.SIZE_PART' | translate}}</label>
-
-            <div class="col-lg-4">
-              <input class="form-control" type="text" disabled="disabled"
-                     value="{{download.sizePartDownloaded | bytesFltr}} / {{download.sizePart | bytesFltr}}""></input>
-            </div>
-          </div>
-          <!--progress-->
-          <div class="form-group">
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.PROGRESS_FILE' | translate}}</label>
 
             <div class="col-lg-4">
               <progressbar class="progress-striped active m-t-sm" value="download.progressFile" type="success"><b>{{download.progressFile}}%</b>
               </progressbar>
             </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-2 control-label">{{'infosPlowdown.form.TIME_SPENT' |
+              translate}}</label>
 
-            <label class="col-lg-2 control-label">{{'infosPlowdown.form.PROGRESS_PART' | translate}}</label>
+            <div class="col-lg-2">
+              <input type="text" class="form-control" disabled="disabled"
+                     value="{{download.timeSpent | timeFltr}}">
+            </div>
+            <label class="col-lg-2 control-label">{{'infosPlowdown.form.TIME_LEFT' |
+              translate}}</label>
 
-            <div class="col-lg-4">
-              <progressbar class="progress-striped active m-t-sm" value="download.progressPart" type="success"><b>{{download.progressPart}}%</b>
-              </progressbar>
+            <div class="col-lg-2">
+              <input type="text" class="form-control" disabled="disabled"
+                     value="{{download.timeLeft | timeFltr}}">
+            </div>
+
+            <label class="col-lg-2 control-label">{{'infosPlowdown.form.CURRENT_SPEED' |
+              translate}}</label>
+
+            <div class="col-lg-2">
+              <input type="text" class="form-control" disabled="disabled"
+                     value="{{download.currentSpeed | bytesPerSecondFltr}}">
             </div>
           </div>
         </tab>
         <tab heading="{{'infosPlowdown.form.OTHER' | translate}}">
+          <div class="form-group">
+            <label class="col-lg-2 control-label">Id</label>
+
+            <div class="col-lg-2">
+              <input type="text" class="form-control" disabled="disabled" value="{{download.id}}">
+            </div>
+
+            <label class="col-lg-2 control-label">{{'infosPlowdown.form.STATUS' | translate}}</label>
+
+            <div class="col-lg-2">
+              <input class="form-control" type="text" disabled="disabled"
+                     value="{{download.status | downloadStatusFltr2}}"></input>
+            </div>
+
+            <label class="col-lg-2 control-label">{{'infosPlowdown.form.AVERAGE_SPEED' |
+              translate}}</label>
+
+            <div class="col-lg-2">
+              <input type="text" class="form-control" disabled="disabled"
+                     value="{{download.averageSpeed | bytesPerSecondFltr}}">
+            </div>
+          </div>
           <div class="form-group">
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.FILE_PATH' |
               translate}}</label>
@@ -83,6 +98,21 @@
             <div class="col-lg-10">
               <input type="text" class="form-control" disabled="disabled"
                      value="{{download.filePath}}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-2 control-label">{{'infosPlowdown.form.SIZE_PART' | translate}}</label>
+
+            <div class="col-lg-4">
+              <input class="form-control" type="text" disabled="disabled"
+                     value="{{download.sizePartDownloaded | bytesFltr}} / {{download.sizePart | bytesFltr}}""></input>
+            </div>
+
+            <label class="col-lg-2 control-label">{{'infosPlowdown.form.PROGRESS_PART' | translate}}</label>
+
+            <div class="col-lg-4">
+              <progressbar class="progress-striped active m-t-sm" value="download.progressPart" type="success"><b>{{download.progressPart}}%</b>
+              </progressbar>
             </div>
           </div>
           <div class="form-group">
@@ -104,22 +134,6 @@
             <div class="col-lg-2">
               <input class="form-control" type="text" disabled="disabled"
                      value="{{download.pidCurl}}"></input>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-lg-2 control-label">{{'infosPlowdown.form.TIME_SPENT' |
-              translate}}</label>
-
-            <div class="col-lg-2">
-              <input type="text" class="form-control" disabled="disabled"
-                     value="{{download.timeSpent | timeFltr}}">
-            </div>
-            <label class="col-lg-2 control-label">{{'infosPlowdown.form.TIME_LEFT' |
-              translate}}</label>
-
-            <div class="col-lg-2">
-              <input type="text" class="form-control" disabled="disabled"
-                     value="{{download.timeLeft | timeFltr}}">
             </div>
           </div>
         </tab>

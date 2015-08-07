@@ -37,37 +37,67 @@ angular.module('plowshareFrontApp')
         enableGroupHeaderSelection: true,
         rowHeight: 35,
         columnDefs: [
-          {name: 'name', displayName: 'Name', cellTooltip: true, headerCellFilter: 'translate'},
-          {name: 'link', displayName: 'Link'},
-          {name: 'sizeFile', displayName: 'Size', cellFilter: 'bytesFltr', enableColumnResizing: false},
+          {name: 'package', displayName: 'Paquet', grouping: {groupPriority: 1}, cellTooltip: true},
+          {
+            name: 'name',
+            displayName: 'Name',
+            cellTooltip: true,
+            headerCellFilter: 'translate',
+            enableCellEdit: false
+          },
+          /*{name: 'link', displayName: 'Link', enableCellEdit: false},*/
+          {
+            name: 'sizeFile',
+            displayName: 'Size',
+            cellFilter: 'bytesFltr',
+            enableColumnResizing: false,
+            enableCellEdit: false,
+            width: 80
+          },
           {
             name: 'status',
             displayName: 'Status',
-            grouping: {groupPriority: 1},
+            grouping: {groupPriority: 0},
             sort: {priority: 1, direction: 'asc'},
             cellFilter: 'downloadStatusFltr2',
-            enableColumnResizing: false
-            /*,
-             cellTemplate: '<download-status-drtv status="row.entity" row="row"></download-status-drtv>'*/
+            enableColumnResizing: false,
+            enableCellEdit: false,
+            width: 80
+            //cellTemplate: '<div ng-if="row.groupHeader">{{COL_FIELD | downloadStatusFltr2}}</div>'
           },
-          {name: 'progressFile', displayName: '%', width: '40', enableColumnResizing: false},
+          {
+            name: 'progressFile',
+            displayName: '%',
+            width: '40',
+            enableColumnResizing: false,
+            enableCellEdit: false
+          },
           {
             name: 'averageSpeed',
             displayName: 'Avg Speed',
             cellFilter: 'bytesPerSecondFltr',
-            enableColumnResizing: false
+            enableColumnResizing: false,
+            enableCellEdit: false,
+            width: 80
           },
-          {name: 'timeLeft', displayName: 'Time Left', cellFilter: 'timeFltr', enableColumnResizing: false},
+          {
+            name: 'timeLeft',
+            displayName: 'Time Left',
+            cellFilter: 'timeFltr',
+            enableColumnResizing: false,
+            enableCellEdit: false,
+            width: 80
+          },
           {
             name: 'priority',
             displayName: 'Pty',
-            width: '100',
             enableColumnResizing: false,
             cellTemplate: '<div>{{COL_FIELD | downloadPriorityFltr |translate}}</div>',
             editableCellTemplate: 'ui-grid/dropdownEditor',
             editDropdownValueLabel: 'value',
             editDropdownOptionsArray: downloadPriorities,
-            editDropdownFilter: 'translate'
+            editDropdownFilter: 'translate',
+            width: 70
           },
           {
             name: 'Actions',

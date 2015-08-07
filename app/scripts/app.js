@@ -42,11 +42,11 @@ angular
           templateUrl: 'views/downloads/download_main.html',
           controller: 'AddLinksCtrl'
         })/*
-       .state('app.downloads.downloads', {
-       url: '/downloads',
-       templateUrl: 'views/downloads/downloads.html',
-       controller: 'DownloadCtrl'
-       })*/
+        .state('app.downloads.downloads', {
+          url: '/downloads',
+          templateUrl: 'views/downloads/downloads.html',
+          controller: 'DownloadCtrl'
+        })*/
         .state('app.downloads.downloads2', {
           url: '/downloads2',
           templateUrl: 'views/downloads/downloads2.html',
