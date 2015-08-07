@@ -85,7 +85,9 @@
       "PID_PLOWDOWN": "Pid Plowdown",
       "PID_CURL": "Pid Curl",
       "TIME_SPENT": "Temps écoulé",
-      "TIME_LEFT": "Temps restant"
+      "TIME_LEFT": "Temps restant",
+      "CURRENT_SPEED": "Vitesse",
+      "AVERAGE_SPEED": "Vitesse moyenne"
     }
   },
   "download": {
