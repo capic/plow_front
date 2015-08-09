@@ -14,7 +14,7 @@ angular.module('plowshareFrontApp')
 
       function onevent(args) {
         console.log(args[0]);
-        $scope.download.infosPlowdown = args[0].infos_plowdown;
+        $scope.download.infosPlowdown += args[0].last_infos_plowdown;
         $scope.download.sizeFileDownloaded = args[0].size_file_downloaded;
         $scope.download.sizePartDownloaded = args[0].size_part_downloaded;
         $scope.download.progressFile = args[0].progress_file;
