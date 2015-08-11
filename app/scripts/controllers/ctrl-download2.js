@@ -12,8 +12,14 @@ angular.module('plowshareFrontApp')
     function ($scope, DownloadResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp) {
 
       function onevent(args) {
+        angular.forEach($scope.gridOptions.data,
+          function(download){
+            download.subscribed = false;
+          }
+        );
+
         angular.forEach(args[0],
-          function(downloadNotification) {
+          function (downloadNotification) {
             var iterator = 0;
             var found = false;
             while (iterator < $scope.gridOptions.data.length && !found) {
@@ -21,6 +27,10 @@ angular.module('plowshareFrontApp')
                 found = true;
                 $scope.gridOptions.data[iterator].progressFile = downloadNotification.progress_file;
                 $scope.gridOptions.data[iterator].timeLeft = downloadNotification.time_left;
+                $scope.gridOptions.data[iterator].status = downloadNotification.status;
+                if (downloadNotification.status != 3) { // TODO: use constant
+                  $scope.gridOptions.data[iterator].subscribed = true;
+                }
               }
               iterator++;
             }
@@ -104,7 +114,7 @@ angular.module('plowshareFrontApp')
             width: '100',
             enableColumnResizing: false,
             cellTemplate: '<div ng-if="!row.groupHeader" class="btn-group">' +
-            '<a data-ng-click="startDownloading(row.entity);" data-ng-class="{\'disabled\': row.entity.status != 1}" class="btn btn-action glyphicon glyphicon-play" href></a>' +
+            '<a data-ng-click="startDownloading(row.entity);" data-ng-class="{\'disabled\': row.entity.status != 1, \'text-success\': row.entity.subscribed }" class="btn btn-action glyphicon glyphicon-play" href></a>' +
             '<a data-ng-click="grid.appScope.stopDownloading(row.entity);" data-ng-class="{\'disabled\': row.entity.status == 1}" class="btn btn-action glyphicon glyphicon-stop" href></a>' +
             '<a data-ng-click="grid.appScope.refreshDownload(row.entity);" class="btn btn-action glyphicon glyphicon-refresh" data-ng-class="grid.appScope.downloadRefreshInProgress[row.entity.id]" href></a>' +
             '<a data-ng-click="grid.appScope.deleteDownload(row.entity);" class=" btn btn-action glyphicon glyphicon-trash" href></a>' +
