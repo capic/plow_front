@@ -23,11 +23,12 @@ angular.module('plowshareFrontApp')
             var iterator = 0;
             var found = false;
             while (iterator < $scope.gridOptions.data.length && !found) {
-              if (downloadNotification.id == $scope.gridOptions.data[iterator].id) {
+              if (parseInt(downloadNotification.id) === parseInt($scope.gridOptions.data[iterator].id)) {
                 found = true;
                 $scope.gridOptions.data[iterator].progressFile = downloadNotification.progress_file;
                 $scope.gridOptions.data[iterator].timeLeft = downloadNotification.time_left;
                 $scope.gridOptions.data[iterator].status = downloadNotification.status;
+                $scope.gridOptions.data[iterator].sizeFile = downloadNotification.size_file;
                 if (downloadNotification.status != 3) { // TODO: use constant
                   $scope.gridOptions.data[iterator].subscribed = true;
                 }

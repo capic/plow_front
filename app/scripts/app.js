@@ -82,7 +82,7 @@ angular
   }])
   .constant('settings', {
     'SERVER_ADDRESS': 'http://capic.hd.free.fr',
-    'SERVER_NOTIFICATION': 'ws://192.168.1.101:8181/ws'
+    'SERVER_NOTIFICATION': 'ws://capic.hd.free.fr:8181/ws'
   })
   .config(function (settings, $wampProvider) {
     $wampProvider.init({

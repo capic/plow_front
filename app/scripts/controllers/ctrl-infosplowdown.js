@@ -13,9 +13,10 @@ angular.module('plowshareFrontApp')
       $scope.autoscroll = true;
 
       function onevent(args) {
-        console.log(args[0]);
         $scope.download.infosPlowdown += args[0].last_infos_plowdown;
+        $scope.download.sizeFile = args[0].size_file;
         $scope.download.sizeFileDownloaded = args[0].size_file_downloaded;
+        $scope.download.sizePart = args[0].size_part;
         $scope.download.sizePartDownloaded = args[0].size_part_downloaded;
         $scope.download.progressFile = args[0].progress_file;
         $scope.download.progressPart = args[0].progress_part;
