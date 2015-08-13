@@ -24,13 +24,21 @@ angular.module('plowshareFrontApp')
         $scope.download.currentSpeed = args[0].current_speed;
         $scope.download.timeLeft = args[0].time_left;
         $scope.download.timeSpent = args[0].time_spent;
+        $scope.download.theoricalStartDatetime = args[0].theorical_start_datetime;
+
+        if ($scope.startCounter == 0 && $scope.download.theoricalStartDatetime != 0 && $scope.download.theoricalStartDatetime > new Date().getTime()) {
+          $scope.startCounter = Math.abs(($scope.download.theoricalStartDatetime - new Date().getTime()) / 1000);
+        }
       }
 
       $scope.download = download;
       $scope.downloadPriorities = downloadPriorities;
       $scope.downloadPriority = {};
+      $scope.startCounter = 0;
       $scope.downloadPriority.selected = $filter('filter')(downloadPriorities, { id: $scope.download.priority })[0];
-
+      if ($scope.download.theoricalStartDatetime != 0 && $scope.download.theoricalStartDatetime > new Date().getTime()) {
+        $scope.startCounter = Math.abs(($scope.download.theoricalStartDatetime - new Date().getTime()) / 1000);
+      }
       DownloadResourceFctry.infos({Id: download.id},
         function (response) {
           if (response != '') {

@@ -29,6 +29,7 @@ angular.module('plowshareFrontApp')
                 $scope.gridOptions.data[iterator].timeLeft = downloadNotification.time_left;
                 $scope.gridOptions.data[iterator].status = downloadNotification.status;
                 $scope.gridOptions.data[iterator].sizeFile = downloadNotification.size_file;
+                $scope.gridOptions.data[iterator].averageSpeed = downloadNotification.average_speed;
                 if (downloadNotification.status != 3) { // TODO: use constant
                   $scope.gridOptions.data[iterator].subscribed = true;
                 }
