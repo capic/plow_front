@@ -31,10 +31,10 @@ angular.module('plowshareFrontApp')
       $scope.downloadPriority = {};
       $scope.downloadPriority.selected = $filter('filter')(downloadPriorities, { id: $scope.download.priority })[0];
 
-      DownloadResourceFctry.infos({Id: download.id},
+      DownloadResourceFctry.logs({Id: download.id},
         function (response) {
           if (response != '') {
-            $scope.download.infosPlowdown = response.infos;
+            $scope.download.infosPlowdown = response.logs;
             $wamp.subscribe('plow.downloads.download.' + download.id, onevent);
           } else {
             $translate('infosPlowdown.form.NO_INFO').then(function (translation) {
@@ -45,7 +45,7 @@ angular.module('plowshareFrontApp')
       );
 
       $scope.delete = function () {
-        DownloadResourceFctry.deleteInfos({}, {id: download.id},
+        DownloadResourceFctry.deleteLogs({}, {id: download.id},
           function (response) {
             if (response.status == true) {
               $translate('infosPlowdown.form.NO_INFO').then(function (translation) {

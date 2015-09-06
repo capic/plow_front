@@ -12,6 +12,7 @@ angular.module('plowshareFrontApp')
     function ($scope, DownloadResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp) {
 
       function onevent(args) {
+        console.log(args);
         angular.forEach($scope.gridOptions.data,
           function(download){
             download.subscribed = false;

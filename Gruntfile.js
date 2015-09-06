@@ -263,7 +263,8 @@ module.exports = function (grunt) {
           conservativeCollapse: true,
           collapseBooleanAttributes: true,
           removeCommentsFromCDATA: true,
-          removeOptionalTags: true
+          removeOptionalTags: true,
+          keepClosingSlash: true
         },
         files: [{
           expand: true,
@@ -308,7 +309,8 @@ module.exports = function (grunt) {
             '*.html',
             'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
-            'fonts/*'
+            'fonts/*',
+            'l10n/*'
           ]
         }, {
           expand: true,
@@ -320,6 +322,16 @@ module.exports = function (grunt) {
           cwd: 'bower_components/bootstrap/dist',
           src: 'fonts/*',
           dest: '<%= yeoman.dist %>'
+        }, {
+          expand: true,
+          cwd: 'bower_components/angular-ui-grid',
+          src: '*.woff',
+          dest: '<%= yeoman.dist %>/styles'
+        }, {
+          expand: true,
+          cwd: 'app/asset/fonts',
+          src: '**',
+          dest: '<%= yeoman.dist %>/fonts'
         }]
       },
       styles: {

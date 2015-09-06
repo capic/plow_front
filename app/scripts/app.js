@@ -81,7 +81,7 @@ angular
     $translateProvider.useLocalStorage();
   }])
   .constant('settings', {
-    'SERVER_ADDRESS': 'http://capic.hd.free.fr',
+    'SERVER_ADDRESS': 'http://capic.hd.free.fr:3000/',
     'SERVER_NOTIFICATION': 'ws://capic.hd.free.fr:8181/ws'
   })
   .config(function (settings, $wampProvider) {
