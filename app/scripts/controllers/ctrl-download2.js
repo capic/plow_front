@@ -52,7 +52,12 @@ angular.module('plowshareFrontApp')
         enableGroupHeaderSelection: true,
         rowHeight: 35,
         columnDefs: [
-          {name: 'package', displayName: 'Paquet', grouping: {groupPriority: 1}, cellTooltip: true},
+          {
+            name: 'package',
+            displayName: 'Paquet',
+            //grouping: {groupPriority: 1},
+            cellTooltip: true
+          },
           {
             name: 'name',
             displayName: 'Name',
@@ -72,7 +77,7 @@ angular.module('plowshareFrontApp')
           {
             name: 'status',
             displayName: 'Status',
-            grouping: {groupPriority: 0},
+            // grouping: {groupPriority: 0},
             sort: {priority: 1, direction: 'asc'},
             cellFilter: 'downloadStatusFltr2',
             enableColumnResizing: false,

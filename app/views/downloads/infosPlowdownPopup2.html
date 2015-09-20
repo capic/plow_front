@@ -23,7 +23,20 @@
           <div class="form-group">
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.NAME' | translate}}</label>
 
-            <div class="col-lg-10">
+            <div class="col-lg-5">
+              <div class="input-group">
+                <input class="form-control" type="text" data-ng-model="edition.downloadDirectory"
+                       data-ng-disabled="!pathEdition" data-ng-init="pathEdition = false"
+                       data-ng-blur="modifyPath()"></input>
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button" data-ng-click="pathEdition = !pathEdition">
+                    <i class="fa fa-edit"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-lg-5">
               <input class="form-control" type="text" disabled="disabled" value="{{download.name}}"></input>
             </div>
           </div>
