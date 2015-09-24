@@ -199,7 +199,7 @@ angular.module('plowshareFrontApp')
       // to delete a download
       $scope.deleteDownload = function (entity) {
         DownloadResourceFctry.delete({Id: entity.id}, function (response) {
-          if (response.status === true) {
+          if (response.return === true) {
             var idx = $scope.gridOptions.data.indexOf(entity);
             $scope.gridOptions.data.splice(idx, 1);
           }
