@@ -12,32 +12,35 @@ angular.module('plowshareFrontApp')
     function ($scope, DownloadResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp) {
 
       function onevent(args) {
+        var down = angular.fromJson(args[0]);
+
         angular.forEach($scope.gridOptions.data,
-          function(download){
+          function (download) {
             download.subscribed = false;
           }
         );
 
-        angular.forEach(args[0],
-          function (downloadNotification) {
-            var iterator = 0;
-            var found = false;
-            while (iterator < $scope.gridOptions.data.length && !found) {
-              if (parseInt(downloadNotification.id) === parseInt($scope.gridOptions.data[iterator].id)) {
-                found = true;
-                $scope.gridOptions.data[iterator].progressFile = downloadNotification.progress_file;
-                $scope.gridOptions.data[iterator].timeLeft = downloadNotification.time_left;
-                $scope.gridOptions.data[iterator].status = downloadNotification.status;
-                $scope.gridOptions.data[iterator].sizeFile = downloadNotification.size_file;
-                $scope.gridOptions.data[iterator].averageSpeed = downloadNotification.average_speed;
-                if (downloadNotification.status != 3) { // TODO: use constant
-                  $scope.gridOptions.data[iterator].subscribed = true;
-                }
-              }
-              iterator++;
+        var iterator = 0;
+        var found = false;
+        while (iterator < $scope.gridOptions.data.length && !found) {
+          if (parseInt(down.id) === parseInt($scope.gridOptions.data[iterator].id)) {
+            found = true;
+            $scope.gridOptions.data[iterator].progress_file = down.progress_file;
+            $scope.gridOptions.data[iterator].time_left = down.time_left;
+            $scope.gridOptions.data[iterator].status = down.status;
+            $scope.gridOptions.data[iterator].size_file = down.size_file;
+            $scope.gridOptions.data[iterator].average_speed = down.average_speed;
+            if (down.status != 3) { // TODO: use constant
+              $scope.gridOptions.data[iterator].subscribed = true;
             }
           }
-        );
+          iterator++;
+        }
+
+        // => new download
+        if (!found) {
+          $scope.gridOptions.data.push(down);
+        }
       }
 
       $wamp.subscribe('plow.downloads.downloads', onevent);
@@ -59,7 +62,7 @@ angular.module('plowshareFrontApp')
           },
           /*{name: 'link', displayName: 'Link', enableCellEdit: false},*/
           {
-            name: 'sizeFile',
+            name: 'size_file',
             displayName: 'Size',
             cellFilter: 'bytesFltr',
             enableColumnResizing: false,
@@ -78,14 +81,14 @@ angular.module('plowshareFrontApp')
             //cellTemplate: '<div ng-if="row.groupHeader">{{COL_FIELD | downloadStatusFltr2}}</div>'
           },
           {
-            name: 'progressFile',
+            name: 'progress_file',
             displayName: '%',
             width: '40',
             enableColumnResizing: false,
             enableCellEdit: false
           },
           {
-            name: 'averageSpeed',
+            name: 'average_speed',
             displayName: 'Avg Speed',
             cellFilter: 'bytesPerSecondFltr',
             enableColumnResizing: false,
@@ -93,7 +96,7 @@ angular.module('plowshareFrontApp')
             width: 80
           },
           {
-            name: 'timeLeft',
+            name: 'time_left',
             displayName: 'Time Left',
             cellFilter: 'timeFltr',
             enableColumnResizing: false,
@@ -227,8 +230,6 @@ angular.module('plowshareFrontApp')
           }
         });
       };
-
-
     }
   ]
 )

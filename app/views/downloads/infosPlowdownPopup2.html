@@ -33,13 +33,14 @@
 
             <div class="col-lg-4">
               <input class="form-control" type="text" disabled="disabled"
-                     value="{{download.sizeFileDownloaded | bytesFltr}} / {{download.sizeFile | bytesFltr}}"></input>
+                     value="{{download.size_file_downloaded | bytesFltr}} / {{download.size_file | bytesFltr}}"></input>
             </div>
 
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.PROGRESS_FILE' | translate}}</label>
 
             <div class="col-lg-4">
-              <progressbar class="progress-striped active m-t-sm" value="download.progressFile" type="success"><b>{{download.progressFile}}%</b>
+              <progressbar class="progress-striped active m-t-sm" value="download.progress_file" type="success">
+                <b>{{download.progress_file}}%</b>
               </progressbar>
             </div>
           </div>
@@ -49,14 +50,14 @@
 
             <div class="col-lg-2">
               <input type="text" class="form-control" disabled="disabled"
-                     value="{{download.timeSpent | timeFltr}}">
+                     value="{{download.time_spent | timeFltr}}"></input>
             </div>
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.TIME_LEFT' |
               translate}}</label>
 
             <div class="col-lg-2">
               <input type="text" class="form-control" disabled="disabled"
-                     value="{{download.timeLeft | timeFltr}}">
+                     value="{{download.time_left | timeFltr}}"></input>
             </div>
 
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.CURRENT_SPEED' |
@@ -64,7 +65,7 @@
 
             <div class="col-lg-2">
               <input type="text" class="form-control" disabled="disabled"
-                     value="{{download.currentSpeed | bytesPerSecondFltr}}">
+                     value="{{download.current_speed | bytesPerSecondFltr}}"></input>
             </div>
           </div>
         </tab>
@@ -73,7 +74,7 @@
             <label class="col-lg-2 control-label">Id</label>
 
             <div class="col-lg-2">
-              <input type="text" class="form-control" disabled="disabled" value="{{download.id}}">
+              <input type="text" class="form-control" disabled="disabled" value="{{download.id}}"></input>
             </div>
 
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.STATUS' | translate}}</label>
@@ -88,7 +89,7 @@
 
             <div class="col-lg-2">
               <input type="text" class="form-control" disabled="disabled"
-                     value="{{download.averageSpeed | bytesPerSecondFltr}}">
+                     value="{{download.average_speed | bytesPerSecondFltr}}"></input>
             </div>
           </div>
           <div class="form-group">
@@ -97,7 +98,7 @@
 
             <div class="col-lg-10">
               <input type="text" class="form-control" disabled="disabled"
-                     value="{{download.filePath}}">
+                     value="{{download.file_path}}"></input>
             </div>
           </div>
           <div class="form-group">
@@ -105,13 +106,13 @@
 
             <div class="col-lg-4">
               <input class="form-control" type="text" disabled="disabled"
-                     value="{{download.sizePartDownloaded | bytesFltr}} / {{download.sizePart | bytesFltr}}""></input>
+                     value="{{download.size_part_downloaded | bytesFltr}} / {{download.size_part | bytesFltr}}"></input>
             </div>
 
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.PROGRESS_PART' | translate}}</label>
 
             <div class="col-lg-4">
-              <progressbar class="progress-striped active m-t-sm" value="download.progressPart" type="success"><b>{{download.progressPart}}%</b>
+              <progressbar class="progress-striped active m-t-sm" value="download.progress_part" type="success"><b>{{download.progress_part}}%</b>
               </progressbar>
             </div>
           </div>
@@ -119,21 +120,21 @@
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.PID_PYTHON' | translate}}</label>
 
             <div class="col-lg-2">
-              <input class="form-control" type="text" disabled="disabled" value="{{download.pidPython}}"></input>
+              <input class="form-control" type="text" disabled="disabled" value="{{download.pid_python}}"></input>
             </div>
 
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.PID_PLOWDOWN' | translate}}</label>
 
             <div class="col-lg-2">
               <input class="form-control" type="text" disabled="disabled"
-                     value="{{download.pidPlowdown}}"></input>
+                     value="{{download.pid_plowdown}}"></input>
             </div>
 
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.PID_CURL' | translate}}</label>
 
             <div class="col-lg-2">
               <input class="form-control" type="text" disabled="disabled"
-                     value="{{download.pidCurl}}"></input>
+                     value="{{download.pid_curl}}"></input>
             </div>
           </div>
         </tab>
@@ -144,7 +145,7 @@
 
             <div class="col-lg-3">
               <input type="text" class="form-control" disabled="disabled"
-                     value="{{download.lifecycleInsertDate | date: 'dd/MM/yyyy HH:mm:ss'}}">
+                     value="{{download.lifecycle_insert_date | date: 'dd/MM/yyyy HH:mm:ss': '-0200'}}"></input>
             </div>
           </div>
           <div class="form-group">
@@ -153,12 +154,11 @@
 
             <div class="col-lg-3">
               <input class="form-control" type="text" disabled="disabled"
-                     value="{{download.lifecycleUpdateDate | date: 'dd/MM/yyyy HH:mm:ss'}}"></input>
+                     value="{{download.lifecycle_update_date | date: 'dd/MM/yyyy HH:mm:ss': '-0200'}}"></input>
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-lg-2 control-label">{{'infosPlowdown.form.START_COUNTER' |
-              translate}}</label>
+          <div class="form-group" data-ng-if="startCounter > 0">
+            <label class="col-lg-2 control-label">{{'infosPlowdown.form.START_COUNTER' | translate}}</label>
 
             <div class="col-lg-3">
               <p class="form-control-static">
@@ -167,20 +167,24 @@
             </div>
           </div>
         </tab>
+        <!--<tab heading="{{'infosPlowdown.form.MULTI_PARTS' | translate}}">
+          <div id="gridMultiParts" ui-grid="gridOptions" ui-grid-resize-columns class="grid"></div>
+        </tab>-->
       </tabset>
     </div>
 
     <div class="form-group">
       <label> {{'infosPlowdown.form.AUTOSCROLL' | translate}}</label>
       <label class="i-switch m-t-sm m-r">
-        <input type="checkbox" data-ng-model="autoscroll">
+        <input type="checkbox" data-ng-model="autoscroll"></input>
         <i></i>
       </label>
     </div>
     <div class="form-group">
       <label>Informations</label>
       <textarea class="form-control" rows="15" readonly wrap="off"
-                placeholder="{{'infosPlowdown.form.PLACE_HOLDER' | translate}}" scroll-glue="true">{{download.infosPlowdown}}</textarea>
+                placeholder="{{'infosPlowdown.form.PLACE_HOLDER' | translate}}"
+                scroll-glue="true">{{download.logs}}</textarea>
     </div>
     <button type="submit" class="btn btn-warning" data-ng-click="delete()">{{'infosPlowdown.form.DELETE' |
       translate}}
