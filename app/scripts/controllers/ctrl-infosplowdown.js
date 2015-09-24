@@ -96,17 +96,21 @@ angular.module('plowshareFrontApp')
 
       $scope.modifyPath = function () {
         if ($scope.edition.downloadDirectory != $scope.download.directory) {
+          var oldStatus = download.status;
+          //TODO: utiliser une constante
+          download.status = 9;
           DownloadResourceFctry.move({id: download.id, directory: $scope.edition.downloadDirectory},
             function (down) {
               $scope.download = down;
             },
             function () {
-
+              download.status = oldStatus;
             }
           );
+
         }
 
-        $scope.pathEdition = !$scope.pathEdition;
+        $scope.pathEdition = false;
       };
     }
   ]
