@@ -234,8 +234,14 @@ angular.module('plowshareFrontApp')
             }
           }
         });
+
+        $scope.modal.result.then(
+          function (downReturned) {
+            var idx = $scope.gridOptions.data.indexOf(downReturned);
+            $scope.gridOptions.data[idx] = downReturned;
+          }
+        );
       };
     }
   ]
-)
-;
+);

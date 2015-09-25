@@ -83,7 +83,7 @@ angular.module('plowshareFrontApp')
       };
 
       $scope.ok = function () {
-        $modalInstance.dismiss('cancel');
+        $modalInstance.close($scope.download);
       };
 
       $scope.$watch("downloadPriority.selected",
