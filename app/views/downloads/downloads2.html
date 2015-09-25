@@ -30,6 +30,20 @@
       <div id="grid1" ui-grid="gridOptions" ui-grid-selection ui-grid-grouping ui-grid-resize-columns ui-grid-edit
            class="grid"></div>
     </div>
+
+    <div class="btn-group" dropdown is-open="status.isopen">
+      <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled">
+        Button dropdown <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href>Action</a></li>
+        <li><a href>Another action</a></li>
+        <li><a href>Something else here</a></li>
+        <li class="divider"></li>
+        <li><a href>Separated link</a></li>
+      </ul>
+    </div>
+
     <footer class="panel-footer">
       <div class="row">
         <div class="col-sm-4 hidden-xs">

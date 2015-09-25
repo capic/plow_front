@@ -123,13 +123,24 @@ angular.module('plowshareFrontApp')
             name: 'Actions',
             width: '100',
             enableColumnResizing: false,
-            cellTemplate: '<div ng-if="!row.groupHeader" class="btn-group">' +
-            '<a data-ng-click="startDownloading(row.entity);" data-ng-class="{\'disabled\': row.entity.status != 1, \'text-success\': row.entity.subscribed }" class="btn btn-action glyphicon glyphicon-play" href></a>' +
-            '<a data-ng-click="grid.appScope.stopDownloading(row.entity);" data-ng-class="{\'disabled\': row.entity.status == 1}" class="btn btn-action glyphicon glyphicon-stop" href></a>' +
-            '<a data-ng-click="grid.appScope.refreshDownload(row.entity);" class="btn btn-action glyphicon glyphicon-refresh" data-ng-class="grid.appScope.downloadRefreshInProgress[row.entity.id]" href></a>' +
-            '<a data-ng-click="grid.appScope.deleteDownload(row.entity);" class=" btn btn-action glyphicon glyphicon-trash" href></a>' +
-            '<a data-ng-click="grid.appScope.infosPlowdown(row.entity);" class=" btn btn-action glyphicon glyphicon-list-alt" href> </a>' +
-            '</div>'
+            enableCellEdit: false,
+            cellTemplate: '<div class="ui-grid-cell-contents"><div ng-if="!row.groupHeader" class="btn-group" dropdown dropdown-append-to-body>' +
+            '<button type="button" class="btn btn-xs btn-primary dropdown-toggle" dropdown-toggle>' +
+              '<span class="caret"></span>' +
+            '</button>' +
+            '<ul class="dropdown-menu" role="menu">' +
+              '<li>' +
+                '<a data-ng-click="startDownloading(row.entity);" data-ng-class="{\'disabled\': row.entity.status != 1, \'text-success\': row.entity.subscribed }" class="btn btn-action glyphicon glyphicon-play" href></a>' +
+                '<a data-ng-click="grid.appScope.stopDownloading(row.entity);" data-ng-class="{\'disabled\': row.entity.status == 1}" class="btn btn-action glyphicon glyphicon-stop" href></a>' +
+
+                '<a data-ng-click="grid.appScope.refreshDownload(row.entity);" class="btn btn-action glyphicon glyphicon-refresh" data-ng-class="grid.appScope.downloadRefreshInProgress[row.entity.id]" href></a>' +
+
+                '<a data-ng-click="grid.appScope.deleteDownload(row.entity);" class=" btn btn-action glyphicon glyphicon-trash" href></a>' +
+
+                '<a data-ng-click="grid.appScope.infosPlowdown(row.entity);" class=" btn btn-action glyphicon glyphicon-list-alt" href> </a>' +
+              '</li>'+
+            '</ul>' +
+            '</div></div>'
           }
 
         ],
@@ -230,14 +241,14 @@ angular.module('plowshareFrontApp')
           size: 'lg',
           resolve: {
             download: function () {
-              return angular.copy(download);
+              return download;
             }
           }
         });
 
         $scope.modal.result.then(
           function (downReturned) {
-            var idx = $scope.gridOptions.data.indexOf(downReturned);
+            var idx = $scope.gridOptions.data.indexOf(download);
             $scope.gridOptions.data[idx] = downReturned;
           }
         );

@@ -86,6 +86,10 @@ angular.module('plowshareFrontApp')
         $modalInstance.close($scope.download);
       };
 
+      $scope.cancel = function () {
+        $modalInstance.close($scope.download);
+      };
+
       $scope.$watch("downloadPriority.selected",
         function(newVal, oldVal) {
           if (newVal != oldVal) {
@@ -95,7 +99,7 @@ angular.module('plowshareFrontApp')
       );
 
       $scope.modifyPath = function () {
-        if ($scope.edition.downloadDirectory != $scope.download.directory) {
+        if ($scope.edition.downloadDirectory != '' && $scope.edition.downloadDirectory != $scope.download.directory) {
           var oldStatus = download.status;
           //TODO: utiliser une constante
           download.status = 9;
