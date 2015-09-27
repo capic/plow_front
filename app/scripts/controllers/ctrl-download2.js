@@ -120,8 +120,8 @@ angular.module('plowshareFrontApp')
             width: 70
           },
           {
-            name: 'Actions',
-            width: '100',
+            name: 'A',
+            width: '30',
             enableColumnResizing: false,
             enableCellEdit: false,
             cellTemplate: '<div class="ui-grid-cell-contents"><div ng-if="!row.groupHeader" class="btn-group" dropdown dropdown-append-to-body>' +
@@ -130,14 +130,18 @@ angular.module('plowshareFrontApp')
             '</button>' +
             '<ul class="dropdown-menu" role="menu">' +
               '<li>' +
-                '<a data-ng-click="startDownloading(row.entity);" data-ng-class="{\'disabled\': row.entity.status != 1, \'text-success\': row.entity.subscribed }" class="btn btn-action glyphicon glyphicon-play" href></a>' +
+            '<div class="btn-group btn-group-xs">' +
+            '<button type="button" class="btn btn-default" data-ng-click="startDownloading(row.entity);" data-ng-class="{\'disabled\': row.entity.status != 1, \'text-success\': row.entity.subscribed }"><i class="glyphicon glyphicon-play"></i></button>' +
+            '<button type="button" class="btn btn-default" data-ng-click="grid.appScope.stopDownloading(row.entity);" data-ng-class="{\'disabled\': row.entity.status == 1}"><i class="glyphicon glyphicon-stop"></i></button>' +
+            '<button type="button" class="btn btn-default" data-ng-click="grid.appScope.refreshDownload(row.entity);" data-ng-class="grid.appScope.downloadRefreshInProgress[row.entity.id]"><i class="glyphicon glyphicon-refresh"></i></button>' +
+            '<button type="button" class="btn btn-default" data-ng-click="grid.appScope.deleteDownload(row.entity);"><i class="glyphicon glyphicon-trash"></i></button>' +
+            '<button type="button" class="btn btn-default" data-ng-click="grid.appScope.infosPlowdown(row.entity);"><i class="glyphicon glyphicon-list-alt"></i></button>' +
+            '</div>' +
+              /*'<a data-ng-click="startDownloading(row.entity);" data-ng-class="{\'disabled\': row.entity.status != 1, \'text-success\': row.entity.subscribed }" class="btn btn-action glyphicon glyphicon-play" href></a>' +
                 '<a data-ng-click="grid.appScope.stopDownloading(row.entity);" data-ng-class="{\'disabled\': row.entity.status == 1}" class="btn btn-action glyphicon glyphicon-stop" href></a>' +
-
                 '<a data-ng-click="grid.appScope.refreshDownload(row.entity);" class="btn btn-action glyphicon glyphicon-refresh" data-ng-class="grid.appScope.downloadRefreshInProgress[row.entity.id]" href></a>' +
-
                 '<a data-ng-click="grid.appScope.deleteDownload(row.entity);" class=" btn btn-action glyphicon glyphicon-trash" href></a>' +
-
-                '<a data-ng-click="grid.appScope.infosPlowdown(row.entity);" class=" btn btn-action glyphicon glyphicon-list-alt" href> </a>' +
+               '<a data-ng-click="grid.appScope.infosPlowdown(row.entity);" class=" btn btn-action glyphicon glyphicon-list-alt" href> </a>' +*/
               '</li>'+
             '</ul>' +
             '</div></div>'

@@ -26,7 +26,8 @@ angular
     'ui.grid.edit',
     'ui.grid.autoResize',
     'luegg.directives',
-    'timer'
+    'timer',
+    'ng-context-menu'
   ])
   .config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
