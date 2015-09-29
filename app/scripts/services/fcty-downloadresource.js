@@ -32,6 +32,6 @@ angular.module('plowshareFrontApp')
         "deleteLogs": {url: settings.SERVER_ADDRESS + 'downloads/logs', method: 'POST'},
         'updatePriority': {url: settings.SERVER_ADDRESS + 'downloads/priority', method: 'POST'},
         'move': {url: settings.SERVER_ADDRESS + 'downloads/move', method: 'POST'}
-      }
+}
     );
   }]);

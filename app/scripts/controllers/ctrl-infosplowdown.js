@@ -56,6 +56,35 @@ angular.module('plowshareFrontApp')
         $scope.startCounter = (Date.parse($scope.download.theorical_start_datetime) - new Date().getTime()) / 1000;
       }
 
+      $scope.gridOptions = {
+        treeRowHeaderAlwaysVisible: false,
+        rowHeight: 35,
+        columnDefs: [
+          {
+            name: 'package',
+            displayName: 'Paquet',
+            //grouping: {groupPriority: 1},
+            cellTooltip: true
+          },
+          {
+            name: 'name',
+            displayName: 'Name',
+            cellTooltip: true,
+            headerCellFilter: 'translate',
+            enableCellEdit: false
+          }
+        ],
+        onRegisterApi: function(gridApi) {
+          $scope.gridApi = gridApi;
+        }
+      };
+
+      DownloadResourceFctry.parts({}, {packet: download.packet},
+        function(response) {
+          $scope.gridOptions.data = response;
+        }
+      );
+
       DownloadResourceFctry.logs({Id: download.id},
         function (response) {
           if (response != '') {
