@@ -14,8 +14,8 @@
             <label class="col-lg-1 control-label">{{'infosPlowdown.form.PRIORITY' | translate}}</label>
 
             <div class="col-lg-2">
-              <select name="priority" class="form-control m-b" ng-model="downloadPriority.selected"
-                      ng-options="p.value | translate for p in downloadPriorities track by p.id">
+              <select name="priority" class="form-control m-b disabled" ng-model="downloadPriority.selected"
+                      ng-options="p.value | translate for p in downloadPriorities track by p.id" disabled="download.status > 2">
               </select>
             </div>
           </div>
