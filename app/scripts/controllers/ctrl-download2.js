@@ -52,7 +52,12 @@ angular.module('plowshareFrontApp')
         enableGroupHeaderSelection: true,
         rowHeight: 35,
         columnDefs: [
-          {name: 'package', displayName: 'Paquet', grouping: {groupPriority: 1}, cellTooltip: true},
+          {
+            name: 'package',
+            displayName: 'Paquet',
+            //grouping: {groupPriority: 1},
+            cellTooltip: true
+          },
           {
             name: 'name',
             displayName: 'Name',
@@ -72,7 +77,7 @@ angular.module('plowshareFrontApp')
           {
             name: 'status',
             displayName: 'Status',
-            grouping: {groupPriority: 0},
+            // grouping: {groupPriority: 0},
             sort: {priority: 1, direction: 'asc'},
             cellFilter: 'downloadStatusFltr2',
             enableColumnResizing: false,
@@ -115,21 +120,15 @@ angular.module('plowshareFrontApp')
             width: 70
           },
           {
-            name: 'Actions',
-            width: '100',
+            name: ' ',
+            width: '35',
             enableColumnResizing: false,
-            cellTemplate: '<div ng-if="!row.groupHeader" class="btn-group">' +
-            '<a data-ng-click="startDownloading(row.entity);" data-ng-class="{\'disabled\': row.entity.status != 1, \'text-success\': row.entity.subscribed }" class="btn btn-action glyphicon glyphicon-play" href></a>' +
-            '<a data-ng-click="grid.appScope.stopDownloading(row.entity);" data-ng-class="{\'disabled\': row.entity.status == 1}" class="btn btn-action glyphicon glyphicon-stop" href></a>' +
-            '<a data-ng-click="grid.appScope.refreshDownload(row.entity);" class="btn btn-action glyphicon glyphicon-refresh" data-ng-class="grid.appScope.downloadRefreshInProgress[row.entity.id]" href></a>' +
-            '<a data-ng-click="grid.appScope.deleteDownload(row.entity);" class=" btn btn-action glyphicon glyphicon-trash" href></a>' +
-            '<a data-ng-click="grid.appScope.infosPlowdown(row.entity);" class=" btn btn-action glyphicon glyphicon-list-alt" href> </a>' +
-            '</div>'
+            enableCellEdit: false,
+            cellTemplate: '/views/downloads/myDropDown.html'
           }
+      ],
 
-        ],
-        onRegisterApi: function
-          (gridApi) {
+        onRegisterApi: function(gridApi) {
           $scope.gridApi = gridApi;
           $scope.gridApi.selection.on.rowSelectionChanged($scope, function (rowChanged) {
             if (typeof(rowChanged.treeLevel) !== 'undefined' && rowChanged.treeLevel > -1) {
@@ -173,6 +172,7 @@ angular.module('plowshareFrontApp')
 
       // to refresh only one download
       $scope.refreshDownload = function (entity) {
+        $scope.allDownloadRefresh = true;
         $scope.downloadRefreshInProgress[entity.id] = 'glyphicon-refresh-animate';
 
         DownloadResourceFctry.refreshDownload({'Id': entity.id}, function (response) {
@@ -180,6 +180,7 @@ angular.module('plowshareFrontApp')
           $scope.gridOptions.data[idx] = response;
 
           $scope.downloadRefreshInProgress[entity.id] = '';
+          $scope.allDownloadRefresh = false;
         });
       };
 
@@ -225,12 +226,18 @@ angular.module('plowshareFrontApp')
           size: 'lg',
           resolve: {
             download: function () {
-              return angular.copy(download);
+              return download;
             }
           }
         });
+
+        $scope.modal.result.then(
+          function (downReturned) {
+            var idx = $scope.gridOptions.data.indexOf(download);
+            $scope.gridOptions.data[idx] = downReturned;
+          }
+        );
       };
     }
   ]
-)
-;
+);

@@ -10,8 +10,6 @@
 angular.module('plowshareFrontApp')
   .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', '$translate', '$filter', 'DownloadResourceFctry', 'downloadPriorities', 'download', '$wamp',
     function ($scope, $modalInstance, $translate, $filter, DownloadResourceFctry, downloadPriorities, download, $wamp) {
-      $scope.autoscroll = true;
-
       function onevent(args) {
         var down = angular.fromJson(args[0]);
 
@@ -49,6 +47,10 @@ angular.module('plowshareFrontApp')
       $scope.downloadPriority = {};
       $scope.startCounter = 0;
       $scope.downloadPriority.selected = $filter('filter')(downloadPriorities, { id: $scope.download.priority })[0];
+      $scope.autoscroll = true;
+      $scope.pathEdition = false;
+      $scope.edition = {};
+      $scope.edition.downloadDirectory = angular.copy($scope.download.directory);
 
       if (Date.parse($scope.download.theorical_start_datetime) > new Date().getTime()) {
         $scope.startCounter = (Date.parse($scope.download.theorical_start_datetime) - new Date().getTime()) / 1000;
@@ -81,7 +83,11 @@ angular.module('plowshareFrontApp')
       };
 
       $scope.ok = function () {
-        $modalInstance.dismiss('cancel');
+        $modalInstance.close($scope.download);
+      };
+
+      $scope.cancel = function () {
+        $modalInstance.close($scope.download);
       };
 
       $scope.$watch("downloadPriority.selected",
@@ -91,6 +97,25 @@ angular.module('plowshareFrontApp')
           }
         }
       );
+
+      $scope.modifyPath = function () {
+        if ($scope.edition.downloadDirectory != '' && $scope.edition.downloadDirectory != $scope.download.directory) {
+          var oldStatus = download.status;
+          //TODO: utiliser une constante
+          download.status = 9;
+          DownloadResourceFctry.move({id: download.id, directory: $scope.edition.downloadDirectory},
+            function (down) {
+              $scope.download = down;
+            },
+            function () {
+              download.status = oldStatus;
+            }
+          );
+
+        }
+
+        $scope.pathEdition = false;
+      };
     }
   ]
 );

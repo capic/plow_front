@@ -30,6 +30,28 @@
       <div id="grid1" ui-grid="gridOptions" ui-grid-selection ui-grid-grouping ui-grid-resize-columns ui-grid-edit
            class="grid"></div>
     </div>
+    <div class="dropdown position-fixed" id="myMenu">
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a class="pointer" role="menuitem" tabindex="1"
+             ng-click="panel.highlight = true">
+            Menu 1
+          </a>
+        </li>
+        <li>
+          <a class="pointer" role="menuitem" tabindex="2"
+             ng-click="panel.highlight = false">
+            Menu 2
+          </a>
+        </li>
+        <li>
+          <a class="pointer" role="menuitem" tabindex="3"
+             ng-click="panel.highlight = false">
+            Menu 3
+          </a>
+        </li>
+      </ul>
+    </div>
     <footer class="panel-footer">
       <div class="row">
         <div class="col-sm-4 hidden-xs">

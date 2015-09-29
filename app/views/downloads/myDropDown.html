@@ -1,0 +1,33 @@
+<div class="btn-group" dropdown dropdown-append-to-body>
+  <button type="button" class="btn btn-xs btn-primary dropdown-toggle" dropdown-toggle>
+    <i class="glyphicon glyphicon-list"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right" role="menu">
+    <li>
+      <a data-ng-click="startDownloading(row.entity);"
+         data-ng-class="{'disabled': row.entity.status != 1, 'text-success': row.entity.subscribed }"
+         class="btn btn-action" href><i class="glyphicon glyphicon-play"> </i>Start</a>
+    </li>
+    <li>
+      <a data-ng-click="grid.appScope.stopDownloading(row.entity);" data-ng-class="{'disabled': row.entity.status == 1}"
+         class="btn btn-action" href><i class="glyphicon glyphicon-stop"> </i>Stop</a>
+    </li>
+    <li>
+      <a data-ng-click="grid.appScope.refreshDownload(row.entity);" class="btn btn-action"
+         data-ng-class="grid.appScope.downloadRefreshInProgress[row.entity.id]" href><i
+        class="glyphicon glyphicon-refresh"> </i>Refresh</a>
+    </li>
+    <li>
+      <a data-ng-click="grid.appScope.deleteDownload(row.entity);" class="btn btn-action"
+         href><i class="glyphicon glyphicon-trash"> </i>Delete</a>
+    </li>
+    <!--<li>
+      <a data-ng-click="grid.appScope.modeDownload(row.entity);" class="btn btn-action"
+         href><i class="glyphicon glyphicon-trash"> </i>Move</a>
+    </li>-->
+    <li>
+      <a data-ng-click="grid.appScope.infosPlowdown(row.entity);" class="btn btn-action"
+         href><i class="glyphicon glyphicon-list-alt"> </i>Infos</a>
+    </li>
+  </ul>
+</div>

@@ -6,6 +6,7 @@ var app = angular.module('app', [
     'ngAnimate',
     'ngCookies',
     'ngStorage',
+    'ngTouch',
     'ui.router',
     'ui.bootstrap',
     'ui.load',
@@ -21,14 +22,14 @@ var app = angular.module('app', [
   [          '$rootScope', '$state', '$stateParams',
     function ($rootScope,   $state,   $stateParams) {
         $rootScope.$state = $state;
-        $rootScope.$stateParams = $stateParams;        
+        $rootScope.$stateParams = $stateParams;
     }
   ]
 )
 .config(
   [          '$stateProvider', '$urlRouterProvider', '$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
     function ($stateProvider,   $urlRouterProvider,   $controllerProvider,   $compileProvider,   $filterProvider,   $provide) {
-        
+
         // lazy controller, directive and service
         app.controller = $controllerProvider.register;
         app.directive  = $compileProvider.directive;
@@ -40,7 +41,7 @@ var app = angular.module('app', [
 
         $urlRouterProvider
             .otherwise('/app/dashboard');
-        $stateProvider            
+        $stateProvider
             .state('app', {
                 abstract: true,
                 url: '/app',
@@ -65,7 +66,7 @@ var app = angular.module('app', [
             .state('app.ui.grid', {
                 url: '/grid',
                 templateUrl: 'tpl/ui_grid.html'
-            })            
+            })
             .state('app.ui.bootstrap', {
                 url: '/bootstrap',
                 templateUrl: 'tpl/ui_bootstrap.html'
@@ -308,7 +309,7 @@ var app = angular.module('app', [
 .constant('JQ_CONFIG', {
     easyPieChart:   ['js/jquery/charts/easypiechart/jquery.easy-pie-chart.js'],
     sparkline:      ['js/jquery/charts/sparkline/jquery.sparkline.min.js'],
-    plot:           ['js/jquery/charts/flot/jquery.flot.min.js', 
+    plot:           ['js/jquery/charts/flot/jquery.flot.min.js',
                         'js/jquery/charts/flot/jquery.flot.resize.js',
                         'js/jquery/charts/flot/jquery.flot.tooltip.min.js',
                         'js/jquery/charts/flot/jquery.flot.spline.js',
@@ -330,7 +331,7 @@ var app = angular.module('app', [
     dataTable:      ['js/jquery/datatables/jquery.dataTables.min.js',
                         'js/jquery/datatables/dataTables.bootstrap.js',
                         'js/jquery/datatables/dataTables.bootstrap.css'],
-    vectorMap:      ['js/jquery/jvectormap/jquery-jvectormap.min.js', 
+    vectorMap:      ['js/jquery/jvectormap/jquery-jvectormap.min.js',
                         'js/jquery/jvectormap/jquery-jvectormap-world-mill-en.js',
                         'js/jquery/jvectormap/jquery-jvectormap-us-aea-en.js',
                         'js/jquery/jvectormap/jquery-jvectormap.css'],
