@@ -19,7 +19,6 @@
     "bootstrap": "~3.2.0",
     "es5-shim": "~3.1.0",
     "json3": "~3.3.1",
-    "ng-context-menu": "~1.0.2",
     "ngstorage": "~0.3.0"
   },
   "devDependencies": {
