@@ -46,7 +46,7 @@ angular.module('plowshareFrontApp')
       $scope.downloadPriorities = downloadPriorities;
       $scope.downloadPriority = {};
       $scope.startCounter = 0;
-      $scope.downloadPriority.selected = $filter('filter')(downloadPriorities, { id: $scope.download.priority })[0];
+      $scope.downloadPriority.selected = $filter('filter')(downloadPriorities, {id: $scope.download.priority})[0];
       $scope.autoscroll = true;
       $scope.pathEdition = false;
       $scope.edition = {};
@@ -61,10 +61,10 @@ angular.module('plowshareFrontApp')
         rowHeight: 35,
         columnDefs: [
           {
-            name: 'package',
-            displayName: 'Paquet',
-            //grouping: {groupPriority: 1},
-            cellTooltip: true
+            name: ' ',
+            field: ' ',
+            cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row) + 1}}</div>',
+            width: 25
           },
           {
             name: 'name',
@@ -72,15 +72,22 @@ angular.module('plowshareFrontApp')
             cellTooltip: true,
             headerCellFilter: 'translate',
             enableCellEdit: false
+          },
+          {
+            name: 'directory',
+            displayName: 'Directory',
+            cellTooltip: true,
+            headerCellFilter: 'translate',
+            enableCellEdit: false
           }
         ],
-        onRegisterApi: function(gridApi) {
+        onRegisterApi: function (gridApi) {
           $scope.gridApi = gridApi;
         }
       };
 
-      DownloadResourceFctry.parts({}, {packet: download.packet},
-        function(response) {
+      DownloadResourceFctry.query({package: $scope.download.package},
+        function (response) {
           $scope.gridOptions.data = response;
         }
       );
@@ -120,9 +127,9 @@ angular.module('plowshareFrontApp')
       };
 
       $scope.$watch("downloadPriority.selected",
-        function(newVal, oldVal) {
+        function (newVal, oldVal) {
           if (newVal != oldVal) {
-           DownloadResourceFctry.updatePriority({id: newVal});
+            DownloadResourceFctry.updatePriority({id: newVal});
           }
         }
       );

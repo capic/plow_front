@@ -128,3 +128,8 @@ div.editable:focus, div.editable:focus:hover {
   width: 100%;
   height: 400px;
 }
+
+.grid-package {
+  width: 100%;
+  height: 200px;
+}
