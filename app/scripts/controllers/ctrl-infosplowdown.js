@@ -139,6 +139,11 @@ angular.module('plowshareFrontApp')
           var oldStatus = download.status;
           //TODO: utiliser une constante
           download.status = 9;
+
+          if ($scope.edition.downloadDirectory.slice(-1) != '/') {
+            $scope.edition.downloadDirectory += '/';
+          }
+
           DownloadResourceFctry.move({id: download.id, directory: $scope.edition.downloadDirectory},
             function (down) {
               $scope.download = down;
@@ -151,6 +156,14 @@ angular.module('plowshareFrontApp')
         }
 
         $scope.pathEdition = false;
+      };
+
+      $scope.unrar = function() {
+        DownloadResourceFctry.unrar({id: download.id},
+          function() {
+
+          }
+        );
       };
     }
   ]
