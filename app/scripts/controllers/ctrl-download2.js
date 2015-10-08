@@ -53,7 +53,7 @@ angular.module('plowshareFrontApp')
         rowHeight: 35,
         columnDefs: [
           {
-            name: 'package',
+            name: 'download_package.name',
             displayName: 'Paquet',
             //grouping: {groupPriority: 1},
             cellTooltip: true

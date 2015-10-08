@@ -180,7 +180,7 @@
             </div>
           </div>
         </tab>
-        <tab ng-show="gridOptions.data.length > 1" heading="{{'infosPlowdown.form.MULTI_PARTS' | translate}}">
+        <tab ng-show="download.download_package != null" heading="{{'infosPlowdown.form.MULTI_PARTS' | translate}}">
           <div id="gridMultiParts" ui-grid="gridOptions" ui-grid-resize-columns class="grid-package"></div>
           <div class="line line-dashed b-b line-lg pull-in"></div>
           <button class="btn m-b-xs w-xs btn-default btn-xs" data-ng-click="unrar()">Unrar</button>

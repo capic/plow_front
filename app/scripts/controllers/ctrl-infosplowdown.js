@@ -86,11 +86,13 @@ angular.module('plowshareFrontApp')
         }
       };
 
-      DownloadResourceFctry.query({package: $scope.download.package},
-        function (response) {
-          $scope.gridOptions.data = response;
-        }
-      );
+      if ($scope.download.download_package != null) {
+        DownloadResourceFctry.query({package_id: $scope.download.download_package.id},
+          function (response) {
+            $scope.gridOptions.data = response;
+          }
+        );
+      }
 
       DownloadResourceFctry.logs({Id: download.id},
         function (response) {
