@@ -51,6 +51,7 @@ angular.module('plowshareFrontApp')
       $scope.pathEdition = false;
       $scope.edition = {};
       $scope.edition.downloadDirectory = angular.copy($scope.download.directory);
+      $scope.nbrDownloadsToFinishBeforeUnrar = 0;
 
       if (Date.parse($scope.download.theorical_start_datetime) > new Date().getTime()) {
         $scope.startCounter = (Date.parse($scope.download.theorical_start_datetime) - new Date().getTime()) / 1000;
@@ -79,6 +80,15 @@ angular.module('plowshareFrontApp')
             cellTooltip: true,
             headerCellFilter: 'translate',
             enableCellEdit: false
+          },
+          {
+            name: 'status',
+            displayName: 'Status',
+            cellTooltip: true,
+            headerCellFilter: 'translate',
+            cellFilter: 'downloadStatusFltr2',
+            enableCellEdit: false,
+            width: 80
           }
         ],
         onRegisterApi: function (gridApi) {
@@ -90,6 +100,10 @@ angular.module('plowshareFrontApp')
         DownloadResourceFctry.query({package_id: $scope.download.download_package.id},
           function (response) {
             $scope.gridOptions.data = response;
+
+            // TODO: use constant
+            $scope.nbrDownloadsToFinishBeforeUnrar = $filter('filter')(response, { status: 1 }).length;
+            $scope.nbrDownloadsToFinishBeforeUnrar += $filter('filter')(response, { status: 2 }).length;
           }
         );
       }

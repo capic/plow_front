@@ -15,7 +15,8 @@
 
             <div class="col-lg-2">
               <select name="priority" class="form-control m-b disabled" ng-model="downloadPriority.selected"
-                      ng-options="p.value | translate for p in downloadPriorities track by p.id" disabled="download.status > 2">
+                      ng-options="p.value | translate for p in downloadPriorities track by p.id"
+                      disabled="download.status > 2">
               </select>
             </div>
           </div>
@@ -183,7 +184,9 @@
         <tab ng-show="download.download_package != null" heading="{{'infosPlowdown.form.MULTI_PARTS' | translate}}">
           <div id="gridMultiParts" ui-grid="gridOptions" ui-grid-resize-columns class="grid-package"></div>
           <div class="line line-dashed b-b line-lg pull-in"></div>
-          <button class="btn m-b-xs w-xs btn-default btn-xs" data-ng-click="unrar()">Unrar</button>
+          <button class="btn m-b-xs w-xs btn-default btn-xs" data-ng-click="unrar()"
+                  data-ng-class="{'disabled': nbrDownloadsToFinishBeforeUnrar > 0}">Unrar
+          </button>
         </tab>
       </tabset>
     </div>
