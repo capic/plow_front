@@ -153,8 +153,11 @@ angular.module('plowshareFrontApp')
       $scope.modifyPath = function () {
         if ($scope.edition.downloadDirectory != '' && $scope.edition.downloadDirectory != $scope.download.directory) {
           var oldStatus = download.status;
+
           //TODO: utiliser une constante
-          download.status = 9;
+          if (download.status != 2 && download.status != 1) {
+            download.status = 9;
+          }
 
           if ($scope.edition.downloadDirectory.slice(-1) != '/') {
             $scope.edition.downloadDirectory += '/';
