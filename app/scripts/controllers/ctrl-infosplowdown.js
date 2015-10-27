@@ -110,13 +110,13 @@ angular.module('plowshareFrontApp')
 
       DownloadResourceFctry.logs({Id: download.id},
         function (response) {
-          if (response != '') {
+          if (response.logs != undefined && response.logs != '') {
             $scope.download.logs = response.logs;
             $wamp.subscribe('plow.downloads.download.' + download.id, onevent);
             $wamp.subscribe('plow.downloads.logs.' + download.id, oneventLogs);
           } else {
             $translate('infosPlowdown.form.NO_INFO').then(function (translation) {
-              $scope.download.infosPlowdown = translation;
+              $scope.download.logs = translation;
             });
           }
         }
