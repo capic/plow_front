@@ -10,7 +10,6 @@
 angular.module('plowshareFrontApp')
   .controller('DownloadCtrl2', ['$scope', 'DownloadResourceFctry', 'downloadStatusListValue', 'downloadPriorities', '$modal', 'uiGridGroupingConstants', '$wamp',
     function ($scope, DownloadResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp) {
-
       function onevent(args) {
         var down = angular.fromJson(args[0]);
 
@@ -22,6 +21,7 @@ angular.module('plowshareFrontApp')
 
         var iterator = 0;
         var found = false;
+        var now = new Date();
         while (iterator < $scope.gridOptions.data.length && !found) {
           if (parseInt(down.id) === parseInt($scope.gridOptions.data[iterator].id)) {
             found = true;
@@ -30,6 +30,13 @@ angular.module('plowshareFrontApp')
             $scope.gridOptions.data[iterator].status = down.status;
             $scope.gridOptions.data[iterator].size_file = down.size_file;
             $scope.gridOptions.data[iterator].average_speed = down.average_speed;
+            $scope.gridOptions.data[iterator].theorical_start_datetime = new Date(down.theorical_start_datetime);
+
+            $scope.gridOptions.data[iterator].counter = 0;
+            if ( $scope.gridOptions.data[iterator].theorical_start_datetime.getTime() > now) {
+              $scope.gridOptions.data[iterator].counter = Math.round(( $scope.gridOptions.data[iterator].theorical_start_datetime.getTime() - now) / 1000);
+            }
+
             if (down.status != 3) { // TODO: use constant
               $scope.gridOptions.data[iterator].subscribed = true;
             }
@@ -106,7 +113,12 @@ angular.module('plowshareFrontApp')
             cellFilter: 'timeFltr',
             enableColumnResizing: false,
             enableCellEdit: false,
-            width: 80
+            width: 80,
+            cellTemplate:
+              '<div data-ng-if="row.entity.counter > 0">' +
+                '<timer interval="1000" countdown="row.entity.counter">{{countdown}}</timer>' +
+              '</div>'+
+              '<div data-ng-if="row.entity.counter <= 0">{{COL_FIELD}}</div>'
           },
           {
             name: 'priority',
@@ -161,7 +173,21 @@ angular.module('plowshareFrontApp')
         function () {
           DownloadResourceFctry.query(
             function (responses) {
-              $scope.gridOptions.data = responses;
+              var now = new Date().getTime();
+              angular.forEach(responses,
+                function(response) {
+                  response.theorical_start_datetime = new Date(response.theorical_start_datetime);
+
+                  response.counter = 0;
+                  if (response.theorical_start_datetime.getTime() > now) {
+                    response.counter = Math.round((response.theorical_start_datetime.getTime() - now) / 1000);
+                  }
+
+                  $scope.gridOptions.data.push(response);
+                }
+              );
+
+
             }
           );
         }
