@@ -90,7 +90,8 @@
       "AVERAGE_SPEED": "Vitesse moyenne",
       "AUTOSCROLL": "Auto scroll",
       "START_COUNTER": "Délai",
-      "MULTI_PARTS": "Parties"
+      "MULTI_PARTS": "Parties",
+      "LOGS": "Logs"
     }
   },
   "download": {

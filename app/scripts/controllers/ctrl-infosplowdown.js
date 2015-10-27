@@ -26,8 +26,8 @@ angular.module('plowshareFrontApp')
         $scope.download.time_spent = down.time_spent;
         $scope.download.theorical_start_datetime = down.theorical_start_datetime;
 
-        if ($scope.startCounter == 0 && (Date.parse($scope.download.theorical_start_datetime) > new Date().getTime())) {
-          $scope.startCounter = (Date.parse($scope.download.theorical_start_datetime) - new Date().getTime()) / 1000;
+        if ($scope.startCounter == 0 && (Date.parse($scope.download.theorical_start_datetime) - Date.now()) > 0) {
+          $scope.startCounter = (Date.parse($scope.download.theorical_start_datetime) - Date.now()) / 1000;
         }
 
         if (down.status == 3) { //TODO: utiliser une constante
@@ -53,8 +53,8 @@ angular.module('plowshareFrontApp')
       $scope.edition.downloadDirectory = angular.copy($scope.download.directory);
       $scope.nbrDownloadsToFinishBeforeUnrar = 0;
 
-      if (Date.parse($scope.download.theorical_start_datetime) > new Date().getTime()) {
-        $scope.startCounter = (Date.parse($scope.download.theorical_start_datetime) - new Date().getTime()) / 1000;
+      if (Date.parse($scope.download.theorical_start_datetime) - Date.now() > 0) {
+        $scope.startCounter = (Date.parse($scope.download.theorical_start_datetime) - Date.now()) / 1000;
       }
 
       $scope.gridOptions = {
@@ -125,7 +125,7 @@ angular.module('plowshareFrontApp')
       $scope.delete = function () {
         DownloadResourceFctry.deleteLogs({}, {id: download.id},
           function (response) {
-            if (response.status == true) {
+            if (response.return == true) {
               $translate('infosPlowdown.form.NO_INFO').then(function (translation) {
                 $scope.download.infosPlowdown = translation;
               });

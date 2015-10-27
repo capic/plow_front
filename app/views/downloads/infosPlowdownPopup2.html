@@ -188,26 +188,27 @@
                   data-ng-class="{'disabled': nbrDownloadsToFinishBeforeUnrar > 0}">Unrar
           </button>
         </tab>
-      </tabset>
-    </div>
-
-    <div class="form-group">
-      <label> {{'infosPlowdown.form.AUTOSCROLL' | translate}}</label>
-      <label class="i-switch m-t-sm m-r">
-        <input type="checkbox" data-ng-model="autoscroll"></input>
-        <i></i>
-      </label>
-
-    </div>
-    <div class="form-group">
-      <label>Informations</label>
-      <textarea class="form-control" rows="15" readonly wrap="off"
+        <tab heading="{{'infosPlowdown.form.LOGS' | translate}}">
+          <div class="form-group">
+            <textarea class="form-control" rows="15" readonly wrap="off"
                 placeholder="{{'infosPlowdown.form.PLACE_HOLDER' | translate}}"
                 scroll-glue="true">{{download.logs}}</textarea>
+          </div>
+          <div class="form-group">
+            <label> {{'infosPlowdown.form.AUTOSCROLL' | translate}}</label>
+            <label class="i-switch m-t-sm m-r">
+              <input type="checkbox" data-ng-model="autoscroll"></input>
+              <i></i>
+            </label>
+            <button type="submit" class="btn btn-warning pull-right" data-ng-click="delete()">
+              {{'infosPlowdown.form.DELETE' |
+              translate}}
+            </button>
+          </div>
+
+        </tab>
+      </tabset>
     </div>
-    <button type="submit" class="btn btn-warning" data-ng-click="delete()">{{'infosPlowdown.form.DELETE' |
-      translate}}
-    </button>
   </form>
 </div>
 <footer class="panel-footer text-right bg-light lter">

@@ -21,9 +21,10 @@ angular.module('plowshareFrontApp')
 
         var iterator = 0;
         var found = false;
-        var now = new Date();
+
         while (iterator < $scope.gridOptions.data.length && !found) {
           if (parseInt(down.id) === parseInt($scope.gridOptions.data[iterator].id)) {
+            var now = new Date();
             found = true;
             $scope.gridOptions.data[iterator].progress_file = down.progress_file;
             $scope.gridOptions.data[iterator].time_left = down.time_left;
@@ -62,7 +63,7 @@ angular.module('plowshareFrontApp')
           {
             name: 'download_package.name',
             displayName: 'Paquet',
-            //grouping: {groupPriority: 1},
+            //grouping: {groupPriority: 0},
             cellTooltip: true
           },
           {
@@ -85,8 +86,8 @@ angular.module('plowshareFrontApp')
             name: 'status',
             displayName: 'Status',
             // grouping: {groupPriority: 0},
-            sort: {priority: 1, direction: 'asc'},
-            cellFilter: 'downloadStatusFltr2',
+            //sort: {priority: 1, direction: 'asc'},
+            //cellFilter: 'downloadStatusFltr2',
             enableColumnResizing: false,
             enableCellEdit: false,
             width: 80
@@ -110,15 +111,13 @@ angular.module('plowshareFrontApp')
           {
             name: 'time_left',
             displayName: 'Time Left',
-            cellFilter: 'timeFltr',
             enableColumnResizing: false,
             enableCellEdit: false,
             width: 80,
-            cellTemplate:
-              '<div data-ng-if="row.entity.counter > 0">' +
-                '<timer interval="1000" countdown="row.entity.counter">{{countdown}}</timer>' +
+            cellTemplate: '<div data-ng-if="row.entity.counter > 0 && row.entity.status == 2">' +
+            '<timer interval="1000" countdown="row.entity.counter">- {{countdown}} sec</timer>' +
               '</div>'+
-              '<div data-ng-if="row.entity.counter <= 0">{{COL_FIELD}}</div>'
+            '<div data-ng-if="row.entity.counter <= 0 || row.entity.status != 2">{{COL_FIELD | timeFltr}}</div>'
           },
           {
             name: 'priority',
@@ -176,10 +175,11 @@ angular.module('plowshareFrontApp')
               var now = new Date().getTime();
               angular.forEach(responses,
                 function(response) {
-                  response.theorical_start_datetime = new Date(response.theorical_start_datetime);
+                  response.theorical_start_datetime = new Date(Date.parse(response.theorical_start_datetime));
 
                   response.counter = 0;
-                  if (response.theorical_start_datetime.getTime() > now) {
+                  if (response.status == 2 && response.theorical_start_datetime.getTime() > now) {
+                    console.log("theorical: " + response.theorical_start_datetime);
                     response.counter = Math.round((response.theorical_start_datetime.getTime() - now) / 1000);
                   }
 

@@ -30,7 +30,7 @@ angular.module('plowshareFrontApp')
           'stop': {url: settings.SERVER_ADDRESS + 'downloads/stop', method: 'POST', isArray: true},
           'import': {url: settings.SERVER_ADDRESS + 'downloads/import', method: 'POST', isArray: true},
           "logs": {url: settings.SERVER_ADDRESS + 'downloads/logs/:Id', method: 'GET'},
-          "deleteLogs": {url: settings.SERVER_ADDRESS + 'downloads/logs', method: 'POST'},
+          "deleteLogs": {url: settings.SERVER_ADDRESS + 'downloads/logs/:Id', method: 'DELETE'},
           'updatePriority': {url: settings.SERVER_ADDRESS + 'downloads/priority', method: 'POST'},
           'move': {url: settings.SERVER_ADDRESS + 'downloads/move', method: 'POST'},
           'unrar': {url: settings.SERVER_ADDRESS + 'downloads/unrar', method: 'POST'}
