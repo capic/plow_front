@@ -34,7 +34,7 @@ angular.module('plowshareFrontApp')
             $scope.gridOptions.data[iterator].theorical_start_datetime = new Date(down.theorical_start_datetime);
 
             $scope.gridOptions.data[iterator].counter = 0;
-            if ( $scope.gridOptions.data[iterator].theorical_start_datetime.getTime() > now) {
+            if ($scope.gridOptions.data[iterator].theorical_start_datetime.getTime() > now) {
               $scope.gridOptions.data[iterator].counter = Math.round(( $scope.gridOptions.data[iterator].theorical_start_datetime.getTime() - now) / 1000);
             }
 
@@ -50,8 +50,6 @@ angular.module('plowshareFrontApp')
           $scope.gridOptions.data.push(down);
         }
       }
-
-      $wamp.subscribe('plow.downloads.downloads', onevent);
 
       $scope.gridOptions = {
         treeRowHeaderAlwaysVisible: false,
@@ -115,8 +113,8 @@ angular.module('plowshareFrontApp')
             enableCellEdit: false,
             width: 80,
             cellTemplate: '<div data-ng-if="row.entity.counter > 0 && row.entity.status == 2">' +
-            '<timer interval="1000" countdown="row.entity.counter">- {{countdown}} sec</timer>' +
-              '</div>'+
+            '<timer interval="1000" countdown="row.entity.counter">- {{countdown | timeFltr}}</timer>' +
+            '</div>' +
             '<div data-ng-if="row.entity.counter <= 0 || row.entity.status != 2">{{COL_FIELD | timeFltr}}</div>'
           },
           {
@@ -137,9 +135,9 @@ angular.module('plowshareFrontApp')
             enableCellEdit: false,
             cellTemplate: '/views/downloads/myDropDown.html'
           }
-      ],
+        ],
 
-        onRegisterApi: function(gridApi) {
+        onRegisterApi: function (gridApi) {
           $scope.gridApi = gridApi;
           $scope.gridApi.selection.on.rowSelectionChanged($scope, function (rowChanged) {
             if (typeof(rowChanged.treeLevel) !== 'undefined' && rowChanged.treeLevel > -1) {
@@ -172,14 +170,13 @@ angular.module('plowshareFrontApp')
         function () {
           DownloadResourceFctry.query(
             function (responses) {
-              var now = new Date().getTime();
               angular.forEach(responses,
-                function(response) {
-                  response.theorical_start_datetime = new Date(Date.parse(response.theorical_start_datetime));
+                function (response) {
+                  var now = new Date().getTime();
+                  response.theorical_start_datetime = new Date(response.theorical_start_datetime);
 
                   response.counter = 0;
                   if (response.status == 2 && response.theorical_start_datetime.getTime() > now) {
-                    console.log("theorical: " + response.theorical_start_datetime);
                     response.counter = Math.round((response.theorical_start_datetime.getTime() - now) / 1000);
                   }
 
@@ -187,7 +184,7 @@ angular.module('plowshareFrontApp')
                 }
               );
 
-
+              $wamp.subscribe('plow.downloads.downloads', onevent);
             }
           );
         }

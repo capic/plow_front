@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', '$translate', '$filter', 'DownloadResourceFctry', 'downloadPriorities', 'download', '$wamp',
-    function ($scope, $modalInstance, $translate, $filter, DownloadResourceFctry, downloadPriorities, download, $wamp) {
+  .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', '$translate', '$filter', 'DownloadResourceFctry', 'downloadPriorities', 'download', '$wamp', 'dialogs',
+    function ($scope, $modalInstance, $translate, $filter, DownloadResourceFctry, downloadPriorities, download, $wamp, dialogs) {
       function onevent(args) {
         var down = angular.fromJson(args[0]);
 
@@ -26,8 +26,8 @@ angular.module('plowshareFrontApp')
         $scope.download.time_spent = down.time_spent;
         $scope.download.theorical_start_datetime = down.theorical_start_datetime;
 
-        if ($scope.startCounter == 0 && (Date.parse($scope.download.theorical_start_datetime) - Date.now()) > 0) {
-          $scope.startCounter = (Date.parse($scope.download.theorical_start_datetime) - Date.now()) / 1000;
+        if ($scope.startCounter == 0 && ($scope.download.theorical_start_datetime.getTime() - new Date().getTime()) > 0) {
+          $scope.startCounter = Math.round(($scope.download.theorical_start_datetime.getTime() - new Date().getTime()) / 1000);
         }
 
         if (down.status == 3) { //TODO: utiliser une constante
@@ -52,9 +52,10 @@ angular.module('plowshareFrontApp')
       $scope.edition = {};
       $scope.edition.downloadDirectory = angular.copy($scope.download.directory);
       $scope.nbrDownloadsToFinishBeforeUnrar = 0;
+      $scope.download.theorical_start_datetime = new Date($scope.download.theorical_start_datetime);
 
-      if (Date.parse($scope.download.theorical_start_datetime) - Date.now() > 0) {
-        $scope.startCounter = (Date.parse($scope.download.theorical_start_datetime) - Date.now()) / 1000;
+      if (($scope.download.theorical_start_datetime.getTime() - new Date().getTime()) > 0) {
+        $scope.startCounter = Math.round(($scope.download.theorical_start_datetime.getTime() - new Date().getTime()) / 1000);
       }
 
       $scope.gridOptions = {
@@ -152,6 +153,18 @@ angular.module('plowshareFrontApp')
 
       $scope.modifyPath = function () {
         if ($scope.edition.downloadDirectory != '' && $scope.edition.downloadDirectory != $scope.download.directory) {
+
+          var moveFct = function(withPackage) {
+            DownloadResourceFctry.move({id: download.id, directory: $scope.edition.downloadDirectory, withPackage: withPackage},
+              function (down) {
+                $scope.download = down;
+              },
+              function () {
+                download.status = oldStatus;
+              }
+            );
+          };
+
           var oldStatus = download.status;
 
           //TODO: utiliser une constante
@@ -163,15 +176,17 @@ angular.module('plowshareFrontApp')
             $scope.edition.downloadDirectory += '/';
           }
 
-          DownloadResourceFctry.move({id: download.id, directory: $scope.edition.downloadDirectory},
-            function (down) {
-              $scope.download = down;
-            },
-            function () {
-              download.status = oldStatus;
-            }
-          );
-
+          if ($scope.download.download_package != null) {
+            var dlg = dialogs.confirm($translate('infosPlowdown.form.NO_INFO'), $translate('infosPlowdown.form.NO_INFO'));
+            dlg.result.then(
+              function(btn){
+                moveFct(true);
+              },function(btn){
+              }
+            );
+          } else {
+            moveFct(false);
+          }
         }
 
         $scope.pathEdition = false;
