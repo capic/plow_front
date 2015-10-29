@@ -15,4 +15,6 @@ DOWNLOADS
 - meilleur affichage du move de fichier + notif
 - unrar
 - gerer les erreurs de déplacement
+- pouvoir un reset du code erreur pour relancer les telechargements
+- taille totale pas bonne si telechargement a ete arretee et repris
 
