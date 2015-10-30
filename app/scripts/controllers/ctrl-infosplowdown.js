@@ -182,6 +182,7 @@ angular.module('plowshareFrontApp')
               function(btn){
                 moveFct(true);
               },function(btn){
+                moveFct(false);
               }
             );
           } else {
