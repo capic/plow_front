@@ -25,7 +25,7 @@
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.NAME' | translate}}</label>
 
             <div class="col-lg-5">
-              <div class="input-group">
+              <div class="input-group" data-ng-class="{'has-error': !download.fileExists}">
                 <input class="form-control" type="text" data-ng-model="edition.downloadDirectory"
                        data-ng-disabled="!pathEdition  || download.status == 4 || download.status == 7 || download.status == 9 || download.status == 10"
                        data-ng-blur="modifyPath()"></input>

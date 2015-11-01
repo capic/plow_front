@@ -53,6 +53,7 @@ angular.module('plowshareFrontApp')
       $scope.edition.downloadDirectory = angular.copy($scope.download.directory);
       $scope.nbrDownloadsToFinishBeforeUnrar = 0;
       $scope.download.theorical_start_datetime = new Date($scope.download.theorical_start_datetime);
+      $scope.download.fileExists = true; // par defaut on suppose que le fichier existe
 
       if (($scope.download.theorical_start_datetime.getTime() - new Date().getTime()) > 0) {
         $scope.startCounter = Math.round(($scope.download.theorical_start_datetime.getTime() - new Date().getTime()) / 1000);
@@ -120,6 +121,13 @@ angular.module('plowshareFrontApp')
               $scope.download.logs = translation;
             });
           }
+        }
+      );
+
+      DownloadResourceFctry.exists({Id: download.id},
+        function (response) {
+          console.log(response.return);
+          $scope.download.fileExists = response.return;
         }
       );
 
