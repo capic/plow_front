@@ -85,7 +85,7 @@ angular.module('plowshareFrontApp')
             displayName: 'Status',
             // grouping: {groupPriority: 0},
             //sort: {priority: 1, direction: 'asc'},
-            //cellFilter: 'downloadStatusFltr2',
+            cellFilter: 'downloadStatusFltr2',
             enableColumnResizing: false,
             enableCellEdit: false,
             width: 80
