@@ -124,12 +124,14 @@ angular.module('plowshareFrontApp')
         }
       );
 
-      DownloadResourceFctry.exists({Id: download.id},
-        function (response) {
-          console.log(response.return);
-          $scope.download.fileExists = response.return;
-        }
-      );
+      if (download.status == 3) {
+        DownloadResourceFctry.exists({Id: download.id},
+          function (response) {
+            console.log(response.return);
+            $scope.download.fileExists = response.return;
+          }
+        );
+      }
 
       $scope.delete = function () {
         DownloadResourceFctry.deleteLogs({}, {id: download.id},
