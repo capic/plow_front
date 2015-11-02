@@ -246,6 +246,7 @@ angular.module('plowshareFrontApp')
         $scope.modal = $modal.open({
           templateUrl: 'views/downloads/infosPlowdownPopup2.html',
           controller: 'InfosPlowdownCtrl',
+          backdrop: 'static',
           size: 'lg',
           resolve: {
             download: function () {
