@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', '$translate', '$filter', 'DownloadResourceFctry', 'downloadPriorities', 'download', '$wamp', 'dialogs',
-    function ($scope, $modalInstance, $translate, $filter, DownloadResourceFctry, downloadPriorities, download, $wamp, dialogs) {
+  .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', '$translate', '$filter', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'downloadPriorities', 'download', '$wamp', 'dialogs',
+    function ($scope, $modalInstance, $translate, $filter, DownloadResourceFctry, DirectoryResourceFctry, downloadPriorities, download, $wamp, dialogs) {
       function onevent(args) {
         var down = angular.fromJson(args[0]);
 
@@ -50,7 +50,7 @@ angular.module('plowshareFrontApp')
       $scope.autoscroll = true;
       $scope.pathEdition = false;
       $scope.edition = {};
-      $scope.edition.downloadDirectory = angular.copy($scope.download.directory);
+      $scope.edition.downloadDirectory = angular.copy($scope.download.download_directory.path);
       $scope.nbrDownloadsToFinishBeforeUnrar = 0;
       $scope.download.theorical_start_datetime = new Date($scope.download.theorical_start_datetime);
       $scope.download.fileExists = true; // par defaut on suppose que le fichier existe
@@ -58,6 +58,8 @@ angular.module('plowshareFrontApp')
       if (($scope.download.theorical_start_datetime.getTime() - new Date().getTime()) > 0) {
         $scope.startCounter = Math.round(($scope.download.theorical_start_datetime.getTime() - new Date().getTime()) / 1000);
       }
+
+      $scope.listPath = DirectoryResourceFctry.query();
 
       $scope.gridOptions = {
         treeRowHeaderAlwaysVisible: false,
@@ -162,7 +164,7 @@ angular.module('plowshareFrontApp')
       );
 
       $scope.modifyPath = function () {
-        if ($scope.edition.downloadDirectory != '' && $scope.edition.downloadDirectory != $scope.download.directory) {
+        if ($scope.edition.downloadDirectory != '' && $scope.edition.downloadDirectory != $scope.download.download_directory.path) {
 
           var moveFct = function(withPackage) {
             DownloadResourceFctry.move({id: download.id, directory: $scope.edition.downloadDirectory, withPackage: withPackage},

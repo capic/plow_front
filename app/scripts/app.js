@@ -27,7 +27,8 @@ angular
     'ui.grid.autoResize',
     'luegg.directives',
     'timer',
-    'dialogs.main'
+    'dialogs.main',
+    'ui.select'
   ])
   .config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
