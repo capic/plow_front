@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('DownloadCtrl2', ['$scope', '$filter', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'downloadStatusListValue', 'downloadPriorities', '$modal', 'uiGridGroupingConstants', '$wamp','dialogs',
-    function ($scope, $filter, DownloadResourceFctry, DirectoryResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp,dialogs) {
+  .controller('DownloadCtrl2', ['$scope', '$filter', '$translate', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'downloadStatusListValue', 'downloadPriorities', '$modal', 'uiGridGroupingConstants', '$wamp', 'dialogs',
+    function ($scope, $filter, $translate, DownloadResourceFctry, DirectoryResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp, dialogs) {
       function onevent(args) {
         var down = angular.fromJson(args[0]);
 
@@ -273,16 +273,29 @@ angular.module('plowshareFrontApp')
                       function (listDownloadReturned) {
                         angular.forEach(listDownloadReturned,
                           function(downReturned) {
-                            var idx = $scope.gridOptions.data.indexOf(downReturned);
-                            $scope.gridOptions.data[idx] = downReturned;
+                            var found = false;
+                            var i = 0;
+                            while (!found && i < $scope.gridOptions.data.length) {
+                              if ($scope.gridOptions.data[i].id == downReturned.id) {
+                                $scope.gridOptions.data[i] = downReturned;
+                                found = true;
+                              }
+                              i++;
+                            }
                           }
                         );
                       },
                       function () {
                         download.status = oldStatus;
-
-                        var idx = $scope.gridOptions.data.indexOf(download);
-                        $scope.gridOptions.data[idx] = download;
+                        var found = false;
+                        var i = 0;
+                        while (!found && i < $scope.gridOptions.data.length) {
+                          if ($scope.gridOptions.data[i].id == download.id) {
+                            $scope.gridOptions.data[i] = download;
+                            found = true;
+                          }
+                          i++;
+                        }
                       }
                     );
                   },
