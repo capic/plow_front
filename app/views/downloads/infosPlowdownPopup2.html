@@ -37,10 +37,11 @@
                 <ui-select ng-model="edition.downloadDirectory"
                            theme="bootstrap"
                            reset-search-input="false"
-                           tagging
+                           ng-disabled="download.status == 4 || download.status == 7 || download.status == 9 || !download.fileExists"
+                           tagging="processItem"
                            style="width: 300px;">
                   <ui-select-match placeholder="Enter a path...">{{$select.selected.path}}</ui-select-match>
-                  <ui-select-choices repeat="path in listPath | filter: $select.search"
+                  <ui-select-choices repeat="path in listPath | filter: $select.search track by path.path"
                                      refresh-delay="0">
                     <div ng-bind-html="path.path | highlight: $select.search"></div>
                   </ui-select-choices>

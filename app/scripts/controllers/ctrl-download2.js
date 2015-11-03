@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('DownloadCtrl2', ['$scope', 'DownloadResourceFctry', 'downloadStatusListValue', 'downloadPriorities', '$modal', 'uiGridGroupingConstants', '$wamp',
-    function ($scope, DownloadResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp) {
+  .controller('DownloadCtrl2', ['$scope', '$filter', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'downloadStatusListValue', 'downloadPriorities', '$modal', 'uiGridGroupingConstants', '$wamp','dialogs',
+    function ($scope, $filter, DownloadResourceFctry, DirectoryResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp,dialogs) {
       function onevent(args) {
         var down = angular.fromJson(args[0]);
 
@@ -256,9 +256,66 @@ angular.module('plowshareFrontApp')
         });
 
         $scope.modal.result.then(
-          function (downReturned) {
-            var idx = $scope.gridOptions.data.indexOf(download);
-            $scope.gridOptions.data[idx] = downReturned;
+          function (newDirectory) {
+            if (newDirectory.path != '' && newDirectory.path != download.download_directory.path) {
+
+              var moveFct = function (withPackage) {
+                var directoryResourceObject = new DirectoryResourceFctry();
+                directoryResourceObject.path = newDirectory.path;
+
+                directoryResourceObject.$save(
+                  function(response) {
+                    DownloadResourceFctry.move({
+                        id: download.id,
+                        directory_id: response.id,
+                        withPackage: withPackage
+                      },
+                      function (listDownloadReturned) {
+                        angular.forEach(listDownloadReturned,
+                          function(downReturned) {
+                            var idx = $scope.gridOptions.data.indexOf(downReturned);
+                            $scope.gridOptions.data[idx] = downReturned;
+                          }
+                        );
+                      },
+                      function () {
+                        download.status = oldStatus;
+
+                        var idx = $scope.gridOptions.data.indexOf(download);
+                        $scope.gridOptions.data[idx] = download;
+                      }
+                    );
+                  },
+                  function(response) {
+
+                  }
+                );
+              };
+
+              var oldStatus = download.status;
+
+              //TODO: utiliser une constante
+              if (download.status != 2 && download.status != 1) {
+                download.status = 9;
+              }
+
+              if (newDirectory.path.slice(-1) != '/') {
+                newDirectory.path += '/';
+              }
+
+              if (download.download_package != null) {
+                var dlg = dialogs.confirm($translate('infosPlowdown.form.NO_INFO'), $translate('infosPlowdown.form.NO_INFO'));
+                dlg.result.then(
+                  function (btn) {
+                    moveFct(true);
+                  }, function (btn) {
+                    moveFct(false);
+                  }
+                );
+              } else {
+                moveFct(false);
+              }
+            }
           }
         );
       };

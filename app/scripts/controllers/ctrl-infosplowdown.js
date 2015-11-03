@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', '$translate', '$filter', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'downloadPriorities', 'download', '$wamp', 'dialogs',
-    function ($scope, $modalInstance, $translate, $filter, DownloadResourceFctry, DirectoryResourceFctry, downloadPriorities, download, $wamp, dialogs) {
+  .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', '$translate', '$filter', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'downloadPriorities', 'download', '$wamp',
+    function ($scope, $modalInstance, $translate, $filter, DownloadResourceFctry, DirectoryResourceFctry, downloadPriorities, download, $wamp) {
       function onevent(args) {
         var down = angular.fromJson(args[0]);
 
@@ -48,9 +48,8 @@ angular.module('plowshareFrontApp')
       $scope.startCounter = 0;
       $scope.downloadPriority.selected = $filter('filter')(downloadPriorities, {id: $scope.download.priority})[0];
       $scope.autoscroll = true;
-      $scope.pathEdition = false;
       $scope.edition = {};
-      $scope.edition.downloadDirectory = angular.copy($scope.download.download_directory.path);
+      $scope.edition.downloadDirectory = angular.copy($scope.download.download_directory);
       $scope.nbrDownloadsToFinishBeforeUnrar = 0;
       $scope.download.theorical_start_datetime = new Date($scope.download.theorical_start_datetime);
       $scope.download.fileExists = true; // par defaut on suppose que le fichier existe
@@ -126,7 +125,7 @@ angular.module('plowshareFrontApp')
         }
       );
 
-      if (download.status == 3) {
+      if (download.status != 1 && download.status != 2)  {
         DownloadResourceFctry.exists({Id: download.id},
           function (response) {
             console.log(response.return);
@@ -148,11 +147,7 @@ angular.module('plowshareFrontApp')
       };
 
       $scope.ok = function () {
-        $modalInstance.close($scope.download);
-      };
-
-      $scope.cancel = function () {
-        $modalInstance.close($scope.download);
+        $modalInstance.close($scope.edition.downloadDirectory);
       };
 
       $scope.$watch("downloadPriority.selected",
@@ -163,54 +158,18 @@ angular.module('plowshareFrontApp')
         }
       );
 
-      $scope.modifyPath = function () {
-        if ($scope.edition.downloadDirectory != '' && $scope.edition.downloadDirectory != $scope.download.download_directory.path) {
-
-          var moveFct = function(withPackage) {
-            DownloadResourceFctry.move({id: download.id, directory: $scope.edition.downloadDirectory, withPackage: withPackage},
-              function (down) {
-                $scope.download = down;
-              },
-              function () {
-                download.status = oldStatus;
-              }
-            );
-          };
-
-          var oldStatus = download.status;
-
-          //TODO: utiliser une constante
-          if (download.status != 2 && download.status != 1) {
-            download.status = 9;
-          }
-
-          if ($scope.edition.downloadDirectory.slice(-1) != '/') {
-            $scope.edition.downloadDirectory += '/';
-          }
-
-          if ($scope.download.download_package != null) {
-            var dlg = dialogs.confirm($translate('infosPlowdown.form.NO_INFO'), $translate('infosPlowdown.form.NO_INFO'));
-            dlg.result.then(
-              function(btn){
-                moveFct(true);
-              },function(btn){
-                moveFct(false);
-              }
-            );
-          } else {
-            moveFct(false);
-          }
-        }
-
-        $scope.pathEdition = false;
-      };
-
       $scope.unrar = function() {
         DownloadResourceFctry.unrar({id: download.id},
           function() {
 
           }
         );
+      };
+
+      $scope.processItem = function(tag){
+        return {
+          path:tag
+        }
       };
     }
   ]
