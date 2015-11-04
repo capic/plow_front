@@ -21,19 +21,11 @@
             </div>
           </div>
           <!--name-->
-          <div class="form-group">
+          <div class="form-group" data-ng-class="{'has-error': !download.fileExists}">
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.NAME' | translate}}</label>
 
             <div class="col-lg-5">
-              <div class="input-group" data-ng-class="{'has-error': !download.fileExists}">
-                <!--<input class="form-control" type="text" data-ng-model="edition.downloadDirectory"
-                       data-ng-disabled="!pathEdition  || download.status == 4 || download.status == 7 || download.status == 9 || !download.fileExists"
-                       data-ng-blur="modifyPath()"></input>
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button" data-ng-click="pathEdition = !pathEdition">
-                    <i class="fa fa-edit"></i>
-                  </button>
-                </span>-->
+              <div class="input-group">
                 <ui-select ng-model="edition.downloadDirectory"
                            theme="bootstrap"
                            reset-search-input="false"
@@ -43,13 +35,15 @@
                   <ui-select-match placeholder="Enter a path...">{{$select.selected.path}}</ui-select-match>
                   <ui-select-choices repeat="path in listPath | filter: $select.search track by path.path"
                                      refresh-delay="0">
-                    <div ng-bind-html="path.path | highlight: $select.search"></div>
+                    <a data-ng-if="listPath.length > 1" data-ng-click="deleteOption(path)" class="btn btn-action btn-xs"
+                       href><i class="glyphicon glyphicon-trash"> </i></a>
+                    <span ng-bind-html="path.path | highlight: $select.search"></span>
                   </ui-select-choices>
                 </ui-select>
               </div>
             </div>
 
-            <div class="col-lg-5">
+            <div class="col-lg-5" >
               <input class="form-control" type="text" disabled="disabled" value="{{download.name}}"></input>
             </div>
           </div>

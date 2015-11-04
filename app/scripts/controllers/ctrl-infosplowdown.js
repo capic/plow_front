@@ -59,6 +59,7 @@ angular.module('plowshareFrontApp')
       }
 
       $scope.listPath = DirectoryResourceFctry.query();
+      $scope.path = {};
 
       $scope.gridOptions = {
         treeRowHeaderAlwaysVisible: false,
@@ -171,6 +172,18 @@ angular.module('plowshareFrontApp')
           path:tag
         }
       };
+
+      $scope.deleteOption  = function(directory) {
+        if ($scope.listPath.length > 1) {
+          DirectoryResourceFctry.delete({Id: directory.id}, function(response) {
+            var idx = $scope.listPath.indexOf(directory);
+            $scope.listPath.splice(idx, 1);
+            $scope.edition.downloadDirectory = $scope.listPath[0];
+          }, function(response) {
+            console.log(response);
+          });
+        }
+      }
     }
   ]
 );

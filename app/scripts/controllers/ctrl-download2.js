@@ -257,7 +257,7 @@ angular.module('plowshareFrontApp')
 
         $scope.modal.result.then(
           function (newDirectory) {
-            if (newDirectory.path != '' && newDirectory.path != download.download_directory.path) {
+            if (download.download_directory == null || (newDirectory.path != '' && newDirectory.path != download.download_directory.path)) {
 
               var moveFct = function (withPackage) {
                 var directoryResourceObject = new DirectoryResourceFctry();
