@@ -28,10 +28,12 @@ angular
     'luegg.directives',
     'timer',
     'dialogs.main',
-    'ui.select'
+    'ui.select',
   ])
-  .config(['$stateProvider', '$urlRouterProvider',
-    function ($stateProvider, $urlRouterProvider) {
+  .config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
+    function ($stateProvider, $urlRouterProvider, $httpProvider) {
+      $httpProvider.interceptors.push('ErrorInterceptorFcty');
+
       $urlRouterProvider
         .otherwise('/app/downloads2');
       $stateProvider
