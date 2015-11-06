@@ -21,7 +21,8 @@
     "json3": "~3.3.1",
     "ngstorage": "~0.3.0",
     "angular-dialog-service": "~5.2.8",
-    "ui-select": "angular-ui-select#~0.13.2"
+    "ui-select": "angular-ui-select#~0.13.2",
+    "ngToast": "ngtoast#~1.5.6"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",

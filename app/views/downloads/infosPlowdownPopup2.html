@@ -21,7 +21,8 @@
             </div>
           </div>
           <!--name-->
-          <div class="form-group" data-ng-class="{'has-error': !download.fileExists}">
+          <div class="form-group"
+               data-ng-class="{'has-error': (download.status != 2 && download.status != 1) && !download.fileExists}">
             <label class="col-lg-2 control-label">{{'infosPlowdown.form.NAME' | translate}}</label>
 
             <div class="col-lg-5">
@@ -29,7 +30,7 @@
                 <ui-select ng-model="edition.downloadDirectory"
                            theme="bootstrap"
                            reset-search-input="false"
-                           ng-disabled="download.status == 4 || download.status == 7 || download.status == 9 || !download.fileExists"
+                           ng-disabled="download.status == 4 || download.status == 7 || download.status == 9 || (!download.fileExists && download.status != 1 && download.status != 2)"
                            tagging="processItem"
                            style="width: 300px;">
                   <ui-select-match placeholder="Enter a path...">{{$select.selected.path}}</ui-select-match>
@@ -43,8 +44,8 @@
               </div>
             </div>
 
-            <div class="col-lg-5" >
-              <input class="form-control" type="text" disabled="disabled" value="{{download.name}}"></input>
+            <div class="col-lg-5">
+              <input class="form-control" type="text" disabled="disabled" data-ng-class="{'text-danger': !download.fileExists}" value="{{download.name}}"></input>
             </div>
           </div>
           <!--file size + % file-->
@@ -187,18 +188,17 @@
             </div>
           </div>
         </tab>
-        <tab ng-show="download.download_package != null" heading="{{'infosPlowdown.form.MULTI_PARTS' | translate}}">
-          <div id="gridMultiParts" ui-grid="gridOptions" ui-grid-resize-columns class="grid-package"></div>
+        <tab ng-show="download.name.split('.')[(download.name.split('.').length - 1)] == 'rar'" heading="{{'infosPlowdown.form.MULTI_PARTS' | translate}}">
+          <div id="gridMultiParts" ui-grid="gridOptions" ui-grid-resize-columns class="grid-package"
+               data-ng-class="{'disabled': nbrDownloadsToFinishBeforeUnrar > 0}"></div>
           <div class="line line-dashed b-b line-lg pull-in"></div>
-          <button class="btn m-b-xs w-xs btn-default btn-xs" data-ng-click="unrar()"
-                  data-ng-class="{'disabled': nbrDownloadsToFinishBeforeUnrar > 0}">Unrar
-          </button>
+          <button class="btn m-b-xs w-xs btn-default btn-xs" data-ng-click="unrar()">Unrar</button>
         </tab>
         <tab heading="{{'infosPlowdown.form.LOGS' | translate}}">
           <div class="form-group">
             <textarea class="form-control" rows="15" readonly wrap="off"
-                placeholder="{{'infosPlowdown.form.PLACE_HOLDER' | translate}}"
-                scroll-glue="true">{{download.logs}}</textarea>
+                      placeholder="{{'infosPlowdown.form.PLACE_HOLDER' | translate}}"
+                      scroll-glue="true">{{download.logs}}</textarea>
           </div>
           <div class="form-group">
             <label> {{'infosPlowdown.form.AUTOSCROLL' | translate}}</label>

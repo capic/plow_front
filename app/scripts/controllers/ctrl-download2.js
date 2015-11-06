@@ -233,8 +233,8 @@ angular.module('plowshareFrontApp')
         });
 
         DownloadResourceFctry.remove({ListId: selectedIds}, function (response) {
-          if (response.status === true) {
-            angular.forEach($scope.gridApi.selection.getSelectedRows(), function (entity) {
+          if (response.listDownloadIdDeleted.length > 0) {
+            angular.forEach(response.listDownloadIdDeleted, function (downloadOd) {
               var idx = $scope.gridOptions.data.indexOf(entity);
               $scope.gridOptions.data.splice(idx, 1);
             });
@@ -317,7 +317,8 @@ angular.module('plowshareFrontApp')
               }
 
               if (download.download_package != null) {
-                var dlg = dialogs.confirm($translate('infosPlowdown.form.NO_INFO'), $translate('infosPlowdown.form.NO_INFO'));
+                //$translate('infosPlowdown.form.NO_INFO').then(function())
+                var dlg = dialogs.confirm("aaa", "bb");
                 dlg.result.then(
                   function (btn) {
                     moveFct(true);

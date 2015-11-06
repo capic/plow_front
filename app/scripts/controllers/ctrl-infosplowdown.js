@@ -52,7 +52,7 @@ angular.module('plowshareFrontApp')
       $scope.edition.downloadDirectory = angular.copy($scope.download.download_directory);
       $scope.nbrDownloadsToFinishBeforeUnrar = 0;
       $scope.download.theorical_start_datetime = new Date($scope.download.theorical_start_datetime);
-      $scope.download.fileExists = true; // par defaut on suppose que le fichier existe
+      $scope.download.fileExists = false; // par defaut on suppose que le fichier existe pas
 
       if (($scope.download.theorical_start_datetime.getTime() - new Date().getTime()) > 0) {
         $scope.startCounter = Math.round(($scope.download.theorical_start_datetime.getTime() - new Date().getTime()) / 1000);
@@ -64,6 +64,10 @@ angular.module('plowshareFrontApp')
       $scope.gridOptions = {
         treeRowHeaderAlwaysVisible: false,
         rowHeight: 35,
+        rowTemplate: '<div ng-class="{ \'my-css-class\': grid.appScope.rowFormatter( row ) }">' +
+        '  <div ng-if="row.entity.merge">{{row.entity.title}}</div>' +
+        '  <div ng-if="!row.entity.merge" ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader, \'text-danger\': !row.entity.fileExists }"  ui-grid-cell></div>' +
+        '</div>',
         columnDefs: [
           {
             name: ' ',
@@ -79,7 +83,7 @@ angular.module('plowshareFrontApp')
             enableCellEdit: false
           },
           {
-            name: 'directory',
+            name: 'download_directory.path',
             displayName: 'Directory',
             cellTooltip: true,
             headerCellFilter: 'translate',
@@ -105,9 +109,26 @@ angular.module('plowshareFrontApp')
           function (response) {
             $scope.gridOptions.data = response;
 
-            // TODO: use constant
-            $scope.nbrDownloadsToFinishBeforeUnrar = $filter('filter')(response, { status: 1 }).length;
-            $scope.nbrDownloadsToFinishBeforeUnrar += $filter('filter')(response, { status: 2 }).length;
+            angular.forEach(response, function(resp) {
+              //TODO: use constants
+              if (resp.status == 1 || resp.status == 2) {
+                $scope.nbrDownloadsToFinishBeforeUnrar++;
+              } else {
+                var idx = $scope.gridOptions.data.indexOf(resp);
+                if (resp.id == download.id) {
+                  $scope.gridOptions.data[idx] = download;
+                } else {
+                  DownloadResourceFctry.exists({Id: resp.id}, function(ret) {
+                    resp.fileExists = ret.return;
+
+                    if (!resp.fileExists) {
+                      $scope.nbrDownloadsToFinishBeforeUnrar++;
+                    }
+                    $scope.gridOptions.data[idx] = resp;
+                  });
+                }
+              }
+            });
           }
         );
       }
@@ -180,7 +201,6 @@ angular.module('plowshareFrontApp')
             $scope.listPath.splice(idx, 1);
             $scope.edition.downloadDirectory = $scope.listPath[0];
           }, function(response) {
-            console.log(response);
           });
         }
       }
