@@ -133,7 +133,7 @@ angular.module('plowshareFrontApp')
             width: '35',
             enableColumnResizing: false,
             enableCellEdit: false,
-            cellTemplate: '/views/downloads/myDropDown.html'
+            cellTemplate: 'views/downloads/myDropDown.html'
           }
         ],
 
