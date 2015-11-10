@@ -50,7 +50,7 @@ angular.module('plowshareFrontApp')
           $scope.gridOptions.data.push(down);
         }
       }
-
+      console.log($wamp);
       $scope.gridOptions = {
         treeRowHeaderAlwaysVisible: false,
         showGridFooter: true,
@@ -215,9 +215,32 @@ angular.module('plowshareFrontApp')
         });
       };
 
+      $scope.resetDownload = function(entity) {
+        var downloadObject = new DownloadResourceFctry();
+        downloadObject.id = entity.id;
+
+        var dlg = dialogs.confirm("aaa", "bb");
+        dlg.result.then(
+          function (btn) {
+            downloadObject.deleteFile = true;
+            downloadObject.wampId = $wamp.connection.session.id;
+            downloadObject.$reset(function(response) {
+              var idx = $scope.gridOptions.data.indexOf(entity);
+              $scope.gridOptions.data[idx] = response;
+            });
+          }, function (btn) {
+            downloadObject.deleteFile = false;
+            downloadObject.$reset(function(response) {
+              var idx = $scope.gridOptions.data.indexOf(entity);
+              $scope.gridOptions.data[idx] = response;
+            });
+          }
+        );
+      };
+
       // to delete a download
       $scope.deleteDownload = function (entity) {
-        DownloadResourceFctry.delete({Id: entity.id}, function (response) {
+        DownloadResourceFctry.delete({Id: entity.id, wampId: $wamp.connection.session.id}, function (response) {
           if (response.return === true) {
             var idx = $scope.gridOptions.data.indexOf(entity);
             $scope.gridOptions.data.splice(idx, 1);
@@ -234,9 +257,18 @@ angular.module('plowshareFrontApp')
 
         DownloadResourceFctry.remove({ListId: selectedIds}, function (response) {
           if (response.listDownloadIdDeleted.length > 0) {
-            angular.forEach(response.listDownloadIdDeleted, function (downloadOd) {
-              var idx = $scope.gridOptions.data.indexOf(entity);
-              $scope.gridOptions.data.splice(idx, 1);
+            angular.forEach(response.listDownloadIdDeleted, function (downloadId) {
+              var found  = false;
+              var i = 0;
+
+              while (i < $scope.gridOptions.data.length && !found ) {
+                if ($scope.gridOptions.data[i].id == downloadId) {
+                  $scope.gridOptions.data.splice(i, 1);
+                  found = true;
+                }
+
+                i++;
+              }
             });
           }
         });

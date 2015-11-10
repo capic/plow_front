@@ -150,7 +150,6 @@ angular.module('plowshareFrontApp')
       if (download.status != 1 && download.status != 2)  {
         DownloadResourceFctry.exists({Id: download.id},
           function (response) {
-            console.log(response.return);
             $scope.download.fileExists = response.return;
           }
         );

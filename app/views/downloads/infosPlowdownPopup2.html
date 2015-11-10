@@ -45,7 +45,7 @@
             </div>
 
             <div class="col-lg-5">
-              <input class="form-control" type="text" disabled="disabled" data-ng-class="{'text-danger': !download.fileExists}" value="{{download.name}}"></input>
+              <input class="form-control" type="text" disabled="disabled" data-ng-class="{'text-danger': !download.fileExists && download.status != 1 && download.status != 2}" value="{{download.name}}"></input>
             </div>
           </div>
           <!--file size + % file-->
