@@ -29,7 +29,8 @@ angular
     'timer',
     'dialogs.main',
     'ui.select',
-    'ngToast'
+    'ngToast',
+    'cgBusy'
   ])
   .config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
     function ($stateProvider, $urlRouterProvider, $httpProvider) {

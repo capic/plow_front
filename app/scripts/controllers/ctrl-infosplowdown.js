@@ -148,7 +148,8 @@ angular.module('plowshareFrontApp')
       );
 
       if (download.status != 1 && download.status != 2)  {
-        DownloadResourceFctry.exists({Id: download.id},
+        $scope.test = {}
+        $scope.downloadFileExistsPromise = DownloadResourceFctry.exists({Id: download.id},
           function (response) {
             $scope.download.fileExists = response.return;
           }
