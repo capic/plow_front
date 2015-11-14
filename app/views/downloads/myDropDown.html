@@ -3,31 +3,30 @@
     <i class="glyphicon glyphicon-list"></i>
   </button>
   <ul class="dropdown-menu dropdown-menu-right" role="menu">
-    <li>
+    <li data-ng-class="{'disabled': row.entity.status != 1, 'text-success': row.entity.subscribed }">
       <a data-ng-click="startDownloading(row.entity);"
-         data-ng-class="{'disabled': row.entity.status != 1, 'text-success': row.entity.subscribed }"
-         class="btn btn-action" href><i class="glyphicon glyphicon-play"> </i>Start</a>
+         class="" href><i class="glyphicon glyphicon-play"> </i> {{'downloads.dropdown.START' | translate}}</a>
+    </li>
+    <li data-ng-class="{'disabled': row.entity.status == 1}">
+      <a data-ng-click="grid.appScope.stopDownloading(row.entity);"
+         class="" href><i class="glyphicon glyphicon-stop"> </i> {{'downloads.dropdown.STOP' | translate}}</a>
     </li>
     <li>
-      <a data-ng-click="grid.appScope.stopDownloading(row.entity);" data-ng-class="{'disabled': row.entity.status == 1}"
-         class="btn btn-action" href><i class="glyphicon glyphicon-stop"> </i>Stop</a>
-    </li>
-    <li>
-      <a data-ng-click="grid.appScope.refreshDownload(row.entity);" class="btn btn-action"
+      <a data-ng-click="grid.appScope.refreshDownload(row.entity);" class=""
          data-ng-class="grid.appScope.downloadRefreshInProgress[row.entity.id]" href><i
-        class="glyphicon glyphicon-refresh"> </i>Refresh</a>
+        class="glyphicon glyphicon-refresh"> </i> {{'downloads.dropdown.REFRESH' | translate}}</a>
     </li>
     <li>
-      <a data-ng-click="grid.appScope.deleteDownload(row.entity);" class="btn btn-action"
-         href><i class="glyphicon glyphicon-trash"> </i>Delete</a>
+      <a data-ng-click="grid.appScope.deleteDownload(row.entity);" class=""
+         href><i class="glyphicon glyphicon-trash"> </i> {{'downloads.dropdown.DELETE' | translate}}</a>
     </li>
     <li>
-      <a data-ng-click="grid.appScope.resetDownload(row.entity);" class="btn btn-action"
-         href><i class="glyphicon glyphicon-trash"> </i>Reset</a>
+      <a data-ng-click="grid.appScope.resetDownload(row.entity);" class=""
+         href><i class="glyphicon glyphicon-trash"> </i> {{'downloads.dropdown.RESET' | translate}}</a>
     </li>
     <li>
-      <a data-ng-click="grid.appScope.infosPlowdown(row.entity);" class="btn btn-action"
-         href><i class="glyphicon glyphicon-list-alt"> </i>Infos</a>
+      <a data-ng-click="grid.appScope.infosPlowdown(row.entity);" class=""
+         href><i class="glyphicon glyphicon-list-alt"> </i> {{'downloads.dropdown.INFOS' | translate}}</a>
     </li>
   </ul>
 </div>

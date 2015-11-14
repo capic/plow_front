@@ -166,16 +166,21 @@ angular.module('plowshareFrontApp')
         }
       };
 
+      // on recupere la liste des status
       downloadStatusListValue.status = DownloadResourceFctry.status(
         function () {
+          // on recupere la liste des downloads
           DownloadResourceFctry.query(
             function (responses) {
               angular.forEach(responses,
                 function (response) {
                   var now = new Date().getTime();
+                  // on transforme la chaine de caractere en date
                   response.theorical_start_datetime = new Date(response.theorical_start_datetime);
 
                   response.counter = 0;
+                  // si le download est en cours et que la date theorique de début et après maintenant
+                  // on calcul le nombre de secondes a attendre
                   if (response.status == 2 && response.theorical_start_datetime.getTime() > now) {
                     response.counter = Math.round((response.theorical_start_datetime.getTime() - now) / 1000);
                   }
@@ -219,7 +224,7 @@ angular.module('plowshareFrontApp')
         var downloadObject = new DownloadResourceFctry();
         downloadObject.id = entity.id;
 
-        var dlg = dialogs.confirm("aaa", "bb");
+        var dlg = dialogs.confirm($translate.instant('downloads.dialog.reset.TITLE'), $translate.instant('downloads.dialog.reset.TEXT'));
         dlg.result.then(
           function (btn) {
             downloadObject.deleteFile = true;
@@ -300,7 +305,8 @@ angular.module('plowshareFrontApp')
                     DownloadResourceFctry.move({
                         id: download.id,
                         directory_id: response.id,
-                        withPackage: withPackage
+                        withPackage: withPackage,
+                        from: 1 // ihm
                       },
                       function (listDownloadReturned) {
                         angular.forEach(listDownloadReturned,
@@ -349,8 +355,7 @@ angular.module('plowshareFrontApp')
               }
 
               if (download.download_package != null) {
-                //$translate('infosPlowdown.form.NO_INFO').then(function())
-                var dlg = dialogs.confirm("aaa", "bb");
+                var dlg = dialogs.confirm($translate.instant("downloads.dialog.move.TITLE"), $translate.instant("downloads.dialog.move.TEXT"));
                 dlg.result.then(
                   function (btn) {
                     moveFct(true);

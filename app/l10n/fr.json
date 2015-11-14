@@ -31,6 +31,24 @@
       "AVERAGE_SPEED": "Vit. Moy.",
       "TIME_LEFT": "Tps rest.",
       "ACTIONS": "Actions"
+    },
+    "dropdown": {
+      "START": "Démarrer",
+      "STOP": "Arrêter",
+      "REFRESH": "Rafraichir",
+      "DELETE": "Supprimer",
+      "RESET": "Reinitialiser",
+      "INFOS": "Infos"
+    },
+    "dialog": {
+      "reset": {
+        "TITLE": "Réinitialiser le téléchargement",
+        "TEXT": "Supprimer le fichier ?"
+      },
+      "move": {
+        "TITLE": "Déplacement",
+        "TEXT": "Déplacer tous les fichiers du package ?"
+      }
     }
   },
   "links": {

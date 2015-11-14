@@ -28,6 +28,7 @@ angular
     'luegg.directives',
     'timer',
     'dialogs.main',
+    //'dialogs.default-translations',
     'ui.select',
     'ngToast',
     'cgBusy'

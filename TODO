@@ -17,4 +17,5 @@ DOWNLOADS
 - gerer les erreurs de déplacement
 - pouvoir un reset du code erreur pour relancer les telechargements
 - taille totale pas bonne si telechargement a ete arretee et repris
+- probleme lorsqu'un nouveau download avec package est ajoute depuis la websocket, le package apparait pas dans la liste des downloads
 
