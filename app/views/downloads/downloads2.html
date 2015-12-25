@@ -12,8 +12,22 @@
     </div>
     <div class="row wrapper">
       <div class="col-sm-4 hidden-xs">
-        <button class="btn btn-sm btn-default" data-ng-click="refreshSelectedDownloads()">Refresh</button>
-        <button class="btn btn-sm btn-default" data-ng-click="deleteSelectedDownloads()">Delete</button>
+        <button class="btn btn-sm btn-default" data-ng-click="refreshSelectedDownloads()">{{'downloads.REFRESH' |
+          translate}}
+        </button>
+        <div class="btn-group dropdown">
+          <button class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+            {{'downloads.delete_dropdown.BUTTON' | translate}} <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li><a href data-ng-click="deleteSelectedDownloads()">{{'downloads.delete_dropdown.SELECTED' |
+              translate}}</a></li>
+            <!--TODO: use constant-->
+            <li><a href data-ng-click="deleteDownloads(3)">{{'downloads.delete_dropdown.FINISHED' | translate}}</a></li>
+            <!--<li><a href>Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href>Separated link</a></li>-->
+          </ul>
+        </div>
       </div>
       <div class="col-sm-4">
       </div>
@@ -52,7 +66,7 @@
         </li>
       </ul>
     </div>
-    <footer class="panel-footer">
+    <!--<footer class="panel-footer">
       <div class="row">
         <div class="col-sm-4 hidden-xs">
           <button class="btn btn-sm btn-default" data-ng-click="refreshSelectedLinks()">Refresh</button>
@@ -73,7 +87,7 @@
           </ul>
         </div>
       </div>
-    </footer>
+    </footer>-->
   </div>
 </div>
 

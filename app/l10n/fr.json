@@ -32,7 +32,13 @@
       "TIME_LEFT": "Tps rest.",
       "ACTIONS": "Actions"
     },
-    "dropdown": {
+    "REFRESH": "Rafraichir",
+    "delete_dropdown": {
+      "BUTTON": "Supprimer",
+      "SELECTED": "Séléctionnés",
+      "FINISHED": "Terminés"
+    },
+    "download_menu_dropdown": {
       "START": "Démarrer",
       "STOP": "Arrêter",
       "REFRESH": "Rafraichir",
@@ -109,7 +115,8 @@
       "AUTOSCROLL": "Auto scroll",
       "START_COUNTER": "Délai",
       "MULTI_PARTS": "Parties",
-      "LOGS": "Logs"
+      "LOGS": "Logs",
+      "ACTIONS_HISTORY": "Actions"
     }
   },
   "download": {
