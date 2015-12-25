@@ -26,6 +26,7 @@ angular.module('plowshareFrontApp')
           if (parseInt(down.id) === parseInt($scope.gridOptions.data[iterator].id)) {
             var now = new Date();
             found = true;
+            $scope.gridOptions.data[iterator].download_package = down.download_package;
             $scope.gridOptions.data[iterator].progress_file = down.progress_file;
             $scope.gridOptions.data[iterator].time_left = down.time_left;
             $scope.gridOptions.data[iterator].status = down.status;
@@ -170,7 +171,7 @@ angular.module('plowshareFrontApp')
       downloadStatusListValue.status = DownloadResourceFctry.status(
         function () {
           // on recupere la liste des downloads
-          DownloadResourceFctry.query(
+          $scope.downloadPromise = DownloadResourceFctry.query(
             function (responses) {
               angular.forEach(responses,
                 function (response) {
