@@ -60,19 +60,30 @@ angular.module('plowshareFrontApp')
           enableGroupHeaderSelection: true,
           rowHeight: 35,
           columnDefs: [
-            {
+            /*{
               name: 'download_package.name',
               displayName: 'Paquet',
               //grouping: {groupPriority: 0},
               cellTooltip: true,
               enableCellEdit: false
+             },*/
+            {
+              name: 'package_id',
+              grouping: {groupPriority: 0},
+              //visible: false,
+              cellTemplate: '<div>' +
+              '{{grid.appScope.package_id__(grid, row)}}' +
+              '</div>'
             },
             {
               name: 'name',
               displayName: 'Name',
               cellTooltip: true,
               headerCellFilter: 'translate',
-              enableCellEdit: false
+              enableCellEdit: false,
+              cellTemplate: '<div>' +
+              '{{grid.appScope.name__(grid, row)}}' +
+              '</div>'
             },
             /*{name: 'link', displayName: 'Link', enableCellEdit: false},*/
             {
@@ -166,6 +177,40 @@ angular.module('plowshareFrontApp')
               }
             });
 
+          }
+        };
+
+        $scope.name__ = function (grid, row, col) {
+          if (row.treeLevel == 0) {
+            if (row.groupHeader && row.treeNode.children[0].row.treeNode.children[0]) {
+              var entity = row.treeNode.children[0].row.treeNode.children[0].row.entity;
+              return entity.download_package.name;
+            }
+            else if (row.treeNode.children[0]) {
+              var entity = row.treeNode.children[0].row.entity;
+              return entity.download_package.name;
+            }
+
+            return row.entity.download_package.name;
+          } else {
+            if (row.groupHeader && row.treeNode.children[0].row.treeNode.children[0]) {
+              var entity = row.treeNode.children[0].row.treeNode.children[0].row.entity;
+              return entity.name;
+            }
+            else if (row.treeNode.children[0]) {
+              var entity = row.treeNode.children[0].row.entity;
+              return entity.name;
+            }
+
+            return row.entity.name;
+          }
+        };
+
+        $scope.package_id__ = function (grid, row, col) {
+          if (row.entity.package_id == null || row.entity.package_id == undefined) {
+            return grid.renderContainers.body.visibleRowCache.indexOf(row) + 1
+          } else {
+            return row.entity.package_id
           }
         };
 
