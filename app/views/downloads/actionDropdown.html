@@ -1,0 +1,23 @@
+<div data-ng-if="row.groupHeader" class="btn-group" dropdown dropdown-append-to-body auto-close="outsideClick"
+     style="position:absolute;">
+  <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+    <i class="glyphicon glyphicon-list"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right" role="menu">
+    <li data-ng-class="{'disabled': row.entity.status != 1, 'text-success': row.entity.subscribed }">
+      <a data-ng-click="grid.appScope.startAction(row.treeNode.children[0].row.entity);"
+         class="" href><i class="glyphicon glyphicon-play"> </i> {{'infoplowdown.action_menu_dropdown.START' |
+        translate}}</a>
+    </li>
+    <li data-ng-class="{'disabled': row.entity.status == 1}">
+      <a data-ng-click="grid.appScope.stopAction(row.treeNode.children[0].row.entity);"
+         class="" href><i class="glyphicon glyphicon-stop"> </i> {{'infoplowdown.action_menu_dropdown.STOP' |
+        translate}}</a>
+    </li>
+    <li>
+      <a data-ng-click="grid.appScope.deleteAction(row.treeNode.children[0].row.entity);" class=""
+         href><i class="glyphicon glyphicon-trash"> </i> {{'infoplowdown.action_menu_dropdown.DELETE' | translate}}</a>
+    </li>
+  </ul>
+</div>

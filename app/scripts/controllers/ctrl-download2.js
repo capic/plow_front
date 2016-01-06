@@ -31,6 +31,7 @@ angular.module('plowshareFrontApp')
               $scope.gridOptions.data[iterator].status = down.status;
               $scope.gridOptions.data[iterator].size_file = down.size_file;
               $scope.gridOptions.data[iterator].average_speed = down.average_speed;
+              $scope.gridOptions.data[iterator].directory = down.directory;
               $scope.gridOptions.data[iterator].theorical_start_datetime = new Date(down.theorical_start_datetime);
 
               $scope.gridOptions.data[iterator].counter = 0;
@@ -323,76 +324,62 @@ angular.module('plowshareFrontApp')
 
                   directoryResourceObject.$save(
                     function (response) {
-                      var actions = [];
                       //TODO: utiliser des constantes
-                      actions[0] = {
+                      var action = {
                         download_id: downloadToMove.id,
+                        action_status_id: 1,
                         action_type_id: 1,
-                        property_id: 1,
-                        property_value: 0,
-                        action_status_id: 1
-                      };
-                      actions[1] = {
-                        download_id: downloadToMove.id,
-                        action_type_id: 1,
-                        property_id: 2,
-                        directory_id: downloadToMove.directory_id,
-                        action_status_id: 1
-                      };
-                      actions[2] = {
-                        download_id: downloadToMove.id,
-                        action_type_id: 1,
-                        property_id: 3,
-                        directory_id: response.id,
-                        action_status_id: 1
-                      };
-                      actions[3] = {
-                        download_id: downloadToMove.id,
-                        action_type_id: 1,
-                        property_id: 4,
-                        property_value: 0,
-                        action_status_id: 1
+                        action_has_properties: [
+                          {
+                            property_id: 2,
+                            directory_id: downloadToMove.directory.id
+                          },
+                          {
+                            property_id: 3,
+                            directory_id: response.id
+                          }
+                        ]
                       };
 
-                      ActionResourceFctry.bulk(
-                        {actions: JSON.stringify(actions)},
+                      ActionResourceFctry.save(
+                        {action: JSON.stringify(action)},
                         function (response) {
                           // si le statut est terminé on déplace le fichier
                           // TODO: utiliser des constantes
-                          if (downloadToMove.status == 3) {
-                            //TODO: utiliser constante
-                            var tabResult = $filter('filter')(response, {property_id: 3}, true);
-                            if (tabResult.length > 0) {
-                              DownloadResourceFctry.move({
-                                  download_id: downloadToMove.id,
-                                  num: tabResult[0].num,
-                                  from: 1 // ihm
-                                },
-                                function (downloadReturned) {
-                                  var found = false;
-                                  var i = 0;
-                                  while (!found && i < $scope.gridOptions.data.length) {
-                                    if ($scope.gridOptions.data[i].id == downloadReturned.id) {
-                                      $scope.gridOptions.data[i] = downloadReturned;
-                                      found = true;
-                                    }
-                                    i++;
+                          if (downloadToMove.status == 3 || downloadToMove.status == 10) {
+                            ActionResourceFctry.execute({
+                                object_id: downloadToMove.id,
+                                action_id: response.id,
+                                action_target_id: response.action_type.action_target_id
+                              },
+                              function () {
+                                /*
+                                 var found = false;
+                                 var i = 0;
+                                 while (!found && i < $scope.gridOptions.data.length) {
+                                 if ($scope.gridOptions.data[i].id == downloadReturned.id) {
+                                 $scope.gridOptions.data[i] = downloadReturned;
+                                 found = true;
                                   }
-                                },
-                                function () {
-                                  downloadToMove.status = oldStatus;
-                                  var found = false;
-                                  var i = 0;
-                                  while (!found && i < $scope.gridOptions.data.length) {
-                                    if ($scope.gridOptions.data[i].id == downloadToMove.id) {
-                                      $scope.gridOptions.data[i] = downloadToMove;
-                                      found = true;
-                                    }
-                                    i++;
-                                  }
+                                 i++;
                                 }
-                              );
-                            }
+                                 */
+                              },
+                              function () {
+                                /*
+                                 downloadToMove.status = oldStatus;
+                                 var found = false;
+                                 var i = 0;
+                                 while (!found && i < $scope.gridOptions.data.length) {
+                                 if ($scope.gridOptions.data[i].id == downloadToMove.id) {
+                                 $scope.gridOptions.data[i] = downloadToMove;
+                                 found = true;
+                                 }
+                                 i++;
+                                 }
+                                 */
+                              }
+                            );
                           }
                         }
                       );

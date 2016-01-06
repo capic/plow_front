@@ -117,6 +117,11 @@
       "MULTI_PARTS": "Parties",
       "LOGS": "Logs",
       "ACTIONS_HISTORY": "Actions"
+    },
+    "action_menu_dropdown": {
+      "START": "Démarrer",
+      "STOP": "Arrêter",
+      "DELETE": "Supprimer"
     }
   },
   "download": {
