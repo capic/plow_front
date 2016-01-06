@@ -10,7 +10,7 @@
 angular.module('plowshareFrontApp')
   .factory('DirectoryResourceFctry', ['$resource', 'settings', function ($resource, settings) {
     return $resource(
-      settings.SERVER_ADDRESS + 'downloadDirectories/:Id',
+      settings.SERVER_ADDRESS + 'directories/:Id',
       {Id: '@Id'},
       {}
     );

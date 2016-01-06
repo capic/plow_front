@@ -11,9 +11,11 @@ angular.module('plowshareFrontApp')
   .factory('ErrorInterceptorFcty', ['$q', '$injector', 'ngToast', function ($q, $injector, ngToast) {
     return {
       'responseError': function (response) {
-        ngToast.danger({content: response.data.message});
+        if (response != null && response != undefined && response.data != null) {
+          ngToast.danger({content: response.data.message});
 
-        return $q.reject(response);
+          return $q.reject(response);
+        }
       }
     }
   }]);

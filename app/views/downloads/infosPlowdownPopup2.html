@@ -5,10 +5,15 @@
         <tab heading="{{'infosPlowdown.form.GENERAL' | translate}}">
           <!--link + priority-->
           <div class="form-group">
-            <label class="col-lg-2 control-label">{{'infosPlowdown.form.LINK' | translate}}</label>
+            <label class="col-lg-1 control-label">{{'infosPlowdown.form.LINK' | translate}}</label>
 
             <div class="col-lg-7">
               <input class="form-control" type="text" disabled="disabled" value="{{download.link}}"></input>
+            </div>
+
+            <div class="col-lg-1">
+              {{download.download_host.name}}
+              <!--<img ng-src="{{download.download_host.picture}}" />-->
             </div>
 
             <label class="col-lg-1 control-label">{{'infosPlowdown.form.PRIORITY' | translate}}</label>
@@ -22,12 +27,12 @@
           </div>
           <!--name-->
           <div class="form-group"
-               data-ng-class="{'has-error': (download.status != 2 && download.status != 1) && !download.fileExists}" >
-            <label class="col-lg-2 control-label">{{'infosPlowdown.form.NAME' | translate}}</label>
+               data-ng-class="{'has-error': (download.status != 2 && download.status != 1) && !download.fileExists}">
+            <label class="col-lg-1 control-label">{{'infosPlowdown.form.NAME' | translate}}</label>
 
-            <div class="col-lg-5">
+            <div class="col-lg-6">
               <div class="input-group">
-                <ui-select ng-model="edition.downloadDirectory"
+                <ui-select ng-model="edition.directory"
                            theme="bootstrap"
                            reset-search-input="false"
                            ng-disabled="download.status == 4 || download.status == 7 || download.status == 9 || (!download.fileExists && download.status != 1 && download.status != 2)"
@@ -45,14 +50,16 @@
             </div>
 
             <div class="col-lg-5" cg-busy="downloadFileExistsPromise">
-              <input class="form-control" type="text" disabled="disabled" data-ng-class="{'text-danger': !download.fileExists && download.status != 1 && download.status != 2}" value="{{download.name}}"></input>
+              <input class="form-control" type="text" disabled="disabled"
+                     data-ng-class="{'text-danger': !download.fileExists && download.status != 1 && download.status != 2}"
+                     value="{{download.name}}"></input>
             </div>
           </div>
           <!--file size + % file-->
           <div class="form-group">
-            <label class="col-lg-2 control-label">{{'infosPlowdown.form.SIZE_FILE' | translate}}</label>
+            <label class="col-lg-1 control-label">{{'infosPlowdown.form.SIZE_FILE' | translate}}</label>
 
-            <div class="col-lg-4">
+            <div class="col-lg-5">
               <input class="form-control" type="text" disabled="disabled"
                      value="{{download.size_file_downloaded | bytesFltr}} / {{download.size_file | bytesFltr}}"></input>
             </div>
@@ -66,10 +73,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-2 control-label">{{'infosPlowdown.form.TIME_SPENT' |
+            <label class="col-lg-1 control-label">{{'infosPlowdown.form.TIME_SPENT' |
               translate}}</label>
 
-            <div class="col-lg-2">
+            <div class="col-lg-3">
               <input type="text" class="form-control" disabled="disabled"
                      value="{{download.time_spent | timeFltr}}"></input>
             </div>
@@ -188,17 +195,61 @@
             </div>
           </div>
         </tab>
-        <tab ng-show="download.name.split('.')[(download.name.split('.').length - 1)] == 'rar'" heading="{{'infosPlowdown.form.MULTI_PARTS' | translate}}">
+        <tab ng-show="download.name.split('.')[(download.name.split('.').length - 1)] == 'rar'"
+             heading="{{'infosPlowdown.form.MULTI_PARTS' | translate}}">
           <div id="gridMultiParts" ui-grid="gridOptions" ui-grid-resize-columns class="grid-package"
-               data-ng-class="{'disabled': nbrDownloadsToFinishBeforeUnrar > 0}"></div>
+               data-ng-class="{'disabled': nbrDownloadsToFinishBeforeUnrar > 0}"
+               cg-busy="downloadFileExistsPromise"></div>
           <div class="line line-dashed b-b line-lg pull-in"></div>
-          <button class="btn m-b-xs w-xs btn-default btn-xs" data-ng-click="unrar()">Unrar</button>
+          <div class="form-group">
+            <div class="col-lg-2">
+              <div class="btn-group dropdown">
+                <button class="btn btn-default" data-ng-click="unrar()" data-ng-disabled="download.status == 12">Unrar
+                </button>
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href data-ng-if="download.status == 12">Stop</a></li>
+                  <li><a href data-ng-if="download.status != 12" data-ng-click="deletePackageFiles()">Delete rar
+                    files</a></li>
+                  <!--<li><a href>Delete extracted files</a></li>-->
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-10">
+              <progressbar class="progress-striped active sm-t-sm" value="download.download_package.unrar_progress"
+                           type="success">
+                <b>{{download.download_package.unrar_progress}}%</b>
+              </progressbar>
+            </div>
+          </div>
+        </tab>
+        <tab heading="{{'infosPlowdown.form.ACTIONS_HISTORY' | translate}}">
+          <div id="gridActions" ui-grid="gridActions" ui-grid-resize-columns ui-grid-grouping class="grid-package"
+               cg-busy="downloadActionsHistoryPromise"></div>
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+          <div class="form-group">
+            <div class="col-lg-2">
+              <div class="btn-group dropdown">
+                <button class="btn btn-default" data-ng-click="addDownloadAction()">Add</button>
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href></a></li>
+                  <li><a href></a></li>
+                  <!--<li><a href>Delete extracted files</a></li>-->
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-10">
+            </div>
+          </div>
         </tab>
         <tab heading="{{'infosPlowdown.form.LOGS' | translate}}">
           <div class="form-group">
             <textarea class="form-control" rows="15" readonly wrap="off"
                       placeholder="{{'infosPlowdown.form.PLACE_HOLDER' | translate}}"
-                      scroll-glue="true">{{download.logs}}</textarea>
+                      scroll-glue="autoscroll">{{download.logs.logs}}</textarea>
           </div>
           <div class="form-group">
             <label> {{'infosPlowdown.form.AUTOSCROLL' | translate}}</label>
@@ -211,7 +262,6 @@
               translate}}
             </button>
           </div>
-
         </tab>
       </tabset>
     </div>

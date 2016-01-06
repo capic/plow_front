@@ -32,10 +32,11 @@ angular.module('plowshareFrontApp')
           "logs": {url: settings.SERVER_ADDRESS + 'downloads/logs/:Id', method: 'GET'},
           "deleteLogs": {url: settings.SERVER_ADDRESS + 'downloads/logs/:Id', method: 'DELETE'},
           'updatePriority': {url: settings.SERVER_ADDRESS + 'downloads/priority', method: 'POST'},
-          'move': {url: settings.SERVER_ADDRESS + 'downloads/moveOne', method: 'POST', isArray: true},
+          'move': {url: settings.SERVER_ADDRESS + 'downloads/moveOne', method: 'POST'},
           'unrar': {url: settings.SERVER_ADDRESS + 'downloads/unrar', method: 'POST'},
           'exists': {url: settings.SERVER_ADDRESS + 'downloads/file/exists/:Id', method: 'GET'},
-          'reset': {url: settings.SERVER_ADDRESS + 'downloads/reset', method: 'POST'}
+          'reset': {url: settings.SERVER_ADDRESS + 'downloads/reset', method: 'POST'},
+          'deletePackageFiles': {url: settings.SERVER_ADDRESS + 'downloads/package/files/delete', method: 'POST'}
         }
       );
     }
