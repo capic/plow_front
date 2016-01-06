@@ -30,7 +30,7 @@
                data-ng-class="{'has-error': (download.status != 2 && download.status != 1) && !download.fileExists}">
             <label class="col-lg-1 control-label">{{'infosPlowdown.form.NAME' | translate}}</label>
 
-            <div class="col-lg-6">
+            <div class="col-lg-6" cg-busy="[directoryQueryPromise]">
               <div class="input-group">
                 <ui-select ng-model="edition.directory"
                            theme="bootstrap"
@@ -199,7 +199,7 @@
              heading="{{'infosPlowdown.form.MULTI_PARTS' | translate}}">
           <div id="gridMultiParts" ui-grid="gridOptions" ui-grid-resize-columns class="grid-package"
                data-ng-class="{'disabled': nbrDownloadsToFinishBeforeUnrar > 0}"
-               cg-busy="downloadFileExistsPromise"></div>
+               cg-busy="[packageQueryPromise]"></div>
           <div class="line line-dashed b-b line-lg pull-in"></div>
           <div class="form-group">
             <div class="col-lg-2">
@@ -226,7 +226,7 @@
         </tab>
         <tab heading="{{'infosPlowdown.form.ACTIONS_HISTORY' | translate}}">
           <div id="gridActions" ui-grid="gridActions" ui-grid-resize-columns ui-grid-grouping class="grid-package"
-               cg-busy="downloadActionsHistoryPromise"></div>
+               cg-busy="[actionsQueryPromise]"></div>
           <div class="line line-dashed b-b line-lg pull-in"></div>
           <div class="form-group">
             <div class="col-lg-2">
@@ -246,7 +246,7 @@
           </div>
         </tab>
         <tab heading="{{'infosPlowdown.form.LOGS' | translate}}">
-          <div class="form-group">
+          <div class="form-group" cg-busy="downloadLogsPromise">
             <textarea class="form-control" rows="15" readonly wrap="off"
                       placeholder="{{'infosPlowdown.form.PLACE_HOLDER' | translate}}"
                       scroll-glue="autoscroll">{{download.logs.logs}}</textarea>

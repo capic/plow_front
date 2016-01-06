@@ -86,7 +86,7 @@ angular.module('plowshareFrontApp')
           $scope.startCounter = Math.round(($scope.download.theorical_start_datetime.getTime() - new Date().getTime()) / 1000);
         }
 
-        DirectoryResourceFctry.query(
+        $scope.directoryQueryPromise = DirectoryResourceFctry.query(
           function (response) {
             $scope.listPath = response;
             var tabResult = $filter('filter')(response, {id: $scope.download.directory.id}, true);
@@ -295,7 +295,7 @@ angular.module('plowshareFrontApp')
         };
 
         if ($scope.download.download_package != null) {
-          DownloadResourceFctry.query({package_id: $scope.download.download_package.id},
+          $scope.packageQueryPromise = DownloadResourceFctry.query({package_id: $scope.download.download_package.id},
             function (response) {
               $scope.gridOptions.data = response;
 
@@ -325,7 +325,7 @@ angular.module('plowshareFrontApp')
 
         var websocketDownload = null;
         var websocketDownloadLogs = null;
-        DownloadResourceFctry.logs({Id: download.id},
+        $scope.downloadLogsPromise = DownloadResourceFctry.logs({Id: download.id},
           function (response) {
             if (response.logs != undefined && response.logs != '') {
               $scope.download.logs = response;
@@ -382,7 +382,10 @@ angular.module('plowshareFrontApp')
           return tab;
         };
 
-        ActionResourceFctry.query({download_id$orµ1: download.id, download_package_id$orµ1: download.package_id},
+        $scope.actionsQueryPromise = ActionResourceFctry.query({
+            download_id$orµ1: download.id,
+            download_package_id$orµ1: download.package_id
+          },
           function (response) {
             var tab = [];
             angular.forEach(response,
@@ -407,11 +410,11 @@ angular.module('plowshareFrontApp')
         }
 
         $scope.delete = function () {
-          DownloadResourceFctry.deleteLogs({Id: download.id},
+          $scope.downloadLogsPromise = DownloadResourceFctry.deleteLogs({Id: download.id},
             function (response) {
-              if (response.logs == '') {
+              if (response.logs == "") {
                 $translate('infosPlowdown.form.NO_INFO').then(function (translation) {
-                  $scope.download.logs = translation;
+                  $scope.logs.logs = translation;
                 });
               }
             }, function () {
