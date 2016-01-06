@@ -414,7 +414,7 @@ angular.module('plowshareFrontApp')
             function (response) {
               if (response.logs == "") {
                 $translate('infosPlowdown.form.NO_INFO').then(function (translation) {
-                  $scope.logs.logs = translation;
+                  $scope.download.logs.logs = translation;
                 });
               }
             }, function () {
