@@ -1,0 +1,28 @@
+<div class="modal-body wrapper-lg">
+  <form role="form" class="form-horizontal">
+    <div class="row">
+      <div class="form-group">
+        <label class="col-lg-1 control-label">{{'infosAction.form.ACTION' | translate}}</label>
+
+        <div class="col-lg-11">
+          <select name="actionType" class="form-control m-b disabled" ng-model="actionType.selected"
+                  ng-options="p.name for p in actionTypesList track by p.id">
+          </select>
+        </div>
+
+        <label class="col-lg-1 control-label">{{'infosAction.form.PROPERTY' | translate}}</label>
+
+        <div class="col-lg-11">
+          <select name="action" class="form-control m-b disabled" ng-model="actionTypeProperty.selected"
+                  ng-options="p.property.name for p in actionType.selected.action_type_has_property track by p.id">
+          </select>
+        </div>
+
+
+      </div>
+    </div>
+  </form>
+</div>
+<footer class="panel-footer text-right bg-light lter">
+  <button type="submit" class="btn btn-success" data-ng-click="ok()">Ok</button>
+</footer>

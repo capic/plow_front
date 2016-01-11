@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', '$translate', '$filter', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'HostPictureResourceFctry', 'ActionResourceFctry', 'downloadPriorities', 'download', '$wamp', 'settings', '$interval',
-      function ($scope, $modalInstance, $translate, $filter, DownloadResourceFctry, DirectoryResourceFctry, HostPictureResourceFctry, ActionResourceFctry, downloadPriorities, download, $wamp, settings, $interval) {
+  .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', '$translate', '$filter', '$modal', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'HostPictureResourceFctry', 'ActionResourceFctry', 'downloadPriorities', 'download', '$wamp', 'settings', '$interval',
+    function ($scope, $modalInstance, $translate, $filter, $modal, DownloadResourceFctry, DirectoryResourceFctry, HostPictureResourceFctry, ActionResourceFctry, downloadPriorities, download, $wamp, settings, $interval) {
         function onevent(args) {
           var down = angular.fromJson(args[0]);
 
@@ -524,6 +524,15 @@ angular.module('plowshareFrontApp')
             for (var i = idxToDelete.length - 1; i >= 0; i--) {
               $scope.gridActions.data.splice(idxToDelete[i], 1);
             }
+          });
+        };
+
+      $scope.addAction = function () {
+        $scope.modal = $modal.open({
+          templateUrl: 'views/downloads/infosAction.html',
+          controller: 'InfosActionCtrl',
+          backdrop: 'static',
+          size: 'sm'
           });
         }
       }
