@@ -1,0 +1,16 @@
+<div class="input-group">
+  <ui-select ng-model="edition.directory"
+             theme="bootstrap"
+             reset-search-input="false"
+             ng-disabled="download.status == 4 || download.status == 7 || download.status == 9 || (!download.fileExists && download.status != 1 && download.status != 2)"
+             tagging="processItem"
+             style="width: 300px;">
+    <ui-select-match placeholder="Enter a path...">{{$select.selected.path}}</ui-select-match>
+    <ui-select-choices repeat="path in listPath | filter: $select.search track by path.path"
+                       refresh-delay="0">
+      <a data-ng-if="listPath.length > 1" data-ng-click="deleteOption(path)" class="btn btn-action btn-xs"
+         href><i class="glyphicon glyphicon-trash"> </i></a>
+      <span ng-bind-html="path.path | highlight: $select.search"></span>
+    </ui-select-choices>
+  </ui-select>
+</div>

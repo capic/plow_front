@@ -5,7 +5,7 @@
         <label class="col-lg-1 control-label">{{'infosAction.form.ACTION' | translate}}</label>
 
         <div class="col-lg-11">
-          <select name="actionType" class="form-control m-b disabled" ng-model="actionType.selected"
+          <select name="actionType" class="form-control m-b disabled" ng-model="actionType"
                   ng-options="p.name for p in actionTypesList track by p.id">
           </select>
         </div>
@@ -13,12 +13,33 @@
         <label class="col-lg-1 control-label">{{'infosAction.form.PROPERTY' | translate}}</label>
 
         <div class="col-lg-11">
-          <select name="action" class="form-control m-b disabled" ng-model="actionTypeProperty.selected"
-                  ng-options="p.property.name for p in actionType.selected.action_type_has_property track by p.id">
+          <select name="property" class="form-control m-b disabled" ng-model="actionProperty"
+                  ng-options="p.property.name for p in actionType.action_type_has_property track by p.property.id">
           </select>
         </div>
 
-
+        <div class="col-lg-offset-0"></div>
+        <!--utiliser une constante-->
+        <div class="col-lg-11" data-ng-switch on="actionProperty.property_id">
+          <div data-ng-switch-when="3" class="input-group" cg-busy="[directoryQueryPromise]">
+            <ui-select ng-model="actionPropertyDirectory"
+                       theme="bootstrap"
+                       reset-search-input="false"
+                       tagging="processItem"
+                       style="width: 300px;">
+              <ui-select-match placeholder="Enter a path...">{{$select.selected.path}}</ui-select-match>
+              <ui-select-choices repeat="path in listPath | filter: $select.search track by path.path"
+                                 refresh-delay="0">
+                <a data-ng-if="listPath.length > 1" data-ng-click="deleteOption(path)" class="btn btn-action btn-xs"
+                   href><i class="glyphicon glyphicon-trash"> </i></a>
+                <span ng-bind-html="path.path | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+          <div data-ng-switch-default>
+            <input class="form-control" type="text" data-ng-mode="actionPropertyValue"></input>
+          </div>
+        </div>
       </div>
     </div>
   </form>
