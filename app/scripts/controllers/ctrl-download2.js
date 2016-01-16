@@ -10,6 +10,8 @@
 angular.module('plowshareFrontApp')
   .controller('DownloadCtrl2', ['$scope', '$filter', '$translate', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'ActionResourceFctry', 'downloadStatusListValue', 'downloadPriorities', '$modal', 'uiGridGroupingConstants', '$wamp', 'dialogs',
       function ($scope, $filter, $translate, DownloadResourceFctry, DirectoryResourceFctry, ActionResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp, dialogs) {
+        $scope.contextMenuEntity = {};
+
         function onevent(args) {
           var down = angular.fromJson(args[0]);
 
@@ -59,6 +61,7 @@ angular.module('plowshareFrontApp')
           enableRowSelection: true,
           enableGroupHeaderSelection: true,
           rowHeight: 35,
+          rowTemplate: 'views/downloads/part/rowTemplate.html',
           columnDefs: [
             {
               name: 'download_package.name',
@@ -130,14 +133,14 @@ angular.module('plowshareFrontApp')
               editDropdownOptionsArray: downloadPriorities,
               editDropdownFilter: 'translate',
               width: 70
-            },
+            }/*,
             {
               name: ' ',
               width: '35',
               enableColumnResizing: false,
               enableCellEdit: false,
               cellTemplate: 'views/downloads/myDropDown.html'
-            }
+            }*/
           ],
 
           onRegisterApi: function (gridApi) {

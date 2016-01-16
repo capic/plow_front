@@ -1,0 +1,30 @@
+<div class="dropdown position-fixed" id="cml_menu">
+  <ul class="dropdown-menu" role="menu">
+    <li class="menu-item" data-ng-class="{'disabled': row.entity.status != 1, 'text-success': row.entity.subscribed }">
+      <a data-ng-click="startDownloading(contextMenuEntity);"
+         class="" href><i class="menu-ico glyphicon glyphicon-play"> </i> {{'downloads.download_menu_dropdown.START' |
+        translate}}</a>
+    </li>
+    <li class="menu-item" data-ng-class="{'disabled': row.entity.status == 1}">
+      <a data-ng-click="stopDownloading(contextMenuEntity);"
+         class="" href><i class="menu-ico glyphicon glyphicon-stop"> </i> {{'downloads.download_menu_dropdown.STOP' | translate}}</a>
+    </li>
+    <li class="menu-item">
+      <a data-ng-click="refreshDownload(contextMenuEntity);" class=""
+         data-ng-class="downloadRefreshInProgress[contextMenuEntity.id]" href><i
+        class="menu-ico glyphicon glyphicon-refresh"> </i> {{'downloads.download_menu_dropdown.REFRESH' | translate}}</a>
+    </li>
+    <li class="menu-item">
+      <a data-ng-click="deleteDownload(contextMenuEntity);" class=""
+         href><i class="menu-ico glyphicon glyphicon-trash"> </i> {{'downloads.download_menu_dropdown.DELETE' | translate}}</a>
+    </li>
+    <li class="menu-item">
+      <a data-ng-click="resetDownload(contextMenuEntity);" class=""
+         href><i class="menu-ico glyphicon glyphicon-trash"> </i> {{'downloads.download_menu_dropdown.RESET' | translate}}</a>
+    </li>
+    <li class="menu-item">
+      <a data-ng-click="infosPlowdown(contextMenuEntity);" class=""
+         href><i class="menu-ico glyphicon glyphicon-list-alt"> </i> {{'downloads.download_menu_dropdown.INFOS' | translate}}</a>
+    </li>
+  </ul>
+</div>
