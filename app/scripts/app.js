@@ -31,7 +31,8 @@ angular
     //'dialogs.default-translations',
     'ui.select',
     'ngToast',
-    'cgBusy'
+    'cgBusy',
+    'ng-context-menu'
   ])
   .config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
     function ($stateProvider, $urlRouterProvider, $httpProvider) {
