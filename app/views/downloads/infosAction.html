@@ -6,7 +6,7 @@
 
         <div class="col-lg-10" cg-busy="[actionTypeQueryPromise]">
           <select name="actionType" class="form-control m-b disabled" ng-model="actionType"
-                  ng-options="p.name for p in actionTypesList track by p.id" required>
+                  ng-options="p.translation_key | translate for p in actionTypesList track by p.id" required>
           </select>
         </div>
         <div data-ng-show="actionType.action_type_has_property.length > 0">
@@ -16,7 +16,7 @@
                cg-busy="[actionTypeQueryPromise]">
             <select name="property" class="form-control m-b disabled"
                     ng-model="actionProperty"
-                    ng-options="p.property.name for p in actionType.action_type_has_property track by p.property.id"
+                    ng-options="p.property.translation_key | translate for p in actionType.action_type_has_property track by p.property.id"
                     required>
             </select>
           </div>

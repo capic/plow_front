@@ -131,9 +131,54 @@
       "HIGH": "Haute",
       "MAX": "Max"
     },
+    "status": {
+      "WAITING": "En attente",
+      "IN_PROGRESS": "En cours",
+      "FINISHED": "Terminé",
+      "ERROR": "Erreur",
+      "PAUSED": "En pause",
+      "CANCELED": "Annulé",
+      "UNDEFINED": "Indéfini",
+      "STARTING": "Démarrage",
+      "MOVING": "En déplacement",
+      "MOVED": "Déplacé",
+      "ERROR_MOVING": "Erreur de déplacement",
+      "UNRARING": "Extraction",
+      "UNRARED": "Extrait",
+      "UNRAR_ERROR": "Erreur d'extraction",
+      "FILE_DELETING": "Suppression du fichier",
+      "FILE_DELETED": "Fichier supprimé",
+      "FILE_DELETING_ERROR": "Erreur de suppression du fichier",
+      "TREATMENT_IN_PROGRESS": "Traitement en cours"
+    },
     "dialog": {
 
     }
+  },
+  "action": {
+    "status": {
+      "WAITING": "En attente",
+      "IN_PROGRESS": "En cours",
+      "FINISHED": "Terminé",
+      "ERROR": "Erreur"
+    },
+    "target": {
+      "DOWNLOAD": "Téléchargement",
+      "PACKAGE": "Paquet"
+    },
+    "type": {
+      "MOVE_DOWNLOAD": "Déplacement du téléchargement",
+      "UNRAR_PACKAGE": "Extraction du paquet",
+      "DELETE_PACKAGE": "Suppression du paquet"
+    }
+  },
+  "property": {
+    "PERCENTAGE": "Progression",
+    "DIRECTORY_SRC": "Répertoire source",
+    "DIRECTORY_DST": "Répertoire destination",
+    "TIME_LEFT": "Temps restant",
+    "TIME_ELAPSED": "Temps écoulé",
+    "TIME_TOTAL": "Temps total"
   },
   "infosAction": {
     "form": {

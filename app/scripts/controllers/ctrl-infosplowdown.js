@@ -150,7 +150,7 @@ angular.module('plowshareFrontApp')
 
         $scope.gridActions = {
           treeRowHeaderAlwaysVisible: false,
-          rowHeight: 35,
+          rowHeight: 45,
           rowTemplate: 'views/downloads/infos/menu/rowTemplate.html',
           columnDefs: [
             {
@@ -216,43 +216,58 @@ angular.module('plowshareFrontApp')
         };
 
         $scope.name__ = function (grid, row, col) {
+          var ret = null;
           if (row.treeLevel == 0) {
             if (row.groupHeader && row.treeNode.children[0].row.treeNode.children[0]) {
               var entity = row.treeNode.children[0].row.treeNode.children[0].row.entity;
-              return entity.action_type_name + ' (' + entity.action_target_name + ')';
+              ret = entity.action_type_translation_key;
             }
             else if (row.treeNode.children[0]) {
               var entity = row.treeNode.children[0].row.entity;
-              return entity.action_type_name + ' (' + entity.action_target_name + ')';
+              ret = entity.action_type_translation_key;
+            } else {
+              ret = row.entity.action_type_translation_key;
             }
-
-            return row.entity.action_type_name + ' (' + entity.action_target_name + ')';
           } else {
             if (row.groupHeader && row.treeNode.children[0].row.treeNode.children[0]) {
               var entity = row.treeNode.children[0].row.treeNode.children[0].row.entity;
-              return entity.property_name;
+              ret = entity.property_translation_key;
             }
             else if (row.treeNode.children[0]) {
               var entity = row.treeNode.children[0].row.entity;
-              return entity.property_name;
+              ret = entity.property_translation_key;
+            } else {
+              ret = row.entity.property_translation_key;
             }
+          }
 
-            return row.entity.property_name;
+          if (ret != null) {
+            return $translate.instant(ret);
+          } else {
+            return '';
           }
         };
 
         $scope.status__ = function (grid, row, col) {
+          var ret = null;
+
           if (row.treeLevel == 0) {
             if (row.groupHeader && row.treeNode.children[0].row.treeNode.children[0]) {
               var entity = row.treeNode.children[0].row.treeNode.children[0].row.entity;
-              return entity.action_status_name;
+              ret = entity.action_status_translation_key;
             }
             else if (row.treeNode.children[0]) {
               var entity = row.treeNode.children[0].row.entity;
-              return entity.action_status_name;
+              ret = entity.action_status_translation_key;
+            } else {
+              ret = row.entity.action_status_translation_key;
             }
+          } else {
+            return '';
+          }
 
-            return row.entity.action_status_name;
+          if (ret != null) {
+            return $translate.instant(ret);
           } else {
             return '';
           }
@@ -270,23 +285,6 @@ angular.module('plowshareFrontApp')
             }
 
             return $filter('date')(row.entity.lifecycle_insert_date, 'dd/MM/yyyy HH:mm:ss', '-0200');
-          } else {
-            return '';
-          }
-        };
-
-        $scope.targetName__ = function (grid, row, col) {
-          if (row.treeLevel == 0) {
-            if (row.groupHeader && row.treeNode.children[0].row.treeNode.children[0]) {
-              var entity = row.treeNode.children[0].row.treeNode.children[0].row.entity;
-              return entity.action_target_name;
-            }
-            else if (row.treeNode.children[0]) {
-              var entity = row.treeNode.children[0].row.entity;
-              return entity.action_target_name;
-            }
-
-            return row.entity.action_target_name;
           } else {
             return '';
           }
@@ -364,11 +362,15 @@ angular.module('plowshareFrontApp')
               var a = {
                 action_id: action.id,
                 action_type_name: action.action_type.name,
+                action_type_translation_key: action.action_type.translation_key,
                 action_target_name: action.action_type.action_target.name,
+                action_target_translation_key: action.action_type.action_target.translation_key,
                 lifecycle_insert_date: action.lifecycle_insert_date,
                 action_status_name: action.action_status.name,
+                action_status_translation_key: action.action_status.translation_key,
                 property_id: property.property_id,
                 property_name: property.property.name,
+                property_translation_key: property.property.translation_key,
                 property_value: property.property_value,
                 property_directory_id: (property.directory != null) ? property.directory.id : null,
                 property_directory_path: (property.directory != null) ? property.directory.path : null

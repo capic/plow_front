@@ -9,7 +9,7 @@
  * Filter in the plowshareFrontApp.
  */
 angular.module('plowshareFrontApp')
-  .filter('downloadStatusFltr2', function (downloadStatusListValue) {
+  .filter('downloadStatusFltr2', function (downloadStatusListValue, $translate) {
     return function (input) {
       var returned = '';
 
@@ -18,7 +18,7 @@ angular.module('plowshareFrontApp')
        });
 
        if (statusMatched.length === 1) {
-         returned = statusMatched[0].name;
+         returned = $translate.instant(statusMatched[0].translation_key);
        }
 
       return returned;
