@@ -1,0 +1,23 @@
+<div id="gridActions" ui-grid="gridActions" ui-grid-resize-columns ui-grid-grouping ui-grid-draggable-rows class="grid-package"
+     cg-busy="[actionsQueryPromise]"></div>
+<ng-include
+  src="'views/downloads/infos/menu/myDropDown.html'"></ng-include>
+<div class="line line-dashed b-b line-lg pull-in"></div>
+
+<div class="form-group">
+  <div class="col-lg-2">
+    <div class="btn-group dropdown">
+      <button context-menu data-target="actionsMenu" class="btn btn-default" data-ng-click="addAction()">Add</button>
+      <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a data-ng-click="executeAllActions()" href>execute all</a></li>
+        <li><a href></a></li>
+        <!--<li><a href>Delete extracted files</a></li>-->
+      </ul>
+    </div>
+  </div>
+  <div class="col-lg-10">
+  </div>
+</div>
+

@@ -1,0 +1,26 @@
+<div id="gridMultiParts" ui-grid="gridOptions" ui-grid-resize-columns class="grid-package"
+     data-ng-class="{'disabled': nbrDownloadsToFinishBeforeUnrar > 0}"
+     cg-busy="[packageQueryPromise]"></div>
+<div class="line line-dashed b-b line-lg pull-in"></div>
+<div class="form-group">
+  <div class="col-lg-2">
+    <div class="btn-group dropdown">
+      <button class="btn btn-default" data-ng-click="unrar()" data-ng-disabled="download.status == 12">Unrar
+      </button>
+      <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href data-ng-if="download.status == 12">Stop</a></li>
+        <li><a href data-ng-if="download.status != 12" data-ng-click="deletePackageFiles()">Delete rar
+          files</a></li>
+        <!--<li><a href>Delete extracted files</a></li>-->
+      </ul>
+    </div>
+  </div>
+  <div class="col-lg-10">
+    <progressbar class="progress-striped active sm-t-sm" value="download.download_package.unrar_progress"
+                 type="success">
+      <b>{{download.download_package.unrar_progress}}%</b>
+    </progressbar>
+  </div>
+</div>

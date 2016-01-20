@@ -13,7 +13,8 @@ angular.module('plowshareFrontApp')
       settings.SERVER_ADDRESS + 'actions/:Id',
       {Id: '@Id'},
       {
-        'execute': {url: settings.SERVER_ADDRESS + 'actions/execute', method: 'POST'}
+        'execute': {url: settings.SERVER_ADDRESS + 'actions/execute', method: 'POST'},
+      'executeAll': {url: settings.SERVER_ADDRESS + 'actions/executeAll', method: 'POST'}
       }
     );
   }]);

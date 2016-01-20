@@ -1,0 +1,30 @@
+<div class="modal-body wrapper-lg">
+  <form role="form" class="form-horizontal">
+    <div class="row">
+      <tabset class="tab-container">
+        <tab heading="{{'infosPlowdown.form.GENERAL' | translate}}">
+          <ng-include src="'views/downloads/infos/tabs/general.html'"></ng-include>
+        </tab>
+        <tab heading="{{'infosPlowdown.form.OTHER' | translate}}">
+          <ng-include src="'views/downloads/infos/tabs/other.html'"></ng-include>
+        </tab>
+        <tab heading="{{'infosPlowdown.form.LIFECYCLE' | translate}}">
+          <ng-include src="'views/downloads/infos/tabs/lifecycle.html'"></ng-include>
+        </tab>
+        <tab ng-show="download.name.split('.')[(download.name.split('.').length - 1)] == 'rar'"
+             heading="{{'infosPlowdown.form.MULTI_PARTS' | translate}}">
+          <ng-include src="'views/downloads/infos/tabs/multiParts.html'"></ng-include>
+        </tab>
+        <tab heading="{{'infosPlowdown.form.ACTIONS_HISTORY' | translate}}">
+          <ng-include src="'views/downloads/infos/tabs/actionsHistory.html'"></ng-include>
+        </tab>
+        <tab heading="{{'infosPlowdown.form.LOGS' | translate}}">
+          <ng-include src="'views/downloads/infos/tabs/logs.html'"></ng-include>
+        </tab>
+      </tabset>
+    </div>
+  </form>
+</div>
+<footer class="panel-footer text-right bg-light lter">
+  <button type="submit" class="btn btn-success" data-ng-click="ok()">Ok</button>
+</footer>

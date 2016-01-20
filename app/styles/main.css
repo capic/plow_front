@@ -137,3 +137,29 @@ div.editable:focus, div.editable:focus:hover {
 .position-fixed {
   position: fixed;
 }
+
+.ui-grid-draggable-row {
+  height: 30px;
+}
+
+.ui-grid-draggable-row-over {
+  position: relative;
+  color: #AAA;
+}
+
+.ui-grid-draggable-row-over:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  border-bottom: 1px dashed #AAA;
+}
+
+.ui-grid-draggable-row-over--above:before {
+  top: 0;
+}
+
+.ui-grid-draggable-row-over--below:before {
+  bottom: 0;
+}

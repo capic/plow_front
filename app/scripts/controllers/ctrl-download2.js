@@ -133,14 +133,7 @@ angular.module('plowshareFrontApp')
               editDropdownOptionsArray: downloadPriorities,
               editDropdownFilter: 'translate',
               width: 70
-            }/*,
-            {
-              name: ' ',
-              width: '35',
-              enableColumnResizing: false,
-              enableCellEdit: false,
-              cellTemplate: 'views/downloads/myDropDown.html'
-            }*/
+            }
           ],
 
           onRegisterApi: function (gridApi) {
@@ -304,7 +297,7 @@ angular.module('plowshareFrontApp')
 
         $scope.infosPlowdown = function (download) {
           $scope.modal = $modal.open({
-            templateUrl: 'views/downloads/infosPlowdownPopup2.html',
+            templateUrl: 'views/downloads/infos/infosPlowdownPopup.html',
             controller: 'InfosPlowdownCtrl',
             backdrop: 'static',
             size: 'lg',

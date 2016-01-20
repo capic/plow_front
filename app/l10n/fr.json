@@ -134,5 +134,12 @@
     "dialog": {
 
     }
+  },
+  "infosAction": {
+    "form": {
+      "ACTION": "Action",
+      "PROPERTY": "Propriété",
+      "VALUE": "Valeur"
+    }
   }
 }

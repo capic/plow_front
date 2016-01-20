@@ -1,0 +1,16 @@
+<div class="form-group" cg-busy="downloadLogsPromise">
+            <textarea class="form-control" rows="15" readonly wrap="off"
+                      placeholder="{{'infosPlowdown.form.PLACE_HOLDER' | translate}}"
+                      scroll-glue="autoscroll">{{download.logs.logs}}</textarea>
+</div>
+<div class="form-group">
+  <label> {{'infosPlowdown.form.AUTOSCROLL' | translate}}</label>
+  <label class="i-switch m-t-sm m-r">
+    <input type="checkbox" data-ng-model="autoscroll"></input>
+    <i></i>
+  </label>
+  <button type="submit" class="btn btn-warning pull-right" data-ng-click="delete()">
+    {{'infosPlowdown.form.DELETE' |
+    translate}}
+  </button>
+</div>

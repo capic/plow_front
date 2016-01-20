@@ -1,0 +1,27 @@
+<div class="form-group">
+  <label class="col-lg-2 control-label">{{'infosPlowdown.form.LIFECYCLE_INSERT_DATE' |
+    translate}}</label>
+
+  <div class="col-lg-3">
+    <input type="text" class="form-control" disabled="disabled"
+           value="{{download.lifecycle_insert_date | date: 'dd/MM/yyyy HH:mm:ss': '-0200'}}"></input>
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-lg-2 control-label">{{'infosPlowdown.form.LIFECYCLE_UPDATE_DATE' |
+    translate}}</label>
+
+  <div class="col-lg-3">
+    <input class="form-control" type="text" disabled="disabled"
+           value="{{download.lifecycle_update_date | date: 'dd/MM/yyyy HH:mm:ss': '-0200'}}"></input>
+  </div>
+</div>
+<div class="form-group" data-ng-if="startCounter > 0">
+  <label class="col-lg-2 control-label">{{'infosPlowdown.form.START_COUNTER' | translate}}</label>
+
+  <div class="col-lg-3">
+    <p class="form-control-static">
+      <timer interval="1000" countdown="startCounter">{{countdown | timeFltr}}</timer>
+    </p>
+  </div>
+</div>

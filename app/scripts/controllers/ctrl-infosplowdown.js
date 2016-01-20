@@ -9,7 +9,9 @@
  */
 angular.module('plowshareFrontApp')
   .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', '$translate', '$filter', '$modal', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'HostPictureResourceFctry', 'ActionResourceFctry', 'downloadPriorities', 'download', '$wamp', 'settings', '$interval',
-    function ($scope, $modalInstance, $translate, $filter, $modal, DownloadResourceFctry, DirectoryResourceFctry, HostPictureResourceFctry, ActionResourceFctry, downloadPriorities, download, $wamp, settings, $interval) {
+      function ($scope, $modalInstance, $translate, $filter, $modal, DownloadResourceFctry, DirectoryResourceFctry, HostPictureResourceFctry, ActionResourceFctry, downloadPriorities, download, $wamp, settings, $interval) {
+        $scope.contextMenuEntity = {};
+
         function onevent(args) {
           var down = angular.fromJson(args[0]);
 
@@ -48,6 +50,7 @@ angular.module('plowshareFrontApp')
 
           angular.forEach(actionsList, function (action) {
             var tabProperties = flattenActionProperties(action);
+            actionsFormattedForExecutionList.push(prepareActionToExecution(action));
 
             angular.forEach(tabProperties, function (prop) {
               var iterator = 0;
@@ -79,6 +82,7 @@ angular.module('plowshareFrontApp')
         $scope.nbrDownloadsToFinishBeforeUnrar = 0;
         $scope.download.theorical_start_datetime = new Date($scope.download.theorical_start_datetime);
         $scope.download.fileExists = false; // par defaut on suppose que le fichier existe pas
+        var actionsFormattedForExecutionList = [];
 
         if ($scope.download.theorical_start_datetime != undefined &&
           $scope.download.theorical_start_datetime != null &&
@@ -147,6 +151,7 @@ angular.module('plowshareFrontApp')
         $scope.gridActions = {
           treeRowHeaderAlwaysVisible: false,
           rowHeight: 35,
+          rowTemplate: 'views/downloads/infos/menu/rowTemplate.html',
           columnDefs: [
             {
               name: 'action_id',
@@ -199,13 +204,6 @@ angular.module('plowshareFrontApp')
               cellTemplate: '<div>' +
               '{{grid.appScope.date__(grid, row)}}' +
               '</div>'
-            },
-            {
-              name: ' ',
-              width: '35',
-              enableColumnResizing: false,
-              enableCellEdit: false,
-              cellTemplate: 'views/downloads/actionDropdown.html'
             }
           ],
           onRegisterApi: function (gridApi) {
@@ -382,6 +380,25 @@ angular.module('plowshareFrontApp')
           return tab;
         };
 
+        var prepareActionToExecution = function(action) {
+          var objectId = null;
+          //TODO: utiliser des constantes
+          switch (action.action_type.action_target_id) {
+            case 1:
+              objectId = action.download_id;
+              break;
+            case 2:
+              objectId = action.download_package_id;
+              break;
+          }
+
+          return {
+            objectId: objectId,
+            actionId: action.id,
+            targetId: action.action_type.action_target_id
+          };
+        };
+
         $scope.actionsQueryPromise = ActionResourceFctry.query({
             download_id$orµ1: download.id,
             download_package_id$orµ1: download.package_id
@@ -391,6 +408,8 @@ angular.module('plowshareFrontApp')
             angular.forEach(response,
               function (action) {
                 tab = tab.concat(flattenActionProperties(action));
+
+                actionsFormattedForExecutionList.push(prepareActionToExecution(action));
               }
             );
 
@@ -508,12 +527,21 @@ angular.module('plowshareFrontApp')
         };
 
         $scope.deleteAction = function (entity) {
-          ActionResourceFctry.delete({'Id': entity.action_id}, function (response) {
+          var actionId = null;
+
+          // si on est sur un header
+          if (entity[Object.keys(entity)[0]].hasOwnProperty('groupVal')) {
+            actionId = entity[Object.keys(entity)[0]].groupVal;
+          } else {
+            actionId = entity.action_id;
+          }
+
+          ActionResourceFctry.delete({'Id': actionId}, function (response) {
             var idx = 0;
             var idxToDelete = [];
             angular.forEach($scope.gridActions.data,
               function (action) {
-                if (entity.action_id == action.action_id) {
+                if (actionId == action.action_id) {
                   idxToDelete.push(idx)
                 }
 
@@ -527,14 +555,25 @@ angular.module('plowshareFrontApp')
           });
         };
 
-      $scope.addAction = function () {
-        $scope.modal = $modal.open({
-          templateUrl: 'views/downloads/infosAction.html',
-          controller: 'InfosActionCtrl',
-          backdrop: 'static',
-          size: 'sm'
+        $scope.addAction = function () {
+          $scope.modal = $modal.open({
+            templateUrl: 'views/downloads/infosAction.html',
+            controller: 'InfosActionCtrl',
+            backdrop: 'static',
+            size: 'md',
+            resolve: {
+              download: function () {
+                return download;
+              }
+            }
           });
-        }
+        };
+
+        $scope.executeAllActions = function() {
+          ActionResourceFctry.executeAll(actionsFormattedForExecutionList, function(response) {
+
+          });
+        };
       }
     ]
   );

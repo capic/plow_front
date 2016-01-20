@@ -25,6 +25,7 @@ angular
     'ui.grid.resizeColumns',
     'ui.grid.edit',
     'ui.grid.autoResize',
+    'ui.grid.draggable-rows',
     'luegg.directives',
     'timer',
     'dialogs.main',

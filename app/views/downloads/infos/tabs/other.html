@@ -1,0 +1,67 @@
+<div class="form-group">
+  <label class="col-lg-2 control-label">Id</label>
+
+  <div class="col-lg-2">
+    <input type="text" class="form-control" disabled="disabled" value="{{download.id}}"></input>
+  </div>
+
+  <label class="col-lg-2 control-label">{{'infosPlowdown.form.STATUS' | translate}}</label>
+
+  <div class="col-lg-2">
+    <input class="form-control" type="text" disabled="disabled"
+           value="{{download.status | downloadStatusFltr2}}"></input>
+  </div>
+
+  <label class="col-lg-2 control-label">{{'infosPlowdown.form.AVERAGE_SPEED' |
+    translate}}</label>
+
+  <div class="col-lg-2">
+    <input type="text" class="form-control" disabled="disabled"
+           value="{{download.average_speed | bytesPerSecondFltr}}"></input>
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-lg-2 control-label">{{'infosPlowdown.form.FILE_PATH' |
+    translate}}</label>
+
+  <div class="col-lg-10">
+    <input type="text" class="form-control" disabled="disabled"
+           value="{{download.file_path}}"></input>
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-lg-2 control-label">{{'infosPlowdown.form.SIZE_PART' | translate}}</label>
+
+  <div class="col-lg-4">
+    <input class="form-control" type="text" disabled="disabled"
+           value="{{download.size_part_downloaded | bytesFltr}} / {{download.size_part | bytesFltr}}"></input>
+  </div>
+
+  <label class="col-lg-2 control-label">{{'infosPlowdown.form.PROGRESS_PART' | translate}}</label>
+
+  <div class="col-lg-4">
+    <progressbar class="progress-striped active m-t-sm" value="download.progress_part" type="success"><b>{{download.progress_part}}%</b>
+    </progressbar>
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-lg-2 control-label">{{'infosPlowdown.form.PID_PYTHON' | translate}}</label>
+
+  <div class="col-lg-2">
+    <input class="form-control" type="text" disabled="disabled" value="{{download.pid_python}}"></input>
+  </div>
+
+  <label class="col-lg-2 control-label">{{'infosPlowdown.form.PID_PLOWDOWN' | translate}}</label>
+
+  <div class="col-lg-2">
+    <input class="form-control" type="text" disabled="disabled"
+           value="{{download.pid_plowdown}}"></input>
+  </div>
+
+  <label class="col-lg-2 control-label">{{'infosPlowdown.form.PID_CURL' | translate}}</label>
+
+  <div class="col-lg-2">
+    <input class="form-control" type="text" disabled="disabled"
+           value="{{download.pid_curl}}"></input>
+  </div>
+</div>
