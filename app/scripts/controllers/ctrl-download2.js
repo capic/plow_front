@@ -10,6 +10,7 @@
 angular.module('plowshareFrontApp')
   .controller('DownloadCtrl2', ['$scope', '$filter', '$translate', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'ActionResourceFctry', 'downloadStatusListValue', 'downloadPriorities', '$modal', 'uiGridGroupingConstants', '$wamp', 'dialogs',
       function ($scope, $filter, $translate, DownloadResourceFctry, DirectoryResourceFctry, ActionResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp, dialogs) {
+        var websocketDownload = null;
         $scope.contextMenuEntity = {};
 
         function onevent(args) {
@@ -91,18 +92,13 @@ angular.module('plowshareFrontApp')
               displayName: 'Status',
               // grouping: {groupPriority: 0},
               //sort: {priority: 1, direction: 'asc'},
-              cellFilter: 'downloadStatusFltr2',
               enableColumnResizing: false,
               enableCellEdit: false,
-              width: 80
-              //cellTemplate: '<div ng-if="row.groupHeader">{{COL_FIELD | downloadStatusFltr2}}</div>'
-            },
-            {
-              name: 'progress_file',
-              displayName: '%',
-              width: '40',
-              enableColumnResizing: false,
-              enableCellEdit: false
+              width: 80,
+              cellTemplate: '<div popover-template="\'views/downloads/part/progress.html\'" ' +
+              'popover-placement="bottom" popover-trigger="mouseenter">' +
+              '{{COL_FIELD | downloadStatusFltr2}}' +
+              '</div>'
             },
             {
               name: 'average_speed',
@@ -188,7 +184,11 @@ angular.module('plowshareFrontApp')
                   }
                 );
 
-                $wamp.subscribe('plow.downloads.downloads', onevent);
+                $wamp.subscribe('plow.downloads.downloads', onevent)
+                  .then(function (subscription) {
+                    websocketDownload = subscription;
+                  }
+                );
               }
             );
           }
@@ -296,6 +296,11 @@ angular.module('plowshareFrontApp')
         };
 
         $scope.infosPlowdown = function (download) {
+          if (websocketDownload != null) {
+            $wamp.unsubscribe(websocketDownload);
+            websocketDownload = null;
+          }
+
           $scope.modal = $modal.open({
             templateUrl: 'views/downloads/infos/infosPlowdownPopup.html',
             controller: 'InfosPlowdownCtrl',
@@ -310,6 +315,14 @@ angular.module('plowshareFrontApp')
 
           $scope.modal.result.then(
             function (newDirectory) {
+              if (websocketDownload == null) {
+                $wamp.subscribe('plow.downloads.downloads', onevent)
+                  .then(function (subscription) {
+                      websocketDownload = subscription;
+                    }
+                  );
+              }
+
               if (newDirectory.path != '' && download.directory.path != newDirectory.path) {
 
                 var moveFct = function (downloadToMove) {
@@ -357,9 +370,9 @@ angular.module('plowshareFrontApp')
                                  if ($scope.gridOptions.data[i].id == downloadReturned.id) {
                                  $scope.gridOptions.data[i] = downloadReturned;
                                  found = true;
-                                  }
+                                 }
                                  i++;
-                                }
+                                 }
                                  */
                               },
                               function () {
