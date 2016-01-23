@@ -7,8 +7,7 @@
   </div>
 
   <div class="col-lg-1">
-    {{download.download_host.name}}
-    <!--<img ng-src="{{download.download_host.picture}}" />-->
+    <img tooltip-placement="right" uib-tooltip="{{download.download_host.name}}" class="img-20-centered" ng-src="data:image/png;base64,{{download.host_id | hostPictureFltr}}" />
   </div>
 
   <label class="col-lg-1 control-label">{{'infosPlowdown.form.PRIORITY' | translate}}</label>

@@ -111,6 +111,7 @@ angular
 )
   .value('downloadStatusListValue', {})
   .value('linkStatusListValue', {})
+  .value('hostPicturesList', {})
   .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window'/*, 'webSocketFcty'*/, '$wamp',
     function ($scope, $translate, $localStorage, $window/*, webSocketFcty*/, $wamp) {
       //$scope.notifications = webSocketFcty.getNewNotifications();

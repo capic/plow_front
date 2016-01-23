@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('DownloadCtrl2', ['$scope', '$filter', '$translate', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'ActionResourceFctry', 'downloadStatusListValue', 'downloadPriorities', '$modal', 'uiGridGroupingConstants', '$wamp', 'dialogs',
-      function ($scope, $filter, $translate, DownloadResourceFctry, DirectoryResourceFctry, ActionResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp, dialogs) {
+  .controller('DownloadCtrl2', ['$scope', '$filter', '$translate', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'ActionResourceFctry', 'downloadStatusListValue', 'downloadPriorities', '$modal', 'uiGridGroupingConstants', '$wamp', 'dialogs','hostPicturesList', 'HostPictureResourceFctry',
+      function ($scope, $filter, $translate, DownloadResourceFctry, DirectoryResourceFctry, ActionResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp, dialogs, hostPicturesList, HostPictureResourceFctry) {
         $scope.contextMenuEntity = {};
 
         function onevent(args) {
@@ -73,9 +73,18 @@ angular.module('plowshareFrontApp')
             {
               name: 'name',
               displayName: 'Name',
-              cellTooltip: true,
               headerCellFilter: 'translate',
-              enableCellEdit: false
+              enableCellEdit: false,
+              cellTooltip: true,
+              cellTemplate: '<div><span tooltip-placement="right" uib-tooltip="{{COL_FIELD}}">{{COL_FIELD}}</span></div>'
+            },
+            {
+              name: 'host_id',
+              displayName: 'Host',
+              headerCellFilter: 'translate',
+              enableCellEdit: false,
+              width: 30,
+              cellTemplate: '<div ng-if="row.entity.host_id != null"><img tooltip-placement="right" uib-tooltip="{{row.entity.download_host.name}}" class="img-20-centered" ng-src="data:image/png;base64,{{COL_FIELD | hostPictureFltr}}" /></div>'
             },
             /*{name: 'link', displayName: 'Link', enableCellEdit: false},*/
             {
@@ -168,29 +177,34 @@ angular.module('plowshareFrontApp')
         // on recupere la liste des status
         downloadStatusListValue.status = DownloadResourceFctry.status(
           function () {
-            // on recupere la liste des downloads
-            DownloadResourceFctry.query(
-              function (responses) {
-                angular.forEach(responses,
-                  function (response) {
-                    var now = new Date().getTime();
-                    // on transforme la chaine de caractere en date
-                    response.theorical_start_datetime = new Date(response.theorical_start_datetime);
+            HostPictureResourceFctry.query(function(response) {
+              hostPicturesList.hosts = response;
 
-                    response.counter = 0;
-                    // si le download est en cours et que la date theorique de début et après maintenant
-                    // on calcul le nombre de secondes a attendre
-                    if (response.status == 2 && response.theorical_start_datetime.getTime() > now) {
-                      response.counter = Math.round((response.theorical_start_datetime.getTime() - now) / 1000);
+              // on recupere la liste des downloads
+              DownloadResourceFctry.query(
+                function (responses) {
+                  angular.forEach(responses,
+                    function (response) {
+                      var now = new Date().getTime();
+                      // on transforme la chaine de caractere en date
+                      response.theorical_start_datetime = new Date(response.theorical_start_datetime);
+
+                      response.counter = 0;
+                      // si le download est en cours et que la date theorique de début et après maintenant
+                      // on calcul le nombre de secondes a attendre
+                      if (response.status == 2 && response.theorical_start_datetime.getTime() > now) {
+                        response.counter = Math.round((response.theorical_start_datetime.getTime() - now) / 1000);
+                      }
+
+                      $scope.gridOptions.data.push(response);
                     }
+                  );
 
-                    $scope.gridOptions.data.push(response);
-                  }
-                );
+                  $wamp.subscribe('plow.downloads.downloads', onevent);
+                }
+              );
+            });
 
-                $wamp.subscribe('plow.downloads.downloads', onevent);
-              }
-            );
           }
         );
 

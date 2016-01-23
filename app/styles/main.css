@@ -163,3 +163,10 @@ div.editable:focus, div.editable:focus:hover {
 .ui-grid-draggable-row-over--below:before {
   bottom: 0;
 }
+
+img.img-20-centered {
+  width: 20px;
+  display: block;
+  margin: auto;
+  vertical-align: middle;
+}
