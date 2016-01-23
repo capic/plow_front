@@ -175,11 +175,8 @@ angular.module('plowshareFrontApp')
               cellTooltip: true,
               headerCellFilter: 'translate',
               enableCellEdit: false,
-              cellTemplate: '<div data-ng-if="row.entity.property_directory_id == null || row.entity.property_directory_id == undefined">' +
-              ' {{row.entity.property_value}}' +
-              '</div>' +
-              '<div data-ng-if="row.entity.property_directory_id != null && row.entity.property_directory_id != undefined">' +
-              ' {{row.entity.property_directory_path}}' +
+              cellTemplate: '<div>' +
+              '{{grid.appScope.value__(grid, row)}}' +
               '</div>'
 
             },
@@ -243,6 +240,59 @@ angular.module('plowshareFrontApp')
 
           if (ret != null) {
             return $translate.instant(ret);
+          } else {
+            return '';
+          }
+        };
+
+        $scope.value__ = function (grid, row, col) {
+          var ret = null;
+          var entity = null;
+
+          if (row.treeLevel == 0) {
+            if (row.groupHeader && row.treeNode.children[0].row.treeNode.children[0]) {
+              entity = row.treeNode.children[0].row.treeNode.children[0].row.entity;
+            }
+            else if (row.treeNode.children[0]) {
+              entity = row.treeNode.children[0].row.entity;
+            } else {
+              entity = row.entity;
+            }
+
+            if (entity != null) {
+              // TODO: utiliser des constantes
+              switch (entity.action_target_id) {
+                case 1:
+                  ret = download.name;
+                  break;
+                case 2:
+                  ret = download.download_package.name;
+                  break;
+              }
+            }
+
+          } else {
+            if (row.groupHeader && row.treeNode.children[0].row.treeNode.children[0]) {
+              entity = row.treeNode.children[0].row.treeNode.children[0].row.entity;
+            }
+            else if (row.treeNode.children[0]) {
+              entity = row.treeNode.children[0].row.entity;
+            } else {
+              entity = row.entity;
+            }
+
+            if (entity != null) {
+              if (entity.property_directory_id == null || entity.property_directory_id == undefined) {
+                ret = entity.property_value;
+              } else {
+                ret = entity.property_directory_path;
+              }
+            }
+
+          }
+
+          if (ret != null) {
+            return ret + ' (' + $translate.instant(entity.action_target_translation_key) + ')';
           } else {
             return '';
           }
@@ -363,6 +413,7 @@ angular.module('plowshareFrontApp')
                 action_id: action.id,
                 action_type_name: action.action_type.name,
                 action_type_translation_key: action.action_type.translation_key,
+                action_target_id: action.action_type.action_target.id,
                 action_target_name: action.action_type.action_target.name,
                 action_target_translation_key: action.action_type.action_target.translation_key,
                 lifecycle_insert_date: action.lifecycle_insert_date,
@@ -382,7 +433,7 @@ angular.module('plowshareFrontApp')
           return tab;
         };
 
-        var prepareActionToExecution = function(action) {
+        var prepareActionToExecution = function (action) {
           var objectId = null;
           //TODO: utiliser des constantes
           switch (action.action_type.action_target_id) {
@@ -571,8 +622,8 @@ angular.module('plowshareFrontApp')
           });
         };
 
-        $scope.executeAllActions = function() {
-          ActionResourceFctry.executeAll(actionsFormattedForExecutionList, function(response) {
+        $scope.executeAllActions = function () {
+          ActionResourceFctry.executeAll(actionsFormattedForExecutionList, function (response) {
 
           });
         };
