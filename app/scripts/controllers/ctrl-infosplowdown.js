@@ -436,21 +436,21 @@ angular.module('plowshareFrontApp')
         };
 
         var prepareActionToExecution = function (action) {
-          var objectId = null;
+          var object_id = null;
           //TODO: utiliser des constantes
           switch (action.action_type.action_target_id) {
             case 1:
-              objectId = action.download_id;
+              object_id = action.download_id;
               break;
             case 2:
-              objectId = action.download_package_id;
+              object_id = action.download_package_id;
               break;
           }
 
           return {
-            objectId: objectId,
-            actionId: action.id,
-            targetId: action.action_type.action_target_id
+            object_id: object_id,
+            action_id: action.id,
+            action_target_id: action.action_type.action_target_id
           };
         };
 
