@@ -269,6 +269,8 @@ angular.module('plowshareFrontApp')
                   ret = download.download_package.name;
                   break;
               }
+
+              ret += ' (' + $translate.instant(entity.action_target_translation_key) + ')'
             }
 
           } else {
@@ -292,7 +294,7 @@ angular.module('plowshareFrontApp')
           }
 
           if (ret != null) {
-            return ret + ' (' + $translate.instant(entity.action_target_translation_key) + ')';
+            return ret;
           } else {
             return '';
           }
