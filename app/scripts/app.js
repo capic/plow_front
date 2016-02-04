@@ -33,7 +33,8 @@ angular
     'ui.select',
     'ngToast',
     'cgBusy',
-    'ng-context-menu'
+    'ng-context-menu',
+    'isteven-multi-select'
   ])
   .config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
     function ($stateProvider, $urlRouterProvider, $httpProvider) {

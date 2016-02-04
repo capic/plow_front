@@ -54,6 +54,7 @@ angular.module('plowshareFrontApp')
             $scope.gridOptions.data.push(down);
           }
         }
+        $scope.statusFilter = [];
 
         $scope.gridOptions = {
           treeRowHeaderAlwaysVisible: false,
@@ -103,6 +104,8 @@ angular.module('plowshareFrontApp')
               cellFilter: 'downloadStatusFltr2',
               enableColumnResizing: false,
               enableCellEdit: false,
+              headerCellTemplate:
+                '<div isteven-multi-select input-model="downloadStatusListValue" output-model="statusFilter" button-label="name" item-label="name" tick-property="ticked"></div>',
               width: 80
               //cellTemplate: '<div ng-if="row.groupHeader">{{COL_FIELD | downloadStatusFltr2}}</div>'
             },
