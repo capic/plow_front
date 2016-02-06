@@ -112,8 +112,8 @@ angular
   .value('downloadStatusListValue', {})
   .value('linkStatusListValue', {})
   .value('hostPicturesList', {})
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window'/*, 'webSocketFcty'*/, '$wamp',
-    function ($scope, $translate, $localStorage, $window/*, webSocketFcty*/, $wamp) {
+  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', '$wamp', 'ApplicationConfigurationResourceFctry',
+    function ($scope, $translate, $localStorage, $window/*, webSocketFcty*/, $wamp, ApplicationConfigurationResourceFctry) {
       //$scope.notifications = webSocketFcty.getNewNotifications();
       $wamp.open();
 
@@ -175,6 +175,16 @@ angular
         var ua = $window['navigator']['userAgent'] || $window['navigator']['vendor'] || $window['opera'];
         // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
         return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
+      }
+
+      $scope.applicationConfiguration = {};
+      ApplicationConfigurationResourceFctry.get({Id: 1}, function(response) {
+        $scope.applicationConfiguration = response;
+      });
+      $scope.downloadActivation = function() {
+        ApplicationConfigurationResourceFctry.update({Id: 1}, $scope.applicationConfiguration, function(response) {
+          $scope.applicationConfiguration = response
+        });
       }
     }
   ]
