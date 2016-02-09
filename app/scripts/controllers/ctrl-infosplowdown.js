@@ -285,7 +285,14 @@ angular.module('plowshareFrontApp')
 
             if (entity != null) {
               if (entity.property_directory_id == null || entity.property_directory_id == undefined) {
-                ret = entity.property_value;
+                switch(entity.property_type_id) {
+                  case 5: //TODO: utiliser constante
+                    ret = $filter('timeFltr')(entity.property_value);
+                        break;
+                  default:
+                    ret = entity.property_value;
+                }
+
               } else {
                 ret = entity.property_directory_path;
               }
@@ -425,6 +432,7 @@ angular.module('plowshareFrontApp')
                 property_name: property.property.name,
                 property_translation_key: property.property.translation_key,
                 property_value: property.property_value,
+                property_type_id: property.property.property_type_id,
                 property_directory_id: (property.directory != null) ? property.directory.id : null,
                 property_directory_path: (property.directory != null) ? property.directory.path : null
               };
