@@ -63,6 +63,7 @@ angular.module('plowshareFrontApp')
           enableGroupHeaderSelection: true,
           rowHeight: 35,
           rowTemplate: 'views/downloads/part/rowTemplate.html',
+          enableFiltering: true,
           columnDefs: [
             {
               name: 'download_package.name',
@@ -104,8 +105,7 @@ angular.module('plowshareFrontApp')
               cellFilter: 'downloadStatusFltr2',
               enableColumnResizing: false,
               enableCellEdit: false,
-              headerCellTemplate:
-                '<div isteven-multi-select input-model="downloadStatusListValue" output-model="statusFilter" button-label="name" item-label="name" tick-property="ticked"></div>',
+              filterHeaderTemplate: '<div class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><div my-custom-modal></div></div>',
               width: 80
               //cellTemplate: '<div ng-if="row.groupHeader">{{COL_FIELD | downloadStatusFltr2}}</div>'
             },
