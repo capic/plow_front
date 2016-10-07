@@ -233,6 +233,16 @@ angular.module('plowshareFrontApp')
           });
         };
 
+        $scope.pauseDownloading = function(entity) {
+          var downloadObject = new DownloadResourceFctry();
+          downloadObject.id = entity.id;
+
+          downloadObject.$pause(function(response) {
+            var idx = $scope.gridOptions.data.indexOf(entity);
+            $scope.gridOptions.data[idx] = response;
+          });
+        };
+
         $scope.resetDownload = function (entity) {
           var downloadObject = new DownloadResourceFctry();
           downloadObject.id = entity.id;

@@ -27,6 +27,7 @@ angular.module('plowshareFrontApp')
           'update': {method: 'PUT'},
           'remove': {url: settings.SERVER_ADDRESS + 'downloads/remove', method: 'POST'},
           'start': {url: settings.SERVER_ADDRESS + 'downloads/start', method: 'POST', isArray: true},
+          'pause': {url: settings.SERVER_ADDRESS + 'downloads/pause', method: 'POST'},
           'stop': {url: settings.SERVER_ADDRESS + 'downloads/stop', method: 'POST', isArray: true},
           'import': {url: settings.SERVER_ADDRESS + 'downloads/import', method: 'POST', isArray: true},
           "logs": {url: settings.SERVER_ADDRESS + 'downloads/logs/:Id', method: 'GET'},
