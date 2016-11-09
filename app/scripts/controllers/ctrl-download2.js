@@ -8,9 +8,10 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('DownloadCtrl2', ['$scope', '$filter', '$translate', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'ActionResourceFctry', 'downloadStatusListValue', 'downloadPriorities', '$modal', 'uiGridGroupingConstants', '$wamp', 'dialogs','hostPicturesList', 'HostPictureResourceFctry',
-      function ($scope, $filter, $translate, DownloadResourceFctry, DirectoryResourceFctry, ActionResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridGroupingConstants, $wamp, dialogs, hostPicturesList, HostPictureResourceFctry) {
+  .controller('DownloadCtrl2', ['$scope', '$filter', '$translate', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'ActionResourceFctry', 'downloadStatusListValue', 'downloadPriorities', '$modal', 'uiGridConstants', 'uiGridGroupingConstants', '$wamp', 'dialogs', 'hostPicturesList', 'HostPictureResourceFctry',
+      function ($scope, $filter, $translate, DownloadResourceFctry, DirectoryResourceFctry, ActionResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridConstants, uiGridGroupingConstants, $wamp, dialogs, hostPicturesList, HostPictureResourceFctry) {
         $scope.contextMenuEntity = {};
+        $scope.totalSpeed = 0;
 
         function onevent(args) {
           var down = angular.fromJson(args[0]);
@@ -20,39 +21,41 @@ angular.module('plowshareFrontApp')
               download.subscribed = false;
             }
           );
+          /*
+           var iterator = 0;
+           var found = false;
+           */
+          var currentDownloadList = $scope.gridOptions.data.filter((download) => download.id === down.id);
+          if (currentDownloadList.length > 0) {
+            var now = new Date();
 
-          var iterator = 0;
-          var found = false;
+            currentDownloadList[0].download_package = down.download_package;
+            currentDownloadList[0].progress_file = down.progress_file;
+            currentDownloadList[0].time_left = down.time_left;
+            currentDownloadList[0].status = down.status;
+            currentDownloadList[0].size_file = down.size_file;
+            currentDownloadList[0].average_speed = down.average_speed;
+            currentDownloadList[0].current_speed = down.current_speed;
+            currentDownloadList[0].directory = down.directory;
+            currentDownloadList[0].theorical_start_datetime = new Date(down.theorical_start_datetime);
 
-          while (iterator < $scope.gridOptions.data.length && !found) {
-            if (parseInt(down.id) === parseInt($scope.gridOptions.data[iterator].id)) {
-              var now = new Date();
-              found = true;
-              $scope.gridOptions.data[iterator].download_package = down.download_package;
-              $scope.gridOptions.data[iterator].progress_file = down.progress_file;
-              $scope.gridOptions.data[iterator].time_left = down.time_left;
-              $scope.gridOptions.data[iterator].status = down.status;
-              $scope.gridOptions.data[iterator].size_file = down.size_file;
-              $scope.gridOptions.data[iterator].average_speed = down.average_speed;
-              $scope.gridOptions.data[iterator].directory = down.directory;
-              $scope.gridOptions.data[iterator].theorical_start_datetime = new Date(down.theorical_start_datetime);
-
-              $scope.gridOptions.data[iterator].counter = 0;
-              if ($scope.gridOptions.data[iterator].theorical_start_datetime.getTime() > now) {
-                $scope.gridOptions.data[iterator].counter = Math.round(( $scope.gridOptions.data[iterator].theorical_start_datetime.getTime() - now) / 1000);
-              }
-
-              if (down.status != 3) { // TODO: use constant
-                $scope.gridOptions.data[iterator].subscribed = true;
-              }
+            currentDownloadList[0].counter = 0;
+            if (currentDownloadList[0].theorical_start_datetime.getTime() > now) {
+              currentDownloadList[0].counter = Math.round(( currentDownloadList[0].theorical_start_datetime.getTime() - now) / 1000);
             }
-            iterator++;
-          }
 
-          // => new download
-          if (!found) {
+            // TODO: use constant
+            if (down.status != 3) {
+              currentDownloadList[0].subscribed = true;
+            }
+          } else {
             $scope.gridOptions.data.push(down);
           }
+
+          $scope.totalSpeed = 0;
+          angular.forEach($scope.gridOptions.data.filter((download) => download.status === 2), function (down) {
+            $scope.totalSpeed += down.current_speed;
+          });
         }
 
         $scope.gridOptions = {
@@ -60,7 +63,7 @@ angular.module('plowshareFrontApp')
           showGridFooter: true,
           enableRowSelection: true,
           enableGroupHeaderSelection: true,
-          rowHeight: 35,
+          rowHeight: 65,
           rowTemplate: 'views/downloads/part/rowTemplate.html',
           columnDefs: [
             {
@@ -76,12 +79,39 @@ angular.module('plowshareFrontApp')
               headerCellFilter: 'translate',
               enableCellEdit: false,
               cellTooltip: true,
-              cellTemplate: '<div><span tooltip-placement="right" uib-tooltip="{{COL_FIELD}}">{{COL_FIELD}}</span></div>'
+              cellTemplate: '' +
+              '<div ng-if="!row.groupHeader" tooltip-placement="right" uib-tooltip="{{COL_FIELD}}">' +
+                '<div class="row">' +
+                  '<div class="col-md-12 text-center text-nowrap">' +
+                    '{{COL_FIELD}}' +
+                  '</div>' +
+                '</div>' +
+                '<div class="row">' +
+                  '<div class="col-md-12">' +
+                    '<uib-progressbar animate="false" data-ng-click="grid.appScope.toggleColumn(5)" class="m-b-none" value="row.entity.progress_file" type="{{row.entity.status | progressbarType}}">' +
+                      '{{row.entity.progress_file}}%' +
+                    '</uib-progressbar>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="row">' +
+                  '<div class="col-md-6 text-center">' +
+                    '<span data-ng-click="grid.appScope.toggleColumn(6)">{{row.entity.current_speed | bytesPerSecondFltr}}</span>' +
+                    '<span data-ng-click="grid.appScope.toggleColumn(7)"> ({{row.entity.average_speed | bytesPerSecondFltr}})</span>' +
+                  '</div>' +
+                  '<div class="col-md-6 text-center" data-ng-click="grid.appScope.toggleColumn(8)" data-ng-if="row.entity.counter > 0 && row.entity.status == 2">' +
+                    '<timer interval="1000" countdown="row.entity.counter">- {{countdown | timeFltr}}</timer>' +
+                  '</div>' +
+                  '<div class="col-md-6 text-center" data-ng-click="grid.appScope.toggleColumn(8)" data-ng-if="row.entity.counter <= 0 || row.entity.status != 2">' +
+                    '{{row.entity.time_left | timeFltr}}' +
+                  '</div>'+
+                '</div>' +
+              '</div>'
             },
             {
               name: 'host_id',
               displayName: 'Host',
               headerCellFilter: 'translate',
+              // grouping: {groupPriority: 0},
               enableCellEdit: false,
               width: 30,
               cellTemplate: '<div ng-if="row.entity.host_id != null"><img tooltip-placement="right" uib-tooltip="{{row.entity.download_host.name}}" class="img-20-centered" ng-src="data:image/png;base64,{{COL_FIELD | hostPictureFltr}}" /></div>'
@@ -98,7 +128,7 @@ angular.module('plowshareFrontApp')
             {
               name: 'status',
               displayName: 'Status',
-              // grouping: {groupPriority: 0},
+              //grouping: {groupPriority: 0},
               //sort: {priority: 1, direction: 'asc'},
               cellFilter: 'downloadStatusFltr2',
               enableColumnResizing: false,
@@ -111,7 +141,17 @@ angular.module('plowshareFrontApp')
               displayName: '%',
               width: '40',
               enableColumnResizing: false,
-              enableCellEdit: false
+              enableCellEdit: false,
+              visible: false
+            },
+            {
+              name: 'current_speed',
+              displayName: 'Cur. Speed',
+              cellFilter: 'bytesPerSecondFltr',
+              enableColumnResizing: false,
+              enableCellEdit: false,
+              width: 80,
+              visible: false
             },
             {
               name: 'average_speed',
@@ -119,7 +159,8 @@ angular.module('plowshareFrontApp')
               cellFilter: 'bytesPerSecondFltr',
               enableColumnResizing: false,
               enableCellEdit: false,
-              width: 80
+              width: 80,
+              visible: false
             },
             {
               name: 'time_left',
@@ -127,6 +168,7 @@ angular.module('plowshareFrontApp')
               enableColumnResizing: false,
               enableCellEdit: false,
               width: 80,
+              visible: false,
               cellTemplate: '<div data-ng-if="row.entity.counter > 0 && row.entity.status == 2">' +
               '<timer interval="1000" countdown="row.entity.counter">- {{countdown | timeFltr}}</timer>' +
               '</div>' +
@@ -174,10 +216,15 @@ angular.module('plowshareFrontApp')
           }
         };
 
+        $scope.toggleColumn = function(index) {
+          $scope.gridOptions.columnDefs[index].visible = !($scope.gridOptions.columnDefs[index].visible || $scope.gridOptions.columnDefs[index].visible === undefined);
+          $scope.gridApi.core.notifyDataChange(uiGridConstants.dataChange.COLUMN);
+        };
+
         // on recupere la liste des status
         downloadStatusListValue.status = DownloadResourceFctry.status(
           function () {
-            HostPictureResourceFctry.query(function(response) {
+            HostPictureResourceFctry.query(function (response) {
               hostPicturesList.hosts = response;
 
               // on recupere la liste des downloads
@@ -233,11 +280,31 @@ angular.module('plowshareFrontApp')
           });
         };
 
-        $scope.pauseDownloading = function(entity) {
+        $scope.pauseDownloading = function (entity) {
           var downloadObject = new DownloadResourceFctry();
           downloadObject.id = entity.id;
 
-          downloadObject.$pause(function(response) {
+          downloadObject.$pause(function (response) {
+            var idx = $scope.gridOptions.data.indexOf(entity);
+            $scope.gridOptions.data[idx] = response;
+          });
+        };
+
+        $scope.startDownloading = function (entity) {
+          var downloadObject = new DownloadResourceFctry();
+          downloadObject.id = entity.id;
+
+          downloadObject.$start(function (response) {
+            var idx = $scope.gridOptions.data.indexOf(entity);
+            $scope.gridOptions.data[idx] = response;
+          });
+        };
+
+        $scope.resumeDownloading = function (entity) {
+          var downloadObject = new DownloadResourceFctry();
+          downloadObject.id = entity.id;
+
+          downloadObject.$resume(function (response) {
             var idx = $scope.gridOptions.data.indexOf(entity);
             $scope.gridOptions.data[idx] = response;
           });
@@ -308,15 +375,24 @@ angular.module('plowshareFrontApp')
 
         // to delete the finished downloads
         $scope.deleteDownloads = function (status) {
-          var finishedIds = [];
-          // TODO: use constant
           var finishedDownloads = $filter('filter')($scope.gridOptions.data, {status: status});
-          finishedDownloads = finishedDownloads.concat($filter('filter')($scope.gridOptions.data, {status: 10}));
-          angular.forEach(finishedDownloads, function (entity) {
-            finishedIds.push(entity.id);
-          });
 
-          remove(finishedIds);
+          DownloadResourceFctry.deleteFinished({wampId: $wamp.connection.session.id}, function (response) {
+            angular.forEach(response, function (resp) {
+              if (resp.res === true) {
+                var iterator = 0;
+                var found = false;
+
+                while (iterator < $scope.gridOptions.data.length && !found) {
+                  if (parseInt(resp.id) === parseInt($scope.gridOptions.data[iterator].id)) {
+                    $scope.gridOptions.data.splice(iterator, 1);
+                    found = true;
+                  }
+                  iterator++;
+                }
+              }
+            });
+          });
         };
 
         $scope.infosPlowdown = function (download) {
@@ -381,9 +457,9 @@ angular.module('plowshareFrontApp')
                                  if ($scope.gridOptions.data[i].id == downloadReturned.id) {
                                  $scope.gridOptions.data[i] = downloadReturned;
                                  found = true;
-                                  }
+                                 }
                                  i++;
-                                }
+                                 }
                                  */
                               },
                               function () {

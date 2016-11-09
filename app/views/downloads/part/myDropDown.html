@@ -1,15 +1,20 @@
 <div class="dropdown position-fixed" id="cml_menu">
   <ul class="dropdown-menu" role="menu">
-    <li class="menu-item" data-ng-class="{'disabled': row.entity.status != 1, 'text-success': row.entity.subscribed }">
+    <li class="menu-item" data-ng-show="contextMenuEntity.status !== 5" data-ng-class="{'disabled': contextMenuEntity.status === 2, 'text-success': row.entity.subscribed }">
       <a data-ng-click="startDownloading(contextMenuEntity);"
          class="" href><i class="menu-ico glyphicon glyphicon-play"> </i> {{'downloads.download_menu_dropdown.START' |
         translate}}</a>
     </li>
-    <li class="menu-item" data-ng-class="{'disabled': row.entity.status == 1}">
+    <li class="menu-item" data-ng-show="contextMenuEntity.status === 5" data-ng-class="{'disabled': contextMenuEntity.status === 1, 'text-success': row.entity.subscribed }">
+      <a data-ng-click="resumeDownloading(contextMenuEntity);"
+         class="" href><i class="menu-ico glyphicon glyphicon-play"> </i> {{'downloads.download_menu_dropdown.RESUME' |
+        translate}}</a>
+    </li>
+    <li class="menu-item" data-ng-class="{'disabled': contextMenuEntity.status == 1 || contextMenuEntity.status === 5}">
       <a data-ng-click="pauseDownloading(contextMenuEntity);"
          class="" href><i class="menu-ico glyphicon glyphicon-stop"> </i> {{'downloads.download_menu_dropdown.PAUSE' | translate}}</a>
     </li>
-    <li class="menu-item" data-ng-class="{'disabled': row.entity.status == 1}">
+    <li class="menu-item" data-ng-class="{'disabled': contextMenuEntity.status == 1 }">
       <a data-ng-click="stopDownloading(contextMenuEntity);"
          class="" href><i class="menu-ico glyphicon glyphicon-stop"> </i> {{'downloads.download_menu_dropdown.STOP' | translate}}</a>
     </li>

@@ -1,26 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="nas distant">
+  <component name="PublishConfigData" autoUpload="Always" serverName="nas_dev">
     <serverData>
-      <paths name="nas">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="nas dist">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="nas distant">
+      <paths name="nas_dev">
         <serverdata>
           <mappings>
             <mapping deploy="/" local="$PROJECT_DIR$/app" web="/" />
-            <mapping deploy="/bower_components" local="$PROJECT_DIR$/bower_components" web="/bower_components" />
           </mappings>
         </serverdata>
       </paths>
