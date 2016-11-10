@@ -25,7 +25,7 @@ angular.module('plowshareFrontApp')
            var iterator = 0;
            var found = false;
            */
-          var currentDownloadList = $scope.gridOptions.data.filter((download) => download.id === down.id);
+          var currentDownloadList = $filter('filter')($scope.gridOptions.data, {id: down.id});
           if (currentDownloadList.length > 0) {
             var now = new Date();
 
@@ -53,7 +53,7 @@ angular.module('plowshareFrontApp')
           }
 
           $scope.totalSpeed = 0;
-          angular.forEach($scope.gridOptions.data.filter((download) => download.status === 2), function (down) {
+          angular.forEach($filter('filter')($scope.gridOptions.data, {status: 2}), function (down) {
             $scope.totalSpeed += down.current_speed;
           });
         }
