@@ -114,7 +114,13 @@ angular.module('plowshareFrontApp')
               grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'asc' },
               enableCellEdit: false,
               width: 30,
-              cellTemplate: '<div ng-if="row.entity.host_id != null"><img tooltip-placement="right" uib-tooltip="{{row.entity.download_host.name}}" class="img-20-centered" ng-src="data:image/png;base64,{{COL_FIELD | hostPictureFltr}}" /></div>'
+              cellTemplate:
+              '<div ng-if="!col.grouping || col.grouping.groupPriority === undefined || col.grouping.groupPriority === null || ( row.groupHeader && col.grouping.groupPriority === row.treeLevel )" class="ui-grid-cell-contents" title="TOOLTIP">' +
+                '<img tooltip-placement="right" uib-tooltip="{{row.entity.download_host.name}}" class="img-20-centered" ng-src="data:image/png;base64,{{COL_FIELD | hostPictureFltr}}" />' +
+              '</div>' +
+              '<div ng-if="col.grouping && col.grouping.groupPriority !== undefined && col.grouping.groupPriority !== null && ( !row.groupHeader || col.grouping.groupPriority !== row.treeLevel ) && row.entity.host_id != null">' +
+                '<img tooltip-placement="right" uib-tooltip="{{row.entity.download_host.name}}" class="img-20-centered" ng-src="data:image/png;base64,{{COL_FIELD | hostPictureFltr}}" />' +
+              '</div>'
             },
             /*{name: 'link', displayName: 'Link', enableCellEdit: false},*/
             {
