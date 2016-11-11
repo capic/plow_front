@@ -111,7 +111,7 @@ angular.module('plowshareFrontApp')
               name: 'host_id',
               displayName: 'Host',
               headerCellFilter: 'translate',
-              // grouping: {groupPriority: 0},
+              grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'asc' },
               enableCellEdit: false,
               width: 30,
               cellTemplate: '<div ng-if="row.entity.host_id != null"><img tooltip-placement="right" uib-tooltip="{{row.entity.download_host.name}}" class="img-20-centered" ng-src="data:image/png;base64,{{COL_FIELD | hostPictureFltr}}" /></div>'
@@ -129,7 +129,7 @@ angular.module('plowshareFrontApp')
               name: 'status',
               displayName: 'Status',
               //grouping: {groupPriority: 0},
-              //sort: {priority: 1, direction: 'asc'},
+              sort: {priority: 1, direction: 'desc'},
               cellFilter: 'downloadStatusFltr2',
               enableColumnResizing: false,
               enableCellEdit: false,
