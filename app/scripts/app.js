@@ -180,12 +180,20 @@ angular
       $scope.applicationConfiguration = {};
       ApplicationConfigurationResourceFctry.get({Id: 1}, function(response) {
         $scope.applicationConfiguration = response;
+        $wamp.subscribe('plow.downloads.downloads', onevent);
       });
+
+      function onevent(args) {
+        $scope.applicationConfiguration = angular.fromJson(args[0]);
+      }
+
       $scope.downloadActivation = function() {
         ApplicationConfigurationResourceFctry.update({Id: 1}, $scope.applicationConfiguration, function(response) {
-          $scope.applicationConfiguration = response
+          $scope.applicationConfiguration = response;
         });
-      }
+      };
+
+
     }
   ]
 );

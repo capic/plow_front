@@ -13,49 +13,61 @@ angular.module('plowshareFrontApp')
         $scope.contextMenuEntity = {};
         $scope.totalSpeed = 0;
 
-        function onevent(args) {
-          var down = angular.fromJson(args[0]);
+        function onevent(args, kargs) {
+          var event = angular.fromJson(kargs);
 
-          angular.forEach($scope.gridOptions.data,
-            function (download) {
-              download.subscribed = false;
+          if (event.target == "download") {
+            switch (event.action) {
+              case "add":
+                angular.forEach(event.data, function(down) {
+                  $scope.gridOptions.data.push(down);
+                });
+                break;
+              case "delete":
+                angular.forEach(event.data, function(id) {
+                  var downList = $filter('filter')($scope.gridOptions.data, {id: id});
+                  if (downList.length > 0) {
+                    var idx = $scope.gridOptions.data.indexOf(downList[0]);
+                    if (idx != -1){
+                      $scope.gridOptions.data.splice(idx, 1);
+                    }
+                  }
+                });
+                break;
+              case "update":
+                angular.forEach(event.data, function(down) {
+                  var currentDownloadList = $filter('filter')($scope.gridOptions.data, {id: down.id});
+                  if (currentDownloadList.length > 0) {
+                    var now = new Date();
+
+                    currentDownloadList[0].download_package = down.download_package;
+                    currentDownloadList[0].progress_file = down.progress_file;
+                    currentDownloadList[0].time_left = down.time_left;
+                    currentDownloadList[0].status = down.status;
+                    currentDownloadList[0].size_file = down.size_file;
+                    currentDownloadList[0].average_speed = down.average_speed;
+                    currentDownloadList[0].current_speed = down.current_speed;
+                    currentDownloadList[0].directory = down.directory;
+                    currentDownloadList[0].theorical_start_datetime = new Date(down.theorical_start_datetime);
+
+                    currentDownloadList[0].counter = 0;
+                    if (currentDownloadList[0].theorical_start_datetime.getTime() > now) {
+                      currentDownloadList[0].counter = Math.round(( currentDownloadList[0].theorical_start_datetime.getTime() - now) / 1000);
+                    }
+
+                    // TODO: use constant
+                    if (down.status != 3) {
+                      currentDownloadList[0].subscribed = true;
+                    }
+                  }
+                });
+                break;
             }
-          );
-          /*
-           var iterator = 0;
-           var found = false;
-           */
-          var currentDownloadList = $scope.gridOptions.data.filter((download) => download.id === down.id);
-          if (currentDownloadList.length > 0) {
-            var now = new Date();
-
-            currentDownloadList[0].download_package = down.download_package;
-            currentDownloadList[0].progress_file = down.progress_file;
-            currentDownloadList[0].time_left = down.time_left;
-            currentDownloadList[0].status = down.status;
-            currentDownloadList[0].size_file = down.size_file;
-            currentDownloadList[0].average_speed = down.average_speed;
-            currentDownloadList[0].current_speed = down.current_speed;
-            currentDownloadList[0].directory = down.directory;
-            currentDownloadList[0].theorical_start_datetime = new Date(down.theorical_start_datetime);
-
-            currentDownloadList[0].counter = 0;
-            if (currentDownloadList[0].theorical_start_datetime.getTime() > now) {
-              currentDownloadList[0].counter = Math.round(( currentDownloadList[0].theorical_start_datetime.getTime() - now) / 1000);
-            }
-
-            // TODO: use constant
-            if (down.status != 3) {
-              currentDownloadList[0].subscribed = true;
-            }
-          } else {
-            $scope.gridOptions.data.push(down);
+            $scope.totalSpeed = 0;
+            angular.forEach($filter('filter')($scope.gridOptions.data, {status: 2}), function (down) {
+              $scope.totalSpeed += down.current_speed;
+            });
           }
-
-          $scope.totalSpeed = 0;
-          angular.forEach($scope.gridOptions.data.filter((download) => download.status === 2), function (down) {
-            $scope.totalSpeed += down.current_speed;
-          });
         }
 
         $scope.gridOptions = {
@@ -69,7 +81,7 @@ angular.module('plowshareFrontApp')
             {
               name: 'download_package.name',
               displayName: 'Paquet',
-              //grouping: {groupPriority: 0},
+              //grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'asc' },
               cellTooltip: true,
               enableCellEdit: false
             },
@@ -111,7 +123,7 @@ angular.module('plowshareFrontApp')
               name: 'host_id',
               displayName: 'Host',
               headerCellFilter: 'translate',
-              grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'asc' },
+              grouping: { groupPriority: 1 }, sort: { priority: 0, direction: 'asc' },
               enableCellEdit: false,
               width: 30,
               cellTemplate:
