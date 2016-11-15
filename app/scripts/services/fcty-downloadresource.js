@@ -21,7 +21,7 @@ angular.module('plowshareFrontApp')
             params: {Name: '@Name'},
             isArray: true
           },
-          'deleteFinished': {url: settings.SERVER_ADDRESS + 'downloads/finished', method: 'POST', isArray: true},
+          'deleteFinished': {url: settings.SERVER_ADDRESS + 'downloads/finished', method: 'POST'},
           'availability': {url: settings.SERVER_ADDRESS + 'downloads/availability/:Id', method: 'GET'},
           'refresh': {url: settings.SERVER_ADDRESS + 'downloads/refresh', method: 'GET', isArray: true},
           'refreshDownload': {url: settings.SERVER_ADDRESS + 'downloads/refresh/:Id', method: 'GET'},
