@@ -351,34 +351,37 @@ angular.module('plowshareFrontApp')
           );
         };
 
-        // to delete a download
-        $scope.deleteDownload = function (entity) {
-          DownloadResourceFctry.delete({Id: entity.id, wampId: $wamp.connection.session.id}, function (response) {
-            if (response.return === true) {
-              var idx = $scope.gridOptions.data.indexOf(entity);
-              $scope.gridOptions.data.splice(idx, 1);
-            }
-          });
+        var deleteReturn = function(response) {
+          if (response.return.length > 0) {
+            angular.forEach($filter('filter')(response.return, {result: true}), function (downloadResult) {
+              var found = false;
+              var i = 0;
+
+              while (i < $scope.gridOptions.data.length && !found) {
+                if ($scope.gridOptions.data[i].id == downloadResult.id) {
+                  $scope.gridOptions.data.splice(i, 1);
+                  found = true;
+                }
+
+                i++;
+              }
+            });
+          }
         };
 
         var remove = function (listIds) {
-          DownloadResourceFctry.remove({ListId: listIds}, function (response) {
-            if (response.listDownloadIdDeleted.length > 0) {
-              angular.forEach(response.listDownloadIdDeleted, function (downloadId) {
-                var found = false;
-                var i = 0;
+          var downloadResource = new DownloadResourceFctry();
+          downloadResource.listId = listIds;
+          downloadResource.wampId = $wamp.connection.session.id;
 
-                while (i < $scope.gridOptions.data.length && !found) {
-                  if ($scope.gridOptions.data[i].id == downloadId) {
-                    $scope.gridOptions.data.splice(i, 1);
-                    found = true;
-                  }
-
-                  i++;
-                }
-              });
-            }
+          downloadResource.$remove(function (response) {
+            deleteReturn(response);
           });
+        };
+
+        // to delete a download
+        $scope.deleteDownload = function (entity) {
+          remove([entity.id]);
         };
 
         // to delete the selected downloads
@@ -393,23 +396,11 @@ angular.module('plowshareFrontApp')
 
         // to delete the finished downloads
         $scope.deleteDownloads = function (status) {
-          var finishedDownloads = $filter('filter')($scope.gridOptions.data, {status: status});
+          var downloadResource = new DownloadResourceFctry();
+          downloadResource.wampId = $wamp.connection.session.id;
 
-          DownloadResourceFctry.deleteFinished({wampId: $wamp.connection.session.id}, function (response) {
-            angular.forEach(response, function (resp) {
-              if (resp.res === true) {
-                var iterator = 0;
-                var found = false;
-
-                while (iterator < $scope.gridOptions.data.length && !found) {
-                  if (parseInt(resp.id) === parseInt($scope.gridOptions.data[iterator].id)) {
-                    $scope.gridOptions.data.splice(iterator, 1);
-                    found = true;
-                  }
-                  iterator++;
-                }
-              }
-            });
+          downloadResource.$deleteFinished(function (response) {
+            deleteReturn(response);
           });
         };
 

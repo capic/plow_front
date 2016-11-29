@@ -80,7 +80,7 @@ angular.module('plowshareFrontApp')
         }
 
         $scope.download = download;
-        // $scope.download.logs = {};
+        $scope.download.logs = "";
         $scope.downloadPriorities = downloadPriorities;
         $scope.downloadPriority = {};
         $scope.startCounter = 0;
@@ -391,9 +391,12 @@ angular.module('plowshareFrontApp')
         $scope.downloadLogsPromise = DownloadResourceFctry.logs({Id: download.id, IdApplication: ApplicationConfigurationFcty.getData().id_application},
           function (response) {
             if (response != undefined && response != null) {
+              var logFromFile = "";
               angular.forEach(response, function(line) {
-                $scope.download.logs += line.logs + '\r\n';
+                logFromFile +=  line.logs + '\r\n';
               });
+
+              $scope.download.logs = logFromFile + $scope.download.logs;
 
               $wamp.subscribe('plow.downloads.download.' + download.id, onevent)
                 .then(function (subscription) {
