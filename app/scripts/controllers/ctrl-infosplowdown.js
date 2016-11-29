@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', '$translate', '$filter', '$modal', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'HostPictureResourceFctry', 'ActionResourceFctry', 'downloadPriorities', 'download', '$wamp', 'settings', '$interval',
-      function ($scope, $modalInstance, $translate, $filter, $modal, DownloadResourceFctry, DirectoryResourceFctry, HostPictureResourceFctry, ActionResourceFctry, downloadPriorities, download, $wamp, settings, $interval) {
+  .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', '$translate', '$filter', '$modal', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'HostPictureResourceFctry', 'ActionResourceFctry', 'downloadPriorities', 'download', '$wamp', 'settings', '$interval', 'ApplicationConfigurationFcty',
+      function ($scope, $modalInstance, $translate, $filter, $modal, DownloadResourceFctry, DirectoryResourceFctry, HostPictureResourceFctry, ActionResourceFctry, downloadPriorities, download, $wamp, settings, $interval, ApplicationConfigurationFcty) {
         $scope.contextMenuEntity = {};
 
         function onevent(args) {
@@ -40,9 +40,17 @@ angular.module('plowshareFrontApp')
           }
         }
 
-        function oneventLogs(args) {
-          var downLogs = angular.fromJson(args[0]);
-          $scope.download.logs.logs += downLogs.logs;
+        function oneventLogs(args, kargs) {
+          var event = angular.fromJson(kargs);
+
+          if (event.target == "downloadLog") {
+
+            switch (event.action) {
+              case "add":
+                $scope.download.logs += event.data[0].logs + '\r\n';
+                break;
+            }
+          }
         }
 
         function onEventAction(actionsListJson) {
@@ -72,7 +80,7 @@ angular.module('plowshareFrontApp')
         }
 
         $scope.download = download;
-        $scope.download.logs = {};
+        // $scope.download.logs = {};
         $scope.downloadPriorities = downloadPriorities;
         $scope.downloadPriority = {};
         $scope.startCounter = 0;
@@ -380,10 +388,13 @@ angular.module('plowshareFrontApp')
 
         var websocketDownload = null;
         var websocketDownloadLogs = null;
-        $scope.downloadLogsPromise = DownloadResourceFctry.logs({Id: download.id},
+        $scope.downloadLogsPromise = DownloadResourceFctry.logs({Id: download.id, IdApplication: ApplicationConfigurationFcty.getData().id_application},
           function (response) {
-            if (response.logs != undefined && response.logs != '') {
-              $scope.download.logs = response;
+            if (response != undefined && response != null) {
+              angular.forEach(response, function(line) {
+                $scope.download.logs += line.logs + '\r\n';
+              });
+
               $wamp.subscribe('plow.downloads.download.' + download.id, onevent)
                 .then(function (subscription) {
                   websocketDownload = subscription;

@@ -14,7 +14,7 @@ angular.module('plowshareFrontApp')
         $scope.totalSpeed = 0;
 
         function onevent(args, kargs) {
-          var event = angular.fromJson(kargs);
+            var event = angular.fromJson(kargs);
 
           if (event.target == "download") {
             switch (event.action) {
