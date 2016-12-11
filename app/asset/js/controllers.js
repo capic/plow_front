@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('app.controllers', ['pascalprecht.translate', 'ngCookies'])
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', 
+  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window',
     function(              $scope,   $translate,   $localStorage,   $window ) {
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
@@ -153,25 +153,25 @@ angular.module('app.controllers', ['pascalprecht.translate', 'ngCookies'])
       $scope.status.isopen = !$scope.status.isopen;
     };
   }])
-  .controller('ModalDemoCtrl', ['$scope', '$modal', '$log', function($scope, $modal, $log) {
+  .controller('ModalDemoCtrl', ['$scope', '$uibModal', '$log', function($scope, $uibModal, $log) {
     $scope.items = ['item1', 'item2', 'item3'];
-    var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
+    var ModalInstanceCtrl = function ($scope, $uibModalInstance, items) {
       $scope.items = items;
       $scope.selected = {
         item: $scope.items[0]
       };
 
       $scope.ok = function () {
-        $modalInstance.close($scope.selected.item);
+        $uibModalInstance.close($scope.selected.item);
       };
 
       $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+        $uibModalInstance.dismiss('cancel');
       };
     };
 
     $scope.open = function (size) {
-      var modalInstance = $modal.open({
+      var modalInstance = $uibModal.open({
         templateUrl: 'myModalContent.html',
         controller: ModalInstanceCtrl,
         size: size,
@@ -388,7 +388,7 @@ angular.module('app.controllers', ['pascalprecht.translate', 'ngCookies'])
 
   }])
 
-  // Flot Chart controller 
+  // Flot Chart controller
   .controller('FlotChartDemoCtrl', ['$scope', function($scope) {
     $scope.d = [ [1,6.5],[2,6.5],[3,7],[4,8],[5,7.5],[6,7],[7,6.8],[8,7],[9,7.2],[10,7],[11,6.8],[12,7] ];
 
@@ -406,10 +406,10 @@ angular.module('app.controllers', ['pascalprecht.translate', 'ngCookies'])
 
     for (var i = 0; i < 20; ++i) {
       $scope.d2.push([i, Math.sin(i)]);
-    }   
+    }
 
-    $scope.d3 = [ 
-      { label: "iPhone5S", data: 40 }, 
+    $scope.d3 = [
+      { label: "iPhone5S", data: 40 },
       { label: "iPad Mini", data: 10 },
       { label: "iPad Mini Retina", data: 20 },
       { label: "iPhone4S", data: 12 },

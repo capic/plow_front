@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('InfosActionCtrl', ['$scope', '$filter', '$modalInstance', 'download', 'ActionTypeResourceFctry', 'ActionResourceFctry', 'DirectoryResourceFctry',
-    function ($scope, $filter, $modalInstance, download, ActionTypeResourceFctry, ActionResourceFctry, DirectoryResourceFctry) {
+  .controller('InfosActionCtrl', ['$scope', '$filter', '$uibModalInstance', 'download', 'ActionTypeResourceFctry', 'ActionResourceFctry', 'DirectoryResourceFctry',
+    function ($scope, $filter, $uibModalInstance, download, ActionTypeResourceFctry, ActionResourceFctry, DirectoryResourceFctry) {
       $scope.actionTypesList = [];
       $scope.actionType = {};
       $scope.actionProperty = {};
@@ -72,11 +72,11 @@ angular.module('plowshareFrontApp')
           console.log(response);
         });
 
-        $modalInstance.close();
+        $uibModalInstance.close();
       };
 
       $scope.cancel = function() {
-        $modalInstance.close();
+        $uibModalInstance.close();
       };
 
     }]);

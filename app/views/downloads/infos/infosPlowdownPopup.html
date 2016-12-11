@@ -1,27 +1,27 @@
 <div class="modal-body wrapper-lg">
   <form role="form" class="form-horizontal">
     <div class="row">
-      <tabset class="tab-container">
-        <tab heading="{{'infosPlowdown.form.GENERAL' | translate}}">
+      <uib-tabset class="tab-container">
+        <uib-tab heading="{{'infosPlowdown.form.GENERAL' | translate}}">
           <ng-include src="'views/downloads/infos/tabs/general.html'"></ng-include>
-        </tab>
-        <tab heading="{{'infosPlowdown.form.OTHER' | translate}}">
+        </uib-tab>
+        <uib-tab heading="{{'infosPlowdown.form.OTHER' | translate}}">
           <ng-include src="'views/downloads/infos/tabs/other.html'"></ng-include>
-        </tab>
-        <tab heading="{{'infosPlowdown.form.LIFECYCLE' | translate}}">
+        </uib-tab>
+        <uib-tab heading="{{'infosPlowdown.form.LIFECYCLE' | translate}}">
           <ng-include src="'views/downloads/infos/tabs/lifecycle.html'"></ng-include>
-        </tab>
-        <tab ng-show="download.name.split('.')[(download.name.split('.').length - 1)] == 'rar'"
+        </uib-tab>
+        <uib-tab ng-show="download.name.split('.')[(download.name.split('.').length - 1)] == 'rar'"
              heading="{{'infosPlowdown.form.MULTI_PARTS' | translate}}">
           <ng-include src="'views/downloads/infos/tabs/multiParts.html'"></ng-include>
-        </tab>
-        <tab heading="{{'infosPlowdown.form.ACTIONS_HISTORY' | translate}}">
+        </uib-tab>
+        <uib-tab heading="{{'infosPlowdown.form.ACTIONS_HISTORY' | translate}}">
           <ng-include src="'views/downloads/infos/tabs/actionsHistory.html'"></ng-include>
-        </tab>
-        <tab heading="{{'infosPlowdown.form.LOGS' | translate}}">
+        </uib-tab>
+        <uib-tab heading="{{'infosPlowdown.form.LOGS' | translate}}">
           <ng-include src="'views/downloads/infos/tabs/logs.html'"></ng-include>
-        </tab>
-      </tabset>
+        </uib-tab>
+      </uib-tabset>
     </div>
   </form>
 </div>

@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('DownloadCtrl2', ['$scope', '$filter', '$translate', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'ActionResourceFctry', 'downloadStatusListValue', 'downloadPriorities', '$modal', 'uiGridConstants', 'uiGridGroupingConstants', '$wamp', 'dialogs', 'hostPicturesList', 'HostPictureResourceFctry',
-      function ($scope, $filter, $translate, DownloadResourceFctry, DirectoryResourceFctry, ActionResourceFctry, downloadStatusListValue, downloadPriorities, $modal, uiGridConstants, uiGridGroupingConstants, $wamp, dialogs, hostPicturesList, HostPictureResourceFctry) {
+  .controller('DownloadCtrl2', ['$scope', '$filter', '$translate', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'ActionResourceFctry', 'downloadStatusListValue', 'downloadPriorities', '$uibModal', 'uiGridConstants', 'uiGridGroupingConstants', '$wamp', 'dialogs', 'hostPicturesList', 'HostPictureResourceFctry',
+      function ($scope, $filter, $translate, DownloadResourceFctry, DirectoryResourceFctry, ActionResourceFctry, downloadStatusListValue, downloadPriorities, $uibModal, uiGridConstants, uiGridGroupingConstants, $wamp, dialogs, hostPicturesList, HostPictureResourceFctry) {
         $scope.contextMenuEntity = {};
         $scope.totalSpeed = 0;
 
@@ -405,7 +405,7 @@ angular.module('plowshareFrontApp')
         };
 
         $scope.infosPlowdown = function (download) {
-          $scope.modal = $modal.open({
+          $scope.modal = $uibModal.open({
             templateUrl: 'views/downloads/infos/infosPlowdownPopup.html',
             controller: 'InfosPlowdownCtrl',
             backdrop: 'static',

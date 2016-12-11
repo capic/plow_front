@@ -9,18 +9,33 @@
     <div class="panel-body">
       <div class="m-b-sm">
         <label class="i-switch bg-info pull-right">
-          <input type="checkbox" ng-model="applicationConfiguration.download_activated" ng-change="downloadActivation()" >
+          <input type="checkbox" ng-model="applicationConfiguration.download_activated" ng-change="updateConfig()" >
           <i></i>
         </label>
         Activer
       </div>
+      <hr />
       <div class="m-b-sm">
-        <label class="i-switch bg-info pull-right">
-          <input type="checkbox" ng-model="applicationConfiguration.log_debug_activated" ng-change="downloadActivation()" >
-          <i></i>
+        <label class="pull-right">
+          <select data-ng-model="downloadHostSelected" data-ng-options="host.name for host in downloadHosts track by host.id">
+          </select>
         </label>
-        Log debug
+        Hébergeur
       </div>
+      <div class="m-b-sm">
+        <label class="pull-right">
+            <input type="text" data-ng-model="downloadHostSelected.simultaneous_downloads" data-ng-change="updateHostConfig(downloadHostSelected)" class="form-control input-sm"/>
+        </label>
+        Simultanés
+      </div>
+      <hr/>
+      <!--<div class="m-b-sm">-->
+        <!--<label class="i-switch bg-info pull-right">-->
+          <!--<input type="checkbox" ng-model="applicationConfiguration.log_debug_activated" ng-change="downloadActivation()" >-->
+          <!--<i></i>-->
+        <!--</label>-->
+        <!--Log debug-->
+      <!--</div>-->
     </div>
   </uib-tab>
   <uib-tab heading="Vue">

@@ -6,6 +6,14 @@
         <serverdata>
           <mappings>
             <mapping deploy="/" local="$PROJECT_DIR$/app" web="/" />
+            <mapping deploy="/bower_components" local="$PROJECT_DIR$/bower_components" web="/bower_components" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="prod">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

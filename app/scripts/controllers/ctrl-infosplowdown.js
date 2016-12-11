@@ -8,8 +8,8 @@
  * Controller of the plowshareFrontApp
  */
 angular.module('plowshareFrontApp')
-  .controller('InfosPlowdownCtrl', ['$scope', '$modalInstance', '$translate', '$filter', '$modal', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'HostPictureResourceFctry', 'ActionResourceFctry', 'downloadPriorities', 'download', '$wamp', 'settings', '$interval', 'ApplicationConfigurationFcty',
-      function ($scope, $modalInstance, $translate, $filter, $modal, DownloadResourceFctry, DirectoryResourceFctry, HostPictureResourceFctry, ActionResourceFctry, downloadPriorities, download, $wamp, settings, $interval, ApplicationConfigurationFcty) {
+  .controller('InfosPlowdownCtrl', ['$scope', '$uibModalInstance', '$translate', '$filter', '$uibModal', 'DownloadResourceFctry', 'DirectoryResourceFctry', 'HostPictureResourceFctry', 'ActionResourceFctry', 'downloadPriorities', 'download', '$wamp', 'settings', '$interval', 'ApplicationConfigurationFcty',
+      function ($scope, $uibModalInstance, $translate, $filter, $uibModal, DownloadResourceFctry, DirectoryResourceFctry, HostPictureResourceFctry, ActionResourceFctry, downloadPriorities, download, $wamp, settings, $interval, ApplicationConfigurationFcty) {
         $scope.contextMenuEntity = {};
 
         function onevent(args) {
@@ -534,7 +534,7 @@ angular.module('plowshareFrontApp')
             $wamp.unsubscribe(websocketPackageAction);
           }
 
-          $modalInstance.close($scope.edition.directory);
+          $uibModalInstance.close($scope.edition.directory);
         };
 
         $scope.$watch("downloadPriority.selected",
@@ -633,7 +633,7 @@ angular.module('plowshareFrontApp')
         };
 
         $scope.addAction = function () {
-          $scope.modal = $modal.open({
+          $scope.modal = $uibModal.open({
             templateUrl: 'views/downloads/infosAction.html',
             controller: 'InfosActionCtrl',
             backdrop: 'static',

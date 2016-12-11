@@ -32,11 +32,12 @@ angular
     //'dialogs.default-translations',
     'ui.select',
     'ngToast',
-    'cgBusy',
+    'angular-busy',
     'ng-context-menu'
   ])
-  .config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
-    function ($stateProvider, $urlRouterProvider, $httpProvider) {
+  .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$qProvider',
+    function ($stateProvider, $urlRouterProvider, $httpProvider, $qProvider) {
+      $qProvider.errorOnUnhandledRejections(false);
       $httpProvider.interceptors.push('ErrorInterceptorFcty');
 
       $urlRouterProvider
@@ -112,10 +113,13 @@ angular
   .value('downloadStatusListValue', {})
   .value('linkStatusListValue', {})
   .value('hostPicturesList', {})
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', '$wamp', 'ApplicationConfigurationResourceFctry', 'ApplicationConfigurationFcty',
-    function ($scope, $translate, $localStorage, $window/*, webSocketFcty*/, $wamp, ApplicationConfigurationResourceFctry, ApplicationConfigurationFcty) {
+  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', '$wamp', 'ApplicationConfigurationResourceFctry', 'ApplicationConfigurationFcty', 'HostResourceFctry',
+    function ($scope, $translate, $localStorage, $window/*, webSocketFcty*/, $wamp, ApplicationConfigurationResourceFctry, ApplicationConfigurationFcty, HostResourceFctry) {
       //$scope.notifications = webSocketFcty.getNewNotifications();
       $wamp.open();
+      $scope.applicationConfiguration = {};
+      $scope.downloadHosts = [];
+      $scope.downloadHostSelected = {};
 
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
@@ -179,20 +183,26 @@ angular
 
       ApplicationConfigurationResourceFctry.get({Id: 1}, function(response) {
         ApplicationConfigurationFcty.setData(response);
+        $scope.applicationConfiguration = ApplicationConfigurationFcty.getData();
+        $scope.downloadHosts = HostResourceFctry.query();
         //$wamp.subscribe('plow.downloads.downloads', onevent);
       });
 
       function onevent(args) {
         ApplicationConfigurationFcty.setData(angular.fromJson(args[0]));
+        $scope.applicationConfiguration = ApplicationConfigurationFcty.getData();
       }
 
-      $scope.downloadActivation = function() {
-        ApplicationConfigurationResourceFctry.update({IdApplication: 1}, $rootScope.applicationConfiguration, function(response) {
+      $scope.updateConfig = function() {
+        ApplicationConfigurationResourceFctry.update({Id: 1}, $scope.applicationConfiguration, function(response) {
           ApplicationConfigurationFcty.setData(response);
+          $scope.applicationConfiguration = ApplicationConfigurationFcty.getData();
         });
       };
 
-
+      $scope.updateHostConfig = function(host) {
+        HostResourceFctry.update({Id: host.id}, host);
+      }
     }
   ]
 );
