@@ -7,34 +7,92 @@
       Settings
     </div>
     <div class="panel-body">
-      <div class="m-b-sm">
-        <label class="i-switch bg-info pull-right">
-          <input type="checkbox" ng-model="applicationConfiguration.download_activated" ng-change="updateConfig()" >
-          <i></i>
-        </label>
-        Activer
-      </div>
-      <hr />
-      <div class="m-b-sm">
-        <label class="pull-right">
-          <select data-ng-model="downloadHostSelected" data-ng-options="host.name for host in downloadHosts track by host.id">
-          </select>
-        </label>
-        Hébergeur
-      </div>
-      <div class="m-b-sm">
-        <label class="pull-right">
-            <input type="text" data-ng-model="downloadHostSelected.simultaneous_downloads" data-ng-change="updateHostConfig(downloadHostSelected)" class="form-control input-sm"/>
-        </label>
-        Simultanés
-      </div>
-      <hr/>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label for="checkboxActive" class="col-md-3 control-label">Activer</label>
+          <div class="col-md-9">
+            <label class="i-switch bg-info pull-right">
+              <input id="checkboxActive" class="form-control" type="checkbox" ng-model="applicationConfiguration.download_activated" ng-change="updateConfig()" />
+              <i></i>
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputTimer" class="col-md-3 control-label">Timer</label>
+          <div class="col-md-offset-6 col-md-3">
+            <input id="inputTimer" type="text" data-ng-model="applicationConfiguration.periodic_check_minutes" data-ng-blur="updateConfig()" class="form-control input-sm" />
+          </div>
+        </div>
+        <hr/>
+        <div class="form-group">
+          <label for="inputHost" class="col-md-3 control-label">Hébergeur</label>
+          <div class="col-md-offset-4 col-md-5 pull-right">
+            <select id="inputHost" class="form-control input-sm" data-ng-model="downloadHostSelected" data-ng-options="host.name for host in downloadHosts track by host.id">
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputSimultaneous" class="col-md-3 control-label">Simultanés</label>
+          <div class="col-md-offset-6 col-md-3">
+            <input id="inputSimultaneous" type="text" data-ng-model="downloadHostSelected.simultaneous_downloads" data-ng-blur="updateHostConfig(downloadHostSelected)" class="form-control input-sm" />
+          </div>
+        </div>
+        <hr/>
+        <!--<div class="form-group">-->
+          <!--<label for="inputTemporary" class="col-md-3 control-label">Temporaire</label>-->
+          <!--<div class="col-md-9">-->
+            <!--<ui-select id="inputTemporary" ng-model="applicationConfiguration.python_directory_download_temp" theme="bootstrap" reset-search-input="false" tagging="processItem">-->
+              <!--<ui-select-match class="ui-select-match" placeholder="Enter a path...">{{$select.selected.path}}</ui-select-match>-->
+              <!--<ui-select-choices repeat="path in listPath | filter: $select.search track by path.path" refresh-delay="0" class="ui-select-choices">-->
+                <!--<a data-ng-if="listPath.length > 1" data-ng-click="deleteOption(path)" class="btn btn-action btn-xs" href>-->
+                  <!--<i class="glyphicon glyphicon-trash"> </i>-->
+                <!--</a>-->
+                <!--<span ng-bind-html="path.path | highlight: $select.search"></span>-->
+              <!--</ui-select-choices>-->
+            <!--</ui-select>-->
+          <!--</div>-->
+        <!--</div>-->
+
+      </form>
+      <!--<div class="row m-b-sm">-->
+        <!--<div class="col-md-6">-->
+          <!--Temporaire-->
+        <!--</div>-->
+        <!--<div class="col-md-6">-->
+          <!--<label class="pull-right">-->
+            <!--<ui-select ng-model="applicationConfiguration.python_directory_download_temp"-->
+                <!--theme="bootstrap"-->
+                <!--reset-search-input="false"-->
+                <!--tagging="processItem"-->
+                <!--&gt;-->
+              <!--<ui-select-match class="ui-select-match" placeholder="Enter a path...">{{$select.selected.path}}</ui-select-match>-->
+              <!--<ui-select-choices repeat="path in listPath | filter: $select.search track by path.path"-->
+                <!--refresh-delay="0" class="ui-select-choices">-->
+                <!--<a data-ng-if="listPath.length > 1" data-ng-click="deleteOption(path)" class="btn btn-action btn-xs"-->
+                <!--href><i class="glyphicon glyphicon-trash"> </i></a>-->
+                <!--<span ng-bind-html="path.path | highlight: $select.search"></span>-->
+              <!--</ui-select-choices>-->
+            <!--</ui-select>-->
+          <!--</label>-->
+        <!--</div>-->
+      <!--</div>-->
       <!--<div class="m-b-sm">-->
-        <!--<label class="i-switch bg-info pull-right">-->
-          <!--<input type="checkbox" ng-model="applicationConfiguration.log_debug_activated" ng-change="downloadActivation()" >-->
-          <!--<i></i>-->
+        <!--<label class="pull-right">-->
+          <!--<ui-select ng-model="applicationConfiguration.python_directory_download_temp"-->
+                     <!--theme="bootstrap"-->
+                     <!--reset-search-input="false"-->
+                     <!--tagging="processItem"-->
+                     <!--style="width: 300px;">-->
+            <!--<ui-select-match class="ui-select-match" placeholder="Enter a path...">{{$select.selected.path}}</ui-select-match>-->
+            <!--<ui-select-choices repeat="path in listPath | filter: $select.search track by path.path"-->
+                               <!--refresh-delay="0" class="ui-select-choices">-->
+              <!--<a data-ng-if="listPath.length > 1" data-ng-click="deleteOption(path)" class="btn btn-action btn-xs"-->
+                 <!--href><i class="glyphicon glyphicon-trash"> </i></a>-->
+              <!--<span ng-bind-html="path.path | highlight: $select.search"></span>-->
+            <!--</ui-select-choices>-->
+          <!--</ui-select>-->
         <!--</label>-->
-        <!--Log debug-->
+        <!--Temporaire-->
       <!--</div>-->
     </div>
   </uib-tab>
@@ -260,6 +318,17 @@
                 <b class="bg-dark"></b>
               </span>
           </label>
+        </div>
+      </div>
+    </div>
+  </uib-tab>
+  <uib-tab heading="Actions">
+    <div class="panel-body">
+      <div class="row mb-sm">
+        <div class="col-md-12 text-center">
+          <a class="btn btn-default" ng-click="logsAppli()">
+            Logs
+          </a>
         </div>
       </div>
     </div>

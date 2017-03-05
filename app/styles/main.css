@@ -170,3 +170,9 @@ img.img-20-centered {
   margin: auto;
   vertical-align: middle;
 }
+
+.fixed-panel {
+  min-height: 400px;
+  max-height: 400px;
+  overflow-y: scroll;
+}

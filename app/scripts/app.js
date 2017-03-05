@@ -113,13 +113,24 @@ angular
   .value('downloadStatusListValue', {})
   .value('linkStatusListValue', {})
   .value('hostPicturesList', {})
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', '$wamp', 'ApplicationConfigurationResourceFctry', 'ApplicationConfigurationFcty', 'HostResourceFctry',
-    function ($scope, $translate, $localStorage, $window/*, webSocketFcty*/, $wamp, ApplicationConfigurationResourceFctry, ApplicationConfigurationFcty, HostResourceFctry) {
+  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', '$wamp', 'ApplicationConfigurationResourceFctry', 'ApplicationConfigurationFcty', 'HostResourceFctry', 'DirectoryResourceFctry', '$uibModal',
+    function ($scope, $translate, $localStorage, $window/*, webSocketFcty*/, $wamp, ApplicationConfigurationResourceFctry, ApplicationConfigurationFcty, HostResourceFctry, DirectoryResourceFctry, $uibModal) {
       //$scope.notifications = webSocketFcty.getNewNotifications();
       $wamp.open();
       $scope.applicationConfiguration = {};
       $scope.downloadHosts = [];
       $scope.downloadHostSelected = {};
+      $scope.listPath = [];
+
+      $scope.directoryQueryPromise = DirectoryResourceFctry.query(
+        function (response) {
+          $scope.listPath = response;
+          var tabResult = $filter('filter')(response, {id: $scope.download.directory.id}, true);
+          if (tabResult.length > 0) {
+            $scope.edition.directory = tabResult[0];
+          }
+        }
+      );
 
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
@@ -202,7 +213,16 @@ angular
 
       $scope.updateHostConfig = function(host) {
         HostResourceFctry.update({Id: host.id}, host);
-      }
+      };
+
+      $scope.logsAppli = function () {
+        $scope.modal = $uibModal.open({
+          templateUrl: 'views/downloads/logAppliPopup.html',
+          controller: 'LogAppliCtrl',
+          backdrop: 'static',
+          size: 'lg'
+        });
+      };
     }
   ]
 );

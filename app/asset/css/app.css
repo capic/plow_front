@@ -1661,6 +1661,7 @@ fieldset[disabled] .btn-black.active {
   width: 340px;
   -webkit-transition: right 0.2s;
   transition: right 0.2s;
+  height: 400px;
 }
 .settings.active {
   right: -1px;
